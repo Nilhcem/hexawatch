@@ -1,133 +1,32 @@
-/*
- * Copyright (c) 2016 Samsung Electronics Co., Ltd. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 (function() {
-    var canvasLayout,
-        canvasContent,
-        ctxLayout,
-        ctxContent,
+    var canvasContent,
+        canvasSkeleton,
+        contextContent,
+        contextSkeleton,
+
+        strokeWidth = 2.2,
+        digitsMargin = 10,
+        bgColor = '#333333',
+        strokeColor = '#e6e6e6',
+        fillColor = '#b9b9b9',
+
         center,
-        watchRadius;
+        radius,
+        outerRadius,
+        hexaRadius,
+        outerPoints,
+        hexaPoints;
 
-    /**
-     * Renders a circle with specific center, radius, and color
-     * @private
-     * @param {object} context - the context for the circle to be placed in
-     * @param {number} radius - the radius of the circle
-     * @param {string} color - the color of the circle
-     */
-    function renderCircle(context, center, radius, color) {
-        context.save();
-        context.beginPath();
-        context.fillStyle = color;
-        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-        context.fill();
-        context.closePath();
-        context.restore();
+    Math.radians = function(degrees) {
+        return degrees * Math.PI / 180;
+    };
+
+    function moveTo(context, point) {
+        context.moveTo(point.x, point.y);
     }
 
-    /**
-     * Renders a needle with specific center, angle, start point, end point, width and color
-     * @private
-     * @param {object} context - the context for the needle to be placed in
-     * @param {number} angle - the angle of the needle (0 ~ 360)
-     * @param {number} startPoint - the start point of the needle (-1.0 ~ 1.0)
-     * @param {number} startPoint - the end point of the needle (-1.0 ~ 1.0)
-     * @param {number} width - the width of the needle
-     * @param {string} color - the color of the needle
-     */
-    function renderNeedle(context, angle, startPoint, endPoint, width, color) {
-        var radius = context.canvas.width / 2,
-            centerX = context.canvas.width / 2,
-            centerY = context.canvas.height / 2,
-            dxi = radius * Math.cos(angle) * startPoint,
-            dyi = radius * Math.sin(angle) * startPoint,
-            dxf = radius * Math.cos(angle) * endPoint,
-            dyf = radius * Math.sin(angle) * endPoint;
-
-        context.save();
-        context.beginPath();
-        context.lineWidth = width;
-        context.strokeStyle = color;
-        context.moveTo(centerX + dxi, centerY + dyi);
-        context.lineTo(centerX + dxf, centerY + dyf);
-        context.stroke();
-        context.closePath();
-        context.restore();
-    }
-
-    /**
-     * Renders text at a specific center, radius, and color
-     * @private
-     * @param {object} context - the context for the text to be placed in
-     * @param {string} text - the text to be placed
-     * @param {number} x - the x-coordinate of the text
-     * @param {number} y - the y-coordinate of the text
-     * @param {number} textSize - the size of the text in pixel
-     * @param {string} color - the color of the text
-     */
-    function renderText(context, text, x, y, textSize, color) {
-        context.save();
-        context.beginPath();
-        context.font = textSize + "px Courier";
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.fillStyle = color;
-        context.fillText(text, x, y);
-        context.closePath();
-        context.restore();
-    }
-
-    /**
-     * Draws the basic layout of the watch
-     * @private
-     */
-    function drawWatchLayout() {
-        var grd,
-            angle,
-            i,
-            j;
-
-        // Clear canvas
-        ctxLayout.clearRect(0, 0, ctxLayout.canvas.width, ctxLayout.canvas.height);
-
-        // Draw the background circle
-        renderCircle(ctxLayout, center, watchRadius, "#000000");
-        grd = ctxLayout.createLinearGradient(0, 0, watchRadius * 2, 0);
-        grd.addColorStop(0, "#000000");
-        grd.addColorStop(0.5, "#454545");
-        grd.addColorStop(1, "#000000");
-        ctxLayout.fillStyle = grd;
-        renderCircle(ctxLayout, center, watchRadius * 0.945, grd);
-        renderCircle(ctxLayout, center, watchRadius * 0.7, "#000000");
-
-        // Draw the dividers
-        // 60 unit divider
-        for (i = 1; i <= 60; i++) {
-            angle = (i - 15) * (Math.PI * 2) / 60;
-            renderNeedle(ctxLayout, angle, 0.95, 1.0, 1, "#c4c4c4");
-        }
-
-        // 12 unit divider
-        for (j = 1; j <= 12; j++) {
-            angle = (j - 3) * (Math.PI * 2) / 12;
-            renderNeedle(ctxLayout, angle, 0.7, 0.945, 10, "#c4c4c4");
-        }
-
-        renderText(ctxLayout, "HEXAWATCH", center.x, center.y - (watchRadius * 0.4), 25, "#999999");
+    function lineTo(context, point) {
+        context.lineTo(point.x, point.y);
     }
 
     /**
@@ -135,39 +34,16 @@
      * @private
      */
     function drawWatchContent() {
-        var datetime = tizen.time.getCurrentDateTime(),
-            hour = datetime.getHours(),
-            minute = datetime.getMinutes(),
-            second = datetime.getSeconds(),
-            date = datetime.getDate();
+        var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
+            hour = datetime.getHours() % 12,
+            minute = Math.floor(datetime.getMinutes() / 10),
+            digit = datetime.getMinutes() % 10;
 
-        // Clear canvas
-        ctxContent.clearRect(0, 0, ctxContent.canvas.width, ctxContent.canvas.height);
-
-        // Draw the hour needle
-        renderNeedle(ctxContent, Math.PI * (((hour + minute / 60) / 6) - 0.5), 0, 0.50, 3, "#454545");
-
-        // Draw the minute needle
-        renderNeedle(ctxContent, Math.PI * (((minute + second / 60) / 30) - 0.5), 0, 0.70, 3, "#454545");
-
-        // Draw the minute/hour circle
-        renderCircle(ctxContent, center, 8, "#454545");
-
-        // Draw the second needle
-        ctxContent.shadowOffsetX = 4;
-        ctxContent.shadowOffsetY = 4;
-        renderNeedle(ctxContent, Math.PI * ((second / 30) - 0.5), -0.10, 0.85, 1, "#c4c4c4");
-
-        // Draw the second circle
-        ctxContent.shadowOffsetX = 0;
-        ctxContent.shadowOffsetY = 0;
-        renderCircle(ctxContent, center, 5, "#c4c4c4");
-
-        // Draw the center circle
-        renderCircle(ctxContent, center, 2, "#454545");
-
-        // Draw the text for date
-        renderText(ctxContent, date, center.x, center.y + (watchRadius * 0.5), 25, "#999999");
+        contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
+        drawBackground(contextContent, center, radius);
+        drawMinute(contextContent, outerPoints, hexaPoints, minute);
+        drawDigit(contextContent, center, hexaRadius - strokeWidth, digit);
+        drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, hour);
     }
 
     /**
@@ -175,23 +51,26 @@
      * @private
      */
     function setDefaultVariables() {
-        canvasLayout = document.querySelector("#canvas-layout");
-        ctxLayout = canvasLayout.getContext("2d");
         canvasContent = document.querySelector("#canvas-content");
-        ctxContent = canvasContent.getContext("2d");
+        contextContent = canvasContent.getContext("2d");
+        canvasSkeleton = document.querySelector("#canvas-skeleton");
+        contextSkeleton = canvasSkeleton.getContext("2d");
 
         // Set the canvases square
-        canvasLayout.width = document.body.clientWidth;
-        canvasLayout.height = canvasLayout.width;
         canvasContent.width = document.body.clientWidth;
-        canvasContent.height = canvasContent.width;
+        canvasContent.height = document.body.clientHeight;
+        canvasSkeleton.width = document.body.clientWidth;
+        canvasSkeleton.height = document.body.clientHeight;
 
         center = {
             x: document.body.clientWidth / 2,
             y: document.body.clientHeight / 2
         };
-
-        watchRadius = canvasLayout.width / 2;
+        radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2,
+        outerRadius = radius - strokeWidth / 2,
+        hexaRadius = outerRadius * 0.75,
+        outerPoints = getCirclePoints(center, outerRadius, -90, 12),
+        hexaPoints = getCirclePoints(center, hexaRadius, -120, 6);
     }
 
     /**
@@ -208,6 +87,129 @@
         });
     }
 
+    function getCirclePoints(center, radius, rotation, dividingPoints) {
+        var points = [],
+            x,
+            y,
+            angle;
+
+        for (var i = 0; i < dividingPoints; i++) {
+            angle = i * (360 / dividingPoints) + rotation;
+            points[i] = {
+                x: center.x + radius * Math.cos(Math.radians(angle)),
+                y: center.y + radius * Math.sin(Math.radians(angle))
+            }
+        }
+        return points;
+    }
+
+    function drawBackground(context, center, radius) {
+        context.beginPath();
+        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+        context.lineWidth = strokeWidth;
+
+        context.fillStyle = bgColor;
+        context.fill();
+    }
+
+    function drawSkeleton(context, center, radius, outerPoints, hexaPoints) {
+        // Outer circle
+        context.beginPath();
+        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+
+        // Minutes triangles
+        for (var i = 0; i < 6; i++) {
+            moveTo(context, hexaPoints[i]);
+            lineTo(context, outerPoints[i * 2]);
+            lineTo(context, hexaPoints[i == 5 ? 0 : i + 1]);
+            lineTo(context, hexaPoints[i]);
+        }
+
+        // Hours separators
+        for (var i = 0; i < 6; i++) {
+            moveTo(context, hexaPoints[i]);
+            lineTo(context, outerPoints[i == 0 ? 11 : i * 2 - 1]);
+        }
+
+        context.lineWidth = strokeWidth;
+        context.strokeStyle = strokeColor;
+        context.stroke();
+    }
+
+    function drawMinute(context, outerPoints, hexaPoints, minute) {
+        context.beginPath();
+        moveTo(context, hexaPoints[minute]);
+        lineTo(context, outerPoints[minute * 2]);
+        lineTo(context, hexaPoints[minute == 5 ? 0 : minute + 1]);
+
+        context.fillStyle = fillColor;
+        context.fill();
+    }
+
+    function drawHour(context, center, radius, outerPoints, hexaPoints, hour) {
+        context.beginPath();
+
+        var innerIdx = (hour % 2 + hour) / 2;
+        innerIdx = innerIdx == 6 ? 0 : innerIdx;
+
+        var nextInnerIdx = Math.floor(((hour + 1) % 2 + hour) / 2 + 1);
+        nextInnerIdx = nextInnerIdx == 6 ? 0 : nextInnerIdx;
+
+        var arcStartCoord = hour / 6 * Math.PI - 0.5 * Math.PI;
+
+        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord - 1 / 6 * Math.PI, true);
+        lineTo(context, hexaPoints[innerIdx]);
+        lineTo(context, outerPoints[hour]);
+
+        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord + 1 / 6 * Math.PI, false);
+        lineTo(context, hexaPoints[nextInnerIdx]);
+        lineTo(context, outerPoints[hour]);
+
+        context.fillStyle = fillColor;
+        context.fill();
+    }
+
+    function drawDigit(context, center, radius, digit) {
+        var innerNumbersPoints = getCirclePoints(center, radius - digitsMargin, -120, 6);
+        var coords;
+        if (digit == 0) {
+            coords = [0, 1, 2, 3, 4, 5, 0];
+        } else if (digit == 1) {
+            coords = [1, 2, 3];
+        } else if (digit == 2) {
+            coords = [0, 1, 2, 5, 4, 3];
+        } else if (digit == 3) {
+            coords = [0, 1, 2, 5, 2, 3, 4];
+        } else if (digit == 4) {
+            coords = [0, 5, 2, 1, 2, 3];
+        } else if (digit == 5) {
+            coords = [1, 0, 5, 2, 3, 4];
+        } else if (digit == 6) {
+            coords = [1, 0, 5, 4, 3, 2, 5];
+        } else if (digit == 7) {
+            coords = [0, 1, 2, 3];
+        } else if (digit == 8) {
+            coords = [2, 5, 0, 1, 2, 3, 4, 5];
+        } else {
+            coords = [2, 5, 0, 1, 2, 3, 4];
+        }
+
+        drawPathFromCoords(context, innerNumbersPoints, coords);
+    }
+
+    function drawPathFromCoords(context, points, coords) {
+        // Outer circle
+        context.beginPath();
+        moveTo(context, points[coords[0]]);
+        for (var i = 1; i < coords.length; i++) {
+            lineTo(context, points[coords[i]]);
+        }
+
+        context.lineWidth = strokeWidth;
+        context.strokeStyle = strokeColor;
+        context.stroke();
+    }
+
     /**
      * Initiates the application
      * @private
@@ -217,8 +219,8 @@
         setDefaultEvents();
 
         // Draw the basic layout and the content of the watch at the beginning
-        drawWatchLayout();
         drawWatchContent();
+        drawSkeleton(contextSkeleton, center, radius, outerPoints, hexaPoints);
 
         // Update the content of the watch every second
         setInterval(function() {
