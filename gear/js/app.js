@@ -58,10 +58,10 @@
             y: document.body.clientHeight / 2
         };
 
-        radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2,
-        outerRadius = radius - strokeWidth / 2,
-        hexaRadius = outerRadius * 0.75,
-        outerPoints = getCirclePoints(center, outerRadius, -90, 12),
+        radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2;
+        outerRadius = radius - strokeWidth / 2;
+        hexaRadius = outerRadius * 0.75;
+        outerPoints = getCirclePoints(center, outerRadius, -90, 12);
         hexaPoints = getCirclePoints(center, hexaRadius, -120, 6);
     }
 
@@ -76,8 +76,6 @@
 
     function getCirclePoints(center, radius, rotation, dividingPoints) {
         var points = [],
-            x,
-            y,
             angle;
 
         for (var i = 0; i < dividingPoints; i++) {
@@ -85,7 +83,7 @@
             points[i] = {
                 x: center.x + radius * Math.cos(Math.radians(angle)),
                 y: center.y + radius * Math.sin(Math.radians(angle))
-            }
+            };
         }
         return points;
     }
@@ -105,17 +103,18 @@
         context.arc(center.x, center.y, radius, 0, Math.radians(360));
 
         // Minutes triangles
-        for (var i = 0; i < 6; i++) {
+        var i;
+        for (i = 0; i < 6; i++) {
             moveTo(context, hexaPoints[i]);
             lineTo(context, outerPoints[i * 2]);
-            lineTo(context, hexaPoints[i == 5 ? 0 : i + 1]);
+            lineTo(context, hexaPoints[i === 5 ? 0 : i + 1]);
             lineTo(context, hexaPoints[i]);
         }
 
         // Hours separators
-        for (var i = 0; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
             moveTo(context, hexaPoints[i]);
-            lineTo(context, outerPoints[i == 0 ? 11 : i * 2 - 1]);
+            lineTo(context, outerPoints[i === 0 ? 11 : i * 2 - 1]);
         }
 
         context.lineWidth = strokeWidth;
@@ -127,7 +126,7 @@
         context.beginPath();
         moveTo(context, hexaPoints[minute]);
         lineTo(context, outerPoints[minute * 2]);
-        lineTo(context, hexaPoints[minute == 5 ? 0 : minute + 1]);
+        lineTo(context, hexaPoints[minute === 5 ? 0 : minute + 1]);
 
         context.fillStyle = fillColor;
         context.fill();
@@ -137,10 +136,10 @@
         context.beginPath();
 
         var innerIdx = (hour % 2 + hour) / 2;
-        innerIdx = innerIdx == 6 ? 0 : innerIdx;
+        innerIdx = innerIdx === 6 ? 0 : innerIdx;
 
         var nextInnerIdx = Math.floor(((hour + 1) % 2 + hour) / 2 + 1);
-        nextInnerIdx = nextInnerIdx == 6 ? 0 : nextInnerIdx;
+        nextInnerIdx = nextInnerIdx === 6 ? 0 : nextInnerIdx;
 
         var arcStartCoord = hour * Math.radians(30) - Math.radians(90);
 
@@ -159,23 +158,23 @@
     function drawDigit(context, center, radius, digit) {
         var innerNumbersPoints = getCirclePoints(center, radius - digitsMargin, -120, 6);
         var coords;
-        if (digit == 0) {
+        if (digit === 0) {
             coords = [0, 1, 2, 3, 4, 5, 0];
-        } else if (digit == 1) {
+        } else if (digit === 1) {
             coords = [1, 2, 3];
-        } else if (digit == 2) {
+        } else if (digit === 2) {
             coords = [0, 1, 2, 5, 4, 3];
-        } else if (digit == 3) {
+        } else if (digit === 3) {
             coords = [0, 1, 2, 5, 2, 3, 4];
-        } else if (digit == 4) {
+        } else if (digit === 4) {
             coords = [0, 5, 2, 1, 2, 3];
-        } else if (digit == 5) {
+        } else if (digit === 5) {
             coords = [1, 0, 5, 2, 3, 4];
-        } else if (digit == 6) {
+        } else if (digit === 6) {
             coords = [1, 0, 5, 4, 3, 2, 5];
-        } else if (digit == 7) {
+        } else if (digit === 7) {
             coords = [0, 1, 2, 3];
-        } else if (digit == 8) {
+        } else if (digit === 8) {
             coords = [2, 5, 0, 1, 2, 3, 4, 5];
         } else {
             coords = [2, 5, 0, 1, 2, 3, 4];
