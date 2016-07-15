@@ -43,10 +43,10 @@
     }
 
     function setDefaultVariables() {
-        canvasContent = document.querySelector("#canvas-content");
-        contextContent = canvasContent.getContext("2d");
-        canvasSkeleton = document.querySelector("#canvas-skeleton");
-        contextSkeleton = canvasSkeleton.getContext("2d");
+        canvasContent = document.querySelector('#canvas-content');
+        contextContent = canvasContent.getContext('2d');
+        canvasSkeleton = document.querySelector('#canvas-skeleton');
+        contextSkeleton = canvasSkeleton.getContext('2d');
 
         canvasContent.width = document.body.clientWidth;
         canvasContent.height = document.body.clientHeight;
@@ -67,7 +67,7 @@
 
     function setDefaultEvents() {
         // add eventListener to update the screen immediately when the device wakes up
-        document.addEventListener("visibilitychange", function() {
+        document.addEventListener('visibilitychange', function() {
             if (!document.hidden) {
                 drawWatchContent();
             }
