@@ -29,10 +29,6 @@
         context.lineTo(point.x, point.y);
     }
 
-    /**
-     * Draws the content of the watch
-     * @private
-     */
     function drawWatchContent() {
         var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
             hour = datetime.getHours() % 12,
@@ -46,17 +42,12 @@
         drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, hour);
     }
 
-    /**
-     * Set default variables
-     * @private
-     */
     function setDefaultVariables() {
         canvasContent = document.querySelector("#canvas-content");
         contextContent = canvasContent.getContext("2d");
         canvasSkeleton = document.querySelector("#canvas-skeleton");
         contextSkeleton = canvasSkeleton.getContext("2d");
 
-        // Set the canvases square
         canvasContent.width = document.body.clientWidth;
         canvasContent.height = document.body.clientHeight;
         canvasSkeleton.width = document.body.clientWidth;
@@ -66,6 +57,7 @@
             x: document.body.clientWidth / 2,
             y: document.body.clientHeight / 2
         };
+
         radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2,
         outerRadius = radius - strokeWidth / 2,
         hexaRadius = outerRadius * 0.75,
@@ -73,15 +65,10 @@
         hexaPoints = getCirclePoints(center, hexaRadius, -120, 6);
     }
 
-    /**
-     * Set default event listeners
-     * @private
-     */
     function setDefaultEvents() {
         // add eventListener to update the screen immediately when the device wakes up
         document.addEventListener("visibilitychange", function() {
             if (!document.hidden) {
-                // Draw the content of the watch
                 drawWatchContent();
             }
         });
@@ -210,10 +197,6 @@
         context.stroke();
     }
 
-    /**
-     * Initiates the application
-     * @private
-     */
     function init() {
         setDefaultVariables();
         setDefaultEvents();
