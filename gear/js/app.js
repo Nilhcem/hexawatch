@@ -92,7 +92,7 @@
 
     function drawBackground(context, center, radius) {
         context.beginPath();
-        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+        context.arc(center.x, center.y, radius, 0, Math.radians(360));
         context.lineWidth = strokeWidth;
 
         context.fillStyle = bgColor;
@@ -102,7 +102,7 @@
     function drawSkeleton(context, center, radius, outerPoints, hexaPoints) {
         // Outer circle
         context.beginPath();
-        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+        context.arc(center.x, center.y, radius, 0, Math.radians(360));
 
         // Minutes triangles
         for (var i = 0; i < 6; i++) {
@@ -142,13 +142,13 @@
         var nextInnerIdx = Math.floor(((hour + 1) % 2 + hour) / 2 + 1);
         nextInnerIdx = nextInnerIdx == 6 ? 0 : nextInnerIdx;
 
-        var arcStartCoord = hour / 6 * Math.PI - 0.5 * Math.PI;
+        var arcStartCoord = hour * Math.radians(30) - Math.radians(90);
 
-        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord - 1 / 6 * Math.PI, true);
+        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord - Math.radians(30), true);
         lineTo(context, hexaPoints[innerIdx]);
         lineTo(context, outerPoints[hour]);
 
-        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord + 1 / 6 * Math.PI, false);
+        context.arc(center.x, center.y, radius, arcStartCoord, arcStartCoord + Math.radians(30), false);
         lineTo(context, hexaPoints[nextInnerIdx]);
         lineTo(context, outerPoints[hour]);
 
