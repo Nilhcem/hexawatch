@@ -1,0 +1,17 @@
+# Temporary files
+*~
+\#*#
+
+# Tizen binary
+*.wgt
+
+# Eclipse configuration files
+.sdk_delta.info
+.settings
+.sign
+
+# OSX files
+.DS_Store
+
+# Windows files
+Thumbs.db
