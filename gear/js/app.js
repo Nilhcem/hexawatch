@@ -4,8 +4,9 @@
         contextContent,
         contextSkeleton,
 
-        strokeWidth = 2.2,
-        digitsMargin = 10,
+        strokeWidth = 3.0,
+        digitsMargin = 12,
+        innerRadiusRatio = 0.75,
         bgColor = '#333333',
         strokeColor = '#e6e6e6',
         fillColor = '#b9b9b9',
@@ -60,7 +61,7 @@
 
         radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2;
         outerRadius = radius - strokeWidth / 2;
-        hexaRadius = outerRadius * 0.75;
+        hexaRadius = outerRadius * innerRadiusRatio;
         outerPoints = getCirclePoints(center, outerRadius, -90, 12);
         hexaPoints = getCirclePoints(center, hexaRadius, -120, 6);
     }
