@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="nilhcem.com.hexawatch"
+    package="com.nilhcem.hexawatch"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Required to act as a custom watch face. -->
+    <!-- Required to act as a custom watch face -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application

@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion project.ext['compileSdkVersion']
+    buildToolsVersion project.ext['buildToolsVersion']
+
+    defaultConfig {
+        versionCode project.ext['versionCode']
+        versionName project.ext['versionName']
+
+        minSdkVersion project.ext['minSdkVersion']
+        targetSdkVersion project.ext['targetSdkVersion']
+    }
+}
