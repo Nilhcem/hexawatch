@@ -6,22 +6,17 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
-import java.util.Calendar;
-
 import static com.nilhcem.hexawatch.common.utils.PathUtils.lineTo;
 import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
-public class HexawatchCircleDrawer {
+public class HexawatchCircleDrawer implements Hexawatch {
 
     private Context context;
     private float strokeWidth;
-
-    private Calendar calendar = Calendar.getInstance();
 
     private Path bgPath;
     private Path skeletonPath;
@@ -74,12 +69,8 @@ public class HexawatchCircleDrawer {
         fillPaint.setColor(fillColor);
     }
 
-    public void draw(Canvas canvas, Rect bounds) {
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        drawTime(canvas, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
-    }
-
-    private void drawTime(Canvas canvas, int hours, int minutes) {
+    @Override
+    public void drawTime(Canvas canvas, int hours, int minutes) {
         canvas.drawPath(bgPath, bgPaint);
         canvas.drawPath(hoursPaths[hours], fillPaint);
         canvas.drawPath(minutesPaths[minutes / 10], fillPaint);

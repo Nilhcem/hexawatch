@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            drawer.draw(canvas, null);
+            drawer.drawTime(canvas, 15, 42);
         }
     }
 }
