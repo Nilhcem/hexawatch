@@ -9,7 +9,7 @@ android {
         versionCode project.ext['versionCode']
         versionName project.ext['versionName']
 
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion project.ext['targetSdkVersion']
     }
 
