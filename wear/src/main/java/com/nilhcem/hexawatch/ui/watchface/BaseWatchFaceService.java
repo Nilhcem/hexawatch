@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.view.SurfaceHolder;
+import android.view.WindowInsets;
 
 import com.nilhcem.hexawatch.BuildConfig;
 import com.nilhcem.hexawatch.core.watchface.TimeHelper;
@@ -36,6 +37,10 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
 
         private boolean burnInProtection;
 
+        private boolean isRound;
+
+        private int chinSize;
+
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -54,6 +59,13 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
                 }
                 invalidate();
             }
+        }
+
+        @Override
+        public void onApplyWindowInsets(WindowInsets insets) {
+            super.onApplyWindowInsets(insets);
+            isRound = insets.isRound();
+            chinSize = insets.getSystemWindowInsetBottom();
         }
 
         @Override
