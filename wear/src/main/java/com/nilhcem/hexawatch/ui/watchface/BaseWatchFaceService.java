@@ -34,6 +34,8 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
          */
         private boolean lowBitAmbient;
 
+        private boolean burnInProtection;
+
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -66,6 +68,7 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
             super.onPropertiesChanged(properties);
             /* get device features (burn-in, low-bit ambient) */
             lowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
+            burnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
         }
 
         @Override
