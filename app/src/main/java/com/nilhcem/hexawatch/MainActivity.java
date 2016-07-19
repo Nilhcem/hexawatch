@@ -2,7 +2,6 @@ package com.nilhcem.hexawatch;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.nilhcem.hexawatch.common.HexawatchCircleDrawer;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
+import com.nilhcem.hexawatch.common.Hexawatch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,31 +29,31 @@ public class MainActivity extends AppCompatActivity {
 
     private class HexaTestView extends View {
 
-        private HexawatchCircleDrawer drawer;
+        private Hexawatch hexawatch;
 
         public HexaTestView(Context context) {
             super(context);
 
-//            // black
-//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff333333, 0xffe6e6e6, 0xffb9b9b9, false, false);
+            // black
+            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
 //
 //            // pink
-//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff952261, 0xfff1e5eb, 0xffcd79a6, false, false);
+//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff952261).strokeColor(0xfff1e5eb).fillColor(0xffcd79a6).build();
 //
 //            // blue
-            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff387b94, 0xffebddd4, 0xff1f6179, false, false);
+//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff387b94).strokeColor(0xffebddd4).fillColor(0xff1f6179).build();
 //
 //            // ambient
-//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 1f), 10, Color.TRANSPARENT, 0xff666666, 0xffdddddd, true, false);
+//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).ambient().build();
 //
 //            // low-bit ambient
-//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 1f), 10, Color.TRANSPARENT, Color.WHITE, Color.WHITE, true, true);
+//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).lowBitAmbient().build();
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            drawer.drawTime(canvas, 3, 42);
+            hexawatch.drawTime(canvas, 3, 42);
         }
     }
 }

@@ -29,8 +29,8 @@ public class HexawatchService extends BaseWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
 //            getResources().getConfiguration().isScreenRound()
-            hexaWatch = new HexawatchCircleDrawer(HexawatchService.this, 400, 400, ContextUtils.dpToIntPx(HexawatchService.this, 2f), BURN_IN_MARGIN, 0xff333333, 0xffe6e6e6, 0xffb9b9b9, false, false);
-            ambiantWatch = new HexawatchCircleDrawer(HexawatchService.this, 400, 400, ContextUtils.dpToIntPx(HexawatchService.this, 1f), BURN_IN_MARGIN, Color.TRANSPARENT, 0xff666666, 0xffdddddd, true, false);
+            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(Hexawatch.Shape.CIRCLE).size(400, Hexawatch.Unit.PX).marginWidth(BURN_IN_MARGIN, Hexawatch.Unit.PX).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
+            ambiantWatch = new Hexawatch.Builder(HexawatchService.this).shape(Hexawatch.Shape.CIRCLE).size(400, Hexawatch.Unit.PX).marginWidth(BURN_IN_MARGIN, Hexawatch.Unit.PX).ambient().build();
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)

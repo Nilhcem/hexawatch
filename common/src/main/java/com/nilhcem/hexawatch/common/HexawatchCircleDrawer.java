@@ -16,22 +16,20 @@ import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
 public class HexawatchCircleDrawer implements Hexawatch {
 
-    private boolean ambientMode;
-    private boolean lowBitAmbient;
+    private final boolean ambientMode;
+    private final boolean lowBitAmbient;
 
-    private Path bgPath;
-    private Path skeletonPath;
-    private Path[] hoursPaths;
-    private Path[] minutesPaths;
-    private Path[] digitsPaths;
+    private final Path bgPath;
+    private final Path skeletonPath;
+    private final Path[] hoursPaths;
+    private final Path[] minutesPaths;
+    private final Path[] digitsPaths;
 
-    private Paint bgPaint;
-    private Paint strokePaint;
-    private Paint fillPaint;
-    private Paint marginPaint;
+    private final Paint bgPaint;
+    private final Paint strokePaint;
+    private final Paint fillPaint;
+    private final Paint marginPaint;
 
-    // TODO: builder instead (new Hexawatch.Builder().circle().strokeWidth(2f).fillColor().strokeColor().build())
-    // TODO: Possibilité également de changer en temps réel la couleur ? le mode ambiant ?
     public HexawatchCircleDrawer(Context context, int w, int h, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
         this.ambientMode = ambientMode;
         this.lowBitAmbient = lowBitAmbient;
