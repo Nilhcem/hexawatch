@@ -6,6 +6,9 @@ import android.graphics.Color;
 
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
+import static com.nilhcem.hexawatch.common.utils.Preconditions.checkArgument;
+import static com.nilhcem.hexawatch.common.utils.Preconditions.checkNotNull;
+
 public interface Hexawatch {
 
     void drawTime(Canvas canvas, int hours, int minutes);
@@ -114,25 +117,13 @@ public interface Hexawatch {
         }
 
         public Hexawatch build() {
-            // TODO: Precondition class
-            if (shape == null) {
-                throw new IllegalStateException("You must specify the shape");
-            }
-            if (width == 0 || height == 0) {
-                throw new IllegalStateException("You must specify the size (width and height)");
-            }
-            if (strokeColor == 0 && fillColor == 0) {
-                throw new IllegalStateException("You must specify a bgColor and a fillColor");
-            }
+            checkNotNull(shape, "You must specify the shape");
+            checkArgument(width != 0 && height != 0, "You must specify the size (width and height)");
+            checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a bgColor and a fillColor");
 
             if (strokeWidth == 0) {
-                if (ambient) {
-                    strokeWidth(1f, Unit.DP);
-                } else {
-                    strokeWidth(2f, Unit.DP);
-                }
+                strokeWidth(ambient ? 1f : 2f, Unit.DP);
             }
-
             if (bgColor == 0) {
                 bgColor = Color.TRANSPARENT;
             }
