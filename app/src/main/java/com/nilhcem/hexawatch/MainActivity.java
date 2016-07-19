@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 
 import com.nilhcem.hexawatch.common.Hexawatch;
 
+import static com.nilhcem.hexawatch.common.Hexawatch.SHAPE_CIRCLE;
+import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_DP;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -35,19 +38,19 @@ public class MainActivity extends AppCompatActivity {
             super(context);
 
             // black
-            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
-//
+            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
+
 //            // pink
-//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff952261).strokeColor(0xfff1e5eb).fillColor(0xffcd79a6).build();
+//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff952261).strokeColor(0xfff1e5eb).fillColor(0xffcd79a6).build();
 //
 //            // blue
-//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).bgColor(0xff387b94).strokeColor(0xffebddd4).fillColor(0xff1f6179).build();
+//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff387b94).strokeColor(0xffebddd4).fillColor(0xff1f6179).build();
 //
 //            // ambient
-//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).ambient().build();
+//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).ambient().build();
 //
 //            // low-bit ambient
-//            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.Shape.CIRCLE).size(300, Hexawatch.Unit.DP).lowBitAmbient().build();
+//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).lowBitAmbient().build();
         }
 
         @Override

@@ -11,4 +11,8 @@ android {
         minSdkVersion project.ext['minSdkVersion']
         targetSdkVersion project.ext['targetSdkVersion']
     }
+
+    dependencies {
+        compile "com.android.support:support-annotations:$supportVersion"
+    }
 }

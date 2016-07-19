@@ -3,32 +3,38 @@ package com.nilhcem.hexawatch.common;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.support.annotation.IntDef;
+import android.util.TypedValue;
 
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import static com.nilhcem.hexawatch.common.utils.Preconditions.checkArgument;
 import static com.nilhcem.hexawatch.common.utils.Preconditions.checkNotNull;
 
 public interface Hexawatch {
 
+    int SHAPE_CIRCLE = 0;
+    int SHAPE_SQUARE = 1;
+    int UNIT_DP = TypedValue.COMPLEX_UNIT_DIP;
+    int UNIT_PX = TypedValue.COMPLEX_UNIT_PX;
+
     void drawTime(Canvas canvas, int hours, int minutes);
 
-    // TODO: no enum (who cares?)
-    enum Shape {
-        CIRCLE,
-        SQUARE
+    @IntDef({SHAPE_CIRCLE, SHAPE_SQUARE})
+    @Retention(RetentionPolicy.SOURCE) @interface Shape {
     }
 
-    // TODO: no enum (who cares?)
-    enum Unit {
-        DP,
-        PX
+    @IntDef({UNIT_DP, UNIT_PX})
+    @Retention(RetentionPolicy.SOURCE) @interface Unit {
     }
 
     class Builder {
 
         private Context context;
-        private Shape shape;
+        private int shape;
         private int bgColor;
         private int strokeColor;
         private int fillColor;
@@ -58,8 +64,8 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder strokeWidth(float strokeWidth, Unit unit) {
-            if (unit == Unit.DP) {
+        public Builder strokeWidth(float strokeWidth, @Unit int unit) {
+            if (unit == UNIT_DP) {
                 this.strokeWidth = ContextUtils.dpToIntPx(context, strokeWidth);
             } else {
                 this.strokeWidth = Math.round(strokeWidth);
@@ -67,8 +73,8 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder marginWidth(float marginWidth, Unit unit) {
-            if (unit == Unit.DP) {
+        public Builder marginWidth(float marginWidth, @Unit int unit) {
+            if (unit == UNIT_DP) {
                 this.marginWidth = ContextUtils.dpToIntPx(context, marginWidth);
             } else {
                 this.marginWidth = Math.round(marginWidth);
@@ -76,12 +82,12 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder size(float size, Unit unit) {
+        public Builder size(float size, @Unit int unit) {
             return size(size, size, unit);
         }
 
-        public Builder size(float width, float height, Unit unit) {
-            if (unit == Unit.DP) {
+        public Builder size(float width, float height, @Unit int unit) {
+            if (unit == UNIT_DP) {
                 this.width = ContextUtils.dpToIntPx(context, width);
                 this.height = ContextUtils.dpToIntPx(context, height);
             } else {
@@ -111,7 +117,7 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder shape(Shape shape) {
+        public Builder shape(@Shape int shape) {
             this.shape = shape;
             return this;
         }
@@ -122,13 +128,13 @@ public interface Hexawatch {
             checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a bgColor and a fillColor");
 
             if (strokeWidth == 0) {
-                strokeWidth(ambient ? 1f : 2f, Unit.DP);
+                strokeWidth(ambient ? 1f : 2f, UNIT_DP);
             }
             if (bgColor == 0) {
                 bgColor = Color.TRANSPARENT;
             }
 
-            if (shape == Shape.CIRCLE) {
+            if (shape == SHAPE_CIRCLE) {
                 return new HexawatchCircleDrawer(context, width, height, strokeWidth, marginWidth, bgColor, strokeColor, fillColor, ambient, lowBitAmbient);
             } else {
                 return null;

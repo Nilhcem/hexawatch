@@ -11,6 +11,9 @@ import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
 import java.util.Calendar;
 
+import static com.nilhcem.hexawatch.common.Hexawatch.SHAPE_CIRCLE;
+import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_PX;
+
 public class HexawatchService extends BaseWatchFaceService {
 
     private static final int BURN_IN_MARGIN = 10;
@@ -29,8 +32,8 @@ public class HexawatchService extends BaseWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
 //            getResources().getConfiguration().isScreenRound()
-            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(Hexawatch.Shape.CIRCLE).size(400, Hexawatch.Unit.PX).marginWidth(BURN_IN_MARGIN, Hexawatch.Unit.PX).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
-            ambiantWatch = new Hexawatch.Builder(HexawatchService.this).shape(Hexawatch.Shape.CIRCLE).size(400, Hexawatch.Unit.PX).marginWidth(BURN_IN_MARGIN, Hexawatch.Unit.PX).ambient().build();
+            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
+            ambiantWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).ambient().build();
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
