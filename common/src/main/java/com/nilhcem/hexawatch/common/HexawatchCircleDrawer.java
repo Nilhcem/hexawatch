@@ -30,7 +30,7 @@ public class HexawatchCircleDrawer implements Hexawatch {
     private final Paint fillPaint;
     private final Paint marginPaint;
 
-    HexawatchCircleDrawer(Context context, int width, int height, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
+    HexawatchCircleDrawer(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
         this.ambientMode = ambientMode;
         this.lowBitAmbient = lowBitAmbient;
 
@@ -39,7 +39,7 @@ public class HexawatchCircleDrawer implements Hexawatch {
         float marginRadius = ((float) Math.min(width, height) - marginWidth) / 2f;
         float radius = marginRadius - marginWidth / 2 - strokeWidth / 2;
 
-        float hexaRadius = radius * 0.75f;
+        float hexaRadius = radius * innerHexaRatio;
 
         PointF[] outerPoints = getCirclePoints(centerX, centerY, radius, -90f, 12);
         PointF[] hexaPoints = getCirclePoints(centerX, centerY, hexaRadius, -120f, 6);

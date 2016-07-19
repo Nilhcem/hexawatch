@@ -52,18 +52,62 @@ public interface Hexawatch {
 
         private Context context;
         private int shape;
-        private int bgColor;
-        private int strokeColor;
-        private int fillColor;
         private int width;
         private int height;
         private int strokeWidth;
         private int marginWidth;
+        private float innerHexaRatio = 0.75f;
+        private int bgColor = Color.TRANSPARENT;
+        private int strokeColor;
+        private int fillColor;
         private boolean ambient;
         private boolean lowBitAmbient;
 
         public Builder(Context context) {
             this.context = context;
+        }
+
+        public Builder shape(@Shape int shape) {
+            this.shape = shape;
+            return this;
+        }
+
+        public Builder size(float size, @Unit int unit) {
+            return size(size, size, unit);
+        }
+
+        public Builder size(float width, float height, @Unit int unit) {
+            if (unit == UNIT_DP) {
+                this.width = ContextUtils.dpToIntPx(context, width);
+                this.height = ContextUtils.dpToIntPx(context, height);
+            } else {
+                this.width = Math.round(width);
+                this.height = Math.round(height);
+            }
+            return this;
+        }
+
+        public Builder strokeWidth(float strokeWidth, @Unit int unit) {
+            if (unit == UNIT_DP) {
+                this.strokeWidth = ContextUtils.dpToIntPx(context, strokeWidth);
+            } else {
+                this.strokeWidth = Math.round(strokeWidth);
+            }
+            return this;
+        }
+
+        public Builder marginWidth(float marginWidth, @Unit int unit) {
+            if (unit == UNIT_DP) {
+                this.marginWidth = ContextUtils.dpToIntPx(context, marginWidth);
+            } else {
+                this.marginWidth = Math.round(marginWidth);
+            }
+            return this;
+        }
+
+        public Builder innerHexaRatio(float innerHexaRatio) {
+            this.innerHexaRatio = innerHexaRatio;
+            return this;
         }
 
         public Builder colorPreset(ColorPreset colorPreset) {
@@ -88,39 +132,6 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder strokeWidth(float strokeWidth, @Unit int unit) {
-            if (unit == UNIT_DP) {
-                this.strokeWidth = ContextUtils.dpToIntPx(context, strokeWidth);
-            } else {
-                this.strokeWidth = Math.round(strokeWidth);
-            }
-            return this;
-        }
-
-        public Builder marginWidth(float marginWidth, @Unit int unit) {
-            if (unit == UNIT_DP) {
-                this.marginWidth = ContextUtils.dpToIntPx(context, marginWidth);
-            } else {
-                this.marginWidth = Math.round(marginWidth);
-            }
-            return this;
-        }
-
-        public Builder size(float size, @Unit int unit) {
-            return size(size, size, unit);
-        }
-
-        public Builder size(float width, float height, @Unit int unit) {
-            if (unit == UNIT_DP) {
-                this.width = ContextUtils.dpToIntPx(context, width);
-                this.height = ContextUtils.dpToIntPx(context, height);
-            } else {
-                this.width = Math.round(width);
-                this.height = Math.round(height);
-            }
-            return this;
-        }
-
         public Builder ambient() {
             ambient = true;
             lowBitAmbient = false;
@@ -141,11 +152,6 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder shape(@Shape int shape) {
-            this.shape = shape;
-            return this;
-        }
-
         public Hexawatch build() {
             checkNotNull(shape, "You must specify the shape");
             checkArgument(width != 0 && height != 0, "You must specify the size (width and height)");
@@ -154,12 +160,9 @@ public interface Hexawatch {
             if (strokeWidth == 0) {
                 strokeWidth(ambient ? 1f : 2f, UNIT_DP);
             }
-            if (bgColor == 0) {
-                bgColor = Color.TRANSPARENT;
-            }
 
             if (shape == SHAPE_CIRCLE) {
-                return new HexawatchCircleDrawer(context, width, height, strokeWidth, marginWidth, bgColor, strokeColor, fillColor, ambient, lowBitAmbient);
+                return new HexawatchCircleDrawer(context, width, height, strokeWidth, marginWidth, innerHexaRatio, bgColor, strokeColor, fillColor, ambient, lowBitAmbient);
             } else {
                 return null;
             }
