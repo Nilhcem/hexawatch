@@ -35,8 +35,20 @@ public class MainActivity extends AppCompatActivity {
 
         public HexaTestView(Context context) {
             super(context);
-            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff333333, 0xffe6e6e6, 0xffb9b9b9, false, false);
+
+//            // black
+//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff333333, 0xffe6e6e6, 0xffb9b9b9, false, false);
+//
+//            // pink
+//            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff952261, 0xfff1e5eb, 0xffcd79a6, false, false);
+//
+//            // blue
+            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 2f), ContextUtils.dpToIntPx(context, 1f), 0xff387b94, 0xffebddd4, 0xff1f6179, false, false);
+//
+//            // ambient
 //            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 1f), 10, Color.TRANSPARENT, 0xff666666, 0xffdddddd, true, false);
+//
+//            // low-bit ambient
 //            drawer = new HexawatchCircleDrawer(context, ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 300), ContextUtils.dpToIntPx(context, 1f), 10, Color.TRANSPARENT, Color.WHITE, Color.WHITE, true, true);
         }
 
