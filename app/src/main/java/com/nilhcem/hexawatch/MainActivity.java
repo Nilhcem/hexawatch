@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             super(context);
 
             // colored
-            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).colorPreset(Hexawatch.ColorPreset.BLACK).build();
+            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.SHAPE_SQUARE).size(300, UNIT_DP).colorPreset(Hexawatch.ColorPreset.BLACK).build();
 
 //            // ambient
 //            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).ambient().build();
