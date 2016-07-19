@@ -37,15 +37,9 @@ public class MainActivity extends AppCompatActivity {
         public HexaTestView(Context context) {
             super(context);
 
-            // black
-            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
+            // colored
+            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).colorPreset(Hexawatch.ColorPreset.BLACK).build();
 
-//            // pink
-//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff952261).strokeColor(0xfff1e5eb).fillColor(0xffcd79a6).build();
-//
-//            // blue
-//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).bgColor(0xff387b94).strokeColor(0xffebddd4).fillColor(0xff1f6179).build();
-//
 //            // ambient
 //            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).ambient().build();
 //

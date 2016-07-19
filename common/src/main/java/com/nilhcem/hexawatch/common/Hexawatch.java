@@ -31,6 +31,23 @@ public interface Hexawatch {
     @Retention(RetentionPolicy.SOURCE) @interface Unit {
     }
 
+    enum ColorPreset {
+
+        BLACK(0xff333333, 0xffe6e6e6, 0xffb9b9b9),
+        PINK(0xff952261, 0xfff1e5eb, 0xffcd79a6),
+        BLUE(0xff387b94, 0xffebddd4, 0xff1f6179);
+
+        int bgColor;
+        int strokeColor;
+        int fillColor;
+
+        ColorPreset(int bgColor, int strokeColor, int fillColor) {
+            this.bgColor = bgColor;
+            this.strokeColor = strokeColor;
+            this.fillColor = fillColor;
+        }
+    }
+
     class Builder {
 
         private Context context;
@@ -47,6 +64,13 @@ public interface Hexawatch {
 
         public Builder(Context context) {
             this.context = context;
+        }
+
+        public Builder colorPreset(ColorPreset colorPreset) {
+            bgColor = colorPreset.bgColor;
+            strokeColor = colorPreset.strokeColor;
+            fillColor = colorPreset.fillColor;
+            return this;
         }
 
         public Builder bgColor(int bgColor) {
@@ -125,7 +149,7 @@ public interface Hexawatch {
         public Hexawatch build() {
             checkNotNull(shape, "You must specify the shape");
             checkArgument(width != 0 && height != 0, "You must specify the size (width and height)");
-            checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a bgColor and a fillColor");
+            checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a colorPreset, or a bgColor+fillColor");
 
             if (strokeWidth == 0) {
                 strokeWidth(ambient ? 1f : 2f, UNIT_DP);

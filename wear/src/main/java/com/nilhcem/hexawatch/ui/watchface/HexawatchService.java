@@ -12,6 +12,7 @@ import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import java.util.Calendar;
 
 import static com.nilhcem.hexawatch.common.Hexawatch.SHAPE_CIRCLE;
+import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_DP;
 import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_PX;
 
 public class HexawatchService extends BaseWatchFaceService {
@@ -32,7 +33,8 @@ public class HexawatchService extends BaseWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
 //            getResources().getConfiguration().isScreenRound()
-            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).bgColor(0xff333333).strokeColor(0xffe6e6e6).fillColor(0xffb9b9b9).build();
+
+            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).colorPreset(Hexawatch.ColorPreset.BLACK).build();
             ambiantWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).ambient().build();
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
