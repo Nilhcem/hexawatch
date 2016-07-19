@@ -16,7 +16,6 @@ import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
 public class HexawatchCircleDrawer implements Hexawatch {
 
-    private Context context;
     private boolean ambientMode;
     private boolean lowBitAmbient;
 
@@ -34,7 +33,6 @@ public class HexawatchCircleDrawer implements Hexawatch {
     // TODO: builder instead (new Hexawatch.Builder().circle().strokeWidth(2f).fillColor().strokeColor().build())
     // TODO: Possibilité également de changer en temps réel la couleur ? le mode ambiant ?
     public HexawatchCircleDrawer(Context context, int w, int h, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
-        this.context = context;
         this.ambientMode = ambientMode;
         this.lowBitAmbient = lowBitAmbient;
 
@@ -52,7 +50,7 @@ public class HexawatchCircleDrawer implements Hexawatch {
         skeletonPath = createSkeletonPath(centerX, centerY, radius, outerPoints, hexaPoints);
         minutesPaths = createMinutesPaths(outerPoints, hexaPoints);
         hoursPaths = createHoursPaths(centerX, centerY, radius, outerPoints, hexaPoints);
-        digitsPaths = createDigitsPaths(centerX, centerY, hexaRadius - strokeWidth);
+        digitsPaths = createDigitsPaths(context, centerX, centerY, hexaRadius - strokeWidth);
 
         bgPaint = new Paint();
         bgPaint.setStrokeWidth(strokeWidth);
@@ -167,7 +165,7 @@ public class HexawatchCircleDrawer implements Hexawatch {
         return paths;
     }
 
-    private Path[] createDigitsPaths(float centerX, float centerY, float radius) {
+    private Path[] createDigitsPaths(Context context, float centerX, float centerY, float radius) {
         Path[] paths = new Path[10];
 
         PointF[] innerNumbersPoints = getCirclePoints(centerX, centerY, radius - ContextUtils.dpToPx(context, 6f), -120f, 6);
