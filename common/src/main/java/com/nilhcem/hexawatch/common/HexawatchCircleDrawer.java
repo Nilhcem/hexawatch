@@ -2,6 +2,7 @@ package com.nilhcem.hexawatch.common;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -16,7 +17,6 @@ import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 public class HexawatchCircleDrawer implements Hexawatch {
 
     private Context context;
-    private float strokeWidth;
 
     private Path bgPath;
     private Path skeletonPath;
@@ -27,55 +27,69 @@ public class HexawatchCircleDrawer implements Hexawatch {
     private Paint bgPaint;
     private Paint strokePaint;
     private Paint fillPaint;
+    private Paint marginPaint;
 
     // TODO: builder instead (new Hexawatch.Builder().circle().strokeWidth(2f).fillColor().strokeColor().build())
     // TODO: Possibilité également de changer en temps réel la couleur ? le mode ambiant ?
-    public HexawatchCircleDrawer(Context context, int w, int h, float strokeWidth, int bgColor, int strokeColor, int fillColor) {
+    public HexawatchCircleDrawer(Context context, int w, int h, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor) {
         this.context = context;
-        this.strokeWidth = ContextUtils.dpToPx(context, strokeWidth);
 
         float centerX = (float) w / 2f;
         float centerY = (float) h / 2f;
-        float radius = ((float) Math.min(w, h) - this.strokeWidth) / 2f;
+        float marginRadius = ((float) Math.min(w, h) - marginWidth) / 2f;
+        float radius = marginRadius - marginWidth / 2 - strokeWidth / 2;
 
-        float outerRadius = radius - this.strokeWidth / 2f;
-        float hexaRadius = outerRadius * 0.75f;
+        float hexaRadius = radius * 0.75f;
 
-        PointF[] outerPoints = getCirclePoints(centerX, centerY, outerRadius, -90f, 12);
+        PointF[] outerPoints = getCirclePoints(centerX, centerY, radius, -90f, 12);
         PointF[] hexaPoints = getCirclePoints(centerX, centerY, hexaRadius, -120f, 6);
 
-        bgPath = createBackgroundPath(centerX, centerY, radius);
+        bgPath = createBackgroundPath(centerX, centerY, marginRadius);
         skeletonPath = createSkeletonPath(centerX, centerY, radius, outerPoints, hexaPoints);
         minutesPaths = createMinutesPaths(outerPoints, hexaPoints);
-        hoursPaths = createHoursPaths(centerX, centerY, outerRadius, outerPoints, hexaPoints);
-        digitsPaths = createDigitsPaths(centerX, centerY, hexaRadius - this.strokeWidth);
+        hoursPaths = createHoursPaths(centerX, centerY, radius, outerPoints, hexaPoints);
+        digitsPaths = createDigitsPaths(centerX, centerY, hexaRadius - strokeWidth);
 
         bgPaint = new Paint();
-        bgPaint.setStrokeWidth(this.strokeWidth);
+        bgPaint.setStrokeWidth(strokeWidth);
         bgPaint.setStyle(Style.FILL_AND_STROKE);
         bgPaint.setAntiAlias(true);
         bgPaint.setColor(bgColor);
 
         strokePaint = new Paint();
-        strokePaint.setStrokeWidth(this.strokeWidth);
+        strokePaint.setStrokeWidth(strokeWidth);
         strokePaint.setStyle(Style.STROKE);
         strokePaint.setAntiAlias(true);
         strokePaint.setColor(strokeColor);
 
         fillPaint = new Paint();
-        fillPaint.setStrokeWidth(this.strokeWidth);
+        fillPaint.setStrokeWidth(strokeWidth);
         fillPaint.setStyle(Style.FILL);
         fillPaint.setAntiAlias(true);
         fillPaint.setColor(fillColor);
+
+        marginPaint = new Paint();
+        marginPaint.setStrokeWidth(marginWidth);
+        marginPaint.setStyle(Style.STROKE);
+        marginPaint.setAntiAlias(true);
+        marginPaint.setColor(Color.BLACK);
     }
 
     @Override
     public void drawTime(Canvas canvas, int hours, int minutes) {
         canvas.drawPath(bgPath, bgPaint);
+
+        // if ambient {
+        //    canvas.drawPath(skeletonPath, strokePaint);
+        // }
         canvas.drawPath(hoursPaths[hours], fillPaint);
         canvas.drawPath(minutesPaths[minutes / 10], fillPaint);
         canvas.drawPath(digitsPaths[minutes % 10], strokePaint);
-        canvas.drawPath(skeletonPath, strokePaint);
+        // if not ambient {
+            canvas.drawPath(skeletonPath, strokePaint);
+        // }
+
+        canvas.drawPath(bgPath, marginPaint);
     }
 
     private Path createBackgroundPath(float centerX, float centerY, float radius) {
