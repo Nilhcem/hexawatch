@@ -17,6 +17,8 @@ import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 public class HexawatchCircleDrawer implements Hexawatch {
 
     private Context context;
+    private boolean ambientMode;
+    private boolean lowBitAmbient;
 
     private Path bgPath;
     private Path skeletonPath;
@@ -31,8 +33,10 @@ public class HexawatchCircleDrawer implements Hexawatch {
 
     // TODO: builder instead (new Hexawatch.Builder().circle().strokeWidth(2f).fillColor().strokeColor().build())
     // TODO: Possibilité également de changer en temps réel la couleur ? le mode ambiant ?
-    public HexawatchCircleDrawer(Context context, int w, int h, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor) {
+    public HexawatchCircleDrawer(Context context, int w, int h, int strokeWidth, int marginWidth, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
         this.context = context;
+        this.ambientMode = ambientMode;
+        this.lowBitAmbient = lowBitAmbient;
 
         float centerX = (float) w / 2f;
         float centerY = (float) h / 2f;
@@ -52,44 +56,48 @@ public class HexawatchCircleDrawer implements Hexawatch {
 
         bgPaint = new Paint();
         bgPaint.setStrokeWidth(strokeWidth);
-        bgPaint.setStyle(Style.FILL_AND_STROKE);
-        bgPaint.setAntiAlias(true);
+        bgPaint.setStyle(Style.FILL);
+        bgPaint.setAntiAlias(!lowBitAmbient);
         bgPaint.setColor(bgColor);
 
         strokePaint = new Paint();
         strokePaint.setStrokeWidth(strokeWidth);
         strokePaint.setStyle(Style.STROKE);
-        strokePaint.setAntiAlias(true);
+        strokePaint.setAntiAlias(!lowBitAmbient);
         strokePaint.setColor(strokeColor);
 
         fillPaint = new Paint();
         fillPaint.setStrokeWidth(strokeWidth);
-        fillPaint.setStyle(Style.FILL);
-        fillPaint.setAntiAlias(true);
+        fillPaint.setStyle(ambientMode ? Style.STROKE : Style.FILL);
+        fillPaint.setAntiAlias(!lowBitAmbient);
         fillPaint.setColor(fillColor);
 
         marginPaint = new Paint();
         marginPaint.setStrokeWidth(marginWidth);
         marginPaint.setStyle(Style.STROKE);
-        marginPaint.setAntiAlias(true);
+        marginPaint.setAntiAlias(!lowBitAmbient);
         marginPaint.setColor(Color.BLACK);
     }
 
     @Override
     public void drawTime(Canvas canvas, int hours, int minutes) {
-        canvas.drawPath(bgPath, bgPaint);
+        if (!ambientMode) {
+            canvas.drawPath(bgPath, bgPaint);
+        }
 
-        // if ambient {
-        //    canvas.drawPath(skeletonPath, strokePaint);
-        // }
+        if (ambientMode && !lowBitAmbient) {
+            canvas.drawPath(skeletonPath, strokePaint);
+        }
         canvas.drawPath(hoursPaths[hours], fillPaint);
         canvas.drawPath(minutesPaths[minutes / 10], fillPaint);
-        canvas.drawPath(digitsPaths[minutes % 10], strokePaint);
-        // if not ambient {
+        canvas.drawPath(digitsPaths[minutes % 10], ambientMode ? fillPaint : strokePaint);
+        if (!ambientMode) {
             canvas.drawPath(skeletonPath, strokePaint);
-        // }
+        }
 
-        canvas.drawPath(bgPath, marginPaint);
+        if (!lowBitAmbient) {
+            canvas.drawPath(bgPath, marginPaint);
+        }
     }
 
     private Path createBackgroundPath(float centerX, float centerY, float radius) {
