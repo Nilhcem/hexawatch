@@ -14,7 +14,7 @@ import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import static com.nilhcem.hexawatch.common.utils.PathUtils.lineTo;
 import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
-public class HexawatchCircleDrawer implements Hexawatch {
+public class HexawatchCircle implements Hexawatch {
 
     private final boolean ambientMode;
     private final boolean lowBitAmbient;
@@ -30,7 +30,7 @@ public class HexawatchCircleDrawer implements Hexawatch {
     private final Paint fillPaint;
     private final Paint marginPaint;
 
-    HexawatchCircleDrawer(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
+    HexawatchCircle(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
         this.ambientMode = ambientMode;
         this.lowBitAmbient = lowBitAmbient;
 

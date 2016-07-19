@@ -162,7 +162,7 @@ public interface Hexawatch {
             }
 
             if (shape == SHAPE_CIRCLE) {
-                return new HexawatchCircleDrawer(context, width, height, strokeWidth, marginWidth, innerHexaRatio, bgColor, strokeColor, fillColor, ambient, lowBitAmbient);
+                return new HexawatchCircle(context, width, height, strokeWidth, marginWidth, innerHexaRatio, bgColor, strokeColor, fillColor, ambient, lowBitAmbient);
             } else {
                 return null;
             }
