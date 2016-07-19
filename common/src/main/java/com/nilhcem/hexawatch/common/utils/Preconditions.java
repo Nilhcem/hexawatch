@@ -1,5 +1,7 @@
 package com.nilhcem.hexawatch.common.utils;
 
+import android.support.annotation.NonNull;
+
 /**
  * Preconditions inspired by
  * https://github.com/google/guava/blob/master/guava/src/com/google/common/base/Preconditions.java
@@ -16,7 +18,7 @@ public class Preconditions {
         }
     }
 
-    public static void checkArgument(boolean expression, String errorMessage) {
+    public static void checkArgument(boolean expression, @NonNull String errorMessage) {
         if (!expression) {
             throw new IllegalArgumentException(errorMessage);
         }
@@ -28,7 +30,7 @@ public class Preconditions {
         }
     }
 
-    public static <T> void checkNotNull(T reference, String errorMessage) {
+    public static <T> void checkNotNull(T reference, @NonNull String errorMessage) {
         if (reference == null) {
             throw new NullPointerException(errorMessage);
         }
