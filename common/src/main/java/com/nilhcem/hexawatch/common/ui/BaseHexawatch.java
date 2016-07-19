@@ -76,9 +76,7 @@ public abstract class BaseHexawatch implements Hexawatch {
 
     @Override
     public void drawTime(Canvas canvas, int hours, int minutes) {
-        if (!ambientMode) {
-            canvas.drawPath(bgPath, bgPaint);
-        }
+        canvas.drawPath(bgPath, bgPaint);
 
         if (ambientMode && !lowBitAmbient) {
             canvas.drawPath(skeletonPath, strokePaint);
@@ -165,7 +163,7 @@ public abstract class BaseHexawatch implements Hexawatch {
     private Path[] createDigitsPaths(Context context, float centerX, float centerY, float radius) {
         Path[] paths = new Path[10];
 
-        PointF[] innerNumbersPoints = getCirclePoints(centerX, centerY, radius - ContextUtils.dpToPx(context, 6f), -120f, 6);
+        PointF[] innerNumbersPoints = getCirclePoints(centerX, centerY, radius - ContextUtils.dpToPx(context, 10f), -120f, 6);
         paths[0] = createPathFromCoords(innerNumbersPoints, 0, 1, 2, 3, 4, 5, 0);
         paths[1] = createPathFromCoords(innerNumbersPoints, 1, 2, 3);
         paths[2] = createPathFromCoords(innerNumbersPoints, 0, 1, 2, 5, 4, 3);

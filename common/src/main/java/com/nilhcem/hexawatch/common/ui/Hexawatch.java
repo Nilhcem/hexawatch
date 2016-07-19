@@ -136,7 +136,8 @@ public interface Hexawatch {
             ambient = true;
             lowBitAmbient = false;
 
-            strokeColor = 0xff666666;
+            bgColor = Color.BLACK;
+            strokeColor = 0xff505050;
             fillColor = 0xffdddddd;
 
             return this;
@@ -146,6 +147,7 @@ public interface Hexawatch {
             ambient = true;
             lowBitAmbient = true;
 
+            bgColor = Color.BLACK;
             strokeColor = Color.WHITE;
             fillColor = Color.WHITE;
 
@@ -155,10 +157,10 @@ public interface Hexawatch {
         public Hexawatch build() {
             checkNotNull(shape, "You must specify the shape");
             checkArgument(width != 0 && height != 0, "You must specify the size (width and height)");
-            checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a colorPreset, or a bgColor+fillColor");
+            checkArgument(strokeColor != 0 && fillColor != 0, "You must specify a colorPreset, or a strokeColor+fillColor");
 
             if (strokeWidth == 0) {
-                strokeWidth(ambient ? 1f : 2f, UNIT_DP);
+                strokeWidth(ambient ? 1f : 1.5f, UNIT_DP);
             }
 
             if (shape == SHAPE_CIRCLE) {
