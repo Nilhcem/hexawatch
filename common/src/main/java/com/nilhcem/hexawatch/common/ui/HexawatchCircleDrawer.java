@@ -1,4 +1,4 @@
-package com.nilhcem.hexawatch.common;
+package com.nilhcem.hexawatch.common.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;

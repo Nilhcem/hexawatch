@@ -1,19 +1,15 @@
 package com.nilhcem.hexawatch.ui.watchface;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
-import com.nilhcem.hexawatch.common.Hexawatch;
-import com.nilhcem.hexawatch.common.HexawatchCircleDrawer;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
+import com.nilhcem.hexawatch.common.ui.Hexawatch;
 
 import java.util.Calendar;
 
-import static com.nilhcem.hexawatch.common.Hexawatch.SHAPE_CIRCLE;
-import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_DP;
-import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_PX;
+import static com.nilhcem.hexawatch.common.ui.Hexawatch.SHAPE_CIRCLE;
+import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_PX;
 
 public class HexawatchService extends BaseWatchFaceService {
 

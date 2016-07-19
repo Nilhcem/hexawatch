@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.nilhcem.hexawatch.common.Hexawatch;
+import com.nilhcem.hexawatch.common.ui.Hexawatch;
 
-import static com.nilhcem.hexawatch.common.Hexawatch.SHAPE_CIRCLE;
-import static com.nilhcem.hexawatch.common.Hexawatch.UNIT_DP;
+import static com.nilhcem.hexawatch.common.ui.Hexawatch.SHAPE_CIRCLE;
+import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_DP;
 
 public class MainActivity extends AppCompatActivity {
 
