@@ -10,9 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.nilhcem.hexawatch.common.core.ColorPreset;
+import com.nilhcem.hexawatch.common.core.WatchMode;
+import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
+import com.nilhcem.hexawatch.common.ui.painter.Painter;
+import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
-import static com.nilhcem.hexawatch.common.ui.Hexawatch.SHAPE_CIRCLE;
 import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_DP;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,15 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
         public HexaTestView(Context context) {
             super(context);
+            Painter painter = new Painter(context);
+            hexawatch = new Hexawatch.Builder(context).shape(WatchShape.CIRCLE).size(300, UNIT_DP).strokeWidth(1.5f, Hexawatch.UNIT_DP).marginWidth(60, Hexawatch.UNIT_PX).painter(painter).build();
 
-            // colored
-            hexawatch = new Hexawatch.Builder(context).shape(Hexawatch.SHAPE_SQUARE).size(300, UNIT_DP).colorPreset(Hexawatch.ColorPreset.BLACK).build();
-
-//            // ambient
-//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).ambient().build();
-//
-//            // low-bit ambient
-//            hexawatch = new Hexawatch.Builder(context).shape(SHAPE_CIRCLE).size(300, UNIT_DP).lowBitAmbient().build();
+            painter.setColor(ColorPreset.BLACK);
+//            painter.setMode(WatchMode.AMBIENT);
+//            painter.setMode(WatchMode.LOW_BIT);
         }
 
         @Override

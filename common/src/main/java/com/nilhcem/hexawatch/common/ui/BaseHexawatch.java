@@ -2,12 +2,11 @@ package com.nilhcem.hexawatch.common.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import com.nilhcem.hexawatch.common.ui.painter.Painter;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
 import static com.nilhcem.hexawatch.common.utils.PathUtils.lineTo;
@@ -15,8 +14,7 @@ import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
 public abstract class BaseHexawatch implements Hexawatch {
 
-    private final boolean ambientMode;
-    private final boolean lowBitAmbient;
+    private final Painter painter;
 
     private final Path bgPath;
     private final Path skeletonPath;
@@ -24,14 +22,9 @@ public abstract class BaseHexawatch implements Hexawatch {
     private final Path[] minutesPaths;
     private final Path[] digitsPaths;
 
-    private final Paint bgPaint;
-    private final Paint strokePaint;
-    private final Paint fillPaint;
-    private final Paint marginPaint;
-
-    BaseHexawatch(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, int bgColor, int strokeColor, int fillColor, boolean ambientMode, boolean lowBitAmbient) {
-        this.ambientMode = ambientMode;
-        this.lowBitAmbient = lowBitAmbient;
+    BaseHexawatch(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, Painter painter) {
+        this.painter = painter;
+        this.painter.setWidths(strokeWidth, marginWidth);
 
         float centerX = (float) width / 2f;
         float centerY = (float) height / 2f;
@@ -48,49 +41,11 @@ public abstract class BaseHexawatch implements Hexawatch {
         minutesPaths = createMinutesPaths(outerPoints, hexaPoints);
         hoursPaths = createHoursPaths(centerX, centerY, radius, outerPoints, hexaPoints);
         digitsPaths = createDigitsPaths(context, centerX, centerY, hexaRadius - strokeWidth);
-
-        bgPaint = new Paint();
-        bgPaint.setStrokeWidth(strokeWidth);
-        bgPaint.setStyle(Paint.Style.FILL);
-        bgPaint.setAntiAlias(!lowBitAmbient);
-        bgPaint.setColor(bgColor);
-
-        strokePaint = new Paint();
-        strokePaint.setStrokeWidth(strokeWidth);
-        strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setAntiAlias(!lowBitAmbient);
-        strokePaint.setColor(strokeColor);
-
-        fillPaint = new Paint();
-        fillPaint.setStrokeWidth(strokeWidth);
-        fillPaint.setStyle(ambientMode ? Paint.Style.STROKE : Paint.Style.FILL);
-        fillPaint.setAntiAlias(!lowBitAmbient);
-        fillPaint.setColor(fillColor);
-
-        marginPaint = new Paint();
-        marginPaint.setStrokeWidth(marginWidth);
-        marginPaint.setStyle(Paint.Style.STROKE);
-        marginPaint.setAntiAlias(!lowBitAmbient);
-        marginPaint.setColor(Color.BLACK);
     }
 
     @Override
     public void drawTime(Canvas canvas, int hours, int minutes) {
-        canvas.drawPath(bgPath, bgPaint);
-
-        if (ambientMode && !lowBitAmbient) {
-            canvas.drawPath(skeletonPath, strokePaint);
-        }
-        canvas.drawPath(hoursPaths[hours], fillPaint);
-        canvas.drawPath(minutesPaths[minutes / 10], fillPaint);
-        canvas.drawPath(digitsPaths[minutes % 10], ambientMode ? fillPaint : strokePaint);
-        if (!ambientMode) {
-            canvas.drawPath(skeletonPath, strokePaint);
-        }
-
-        if (!lowBitAmbient) {
-            canvas.drawPath(bgPath, marginPaint);
-        }
+        painter.draw(canvas, bgPath, skeletonPath, hoursPaths[hours], minutesPaths[minutes / 10], digitsPaths[minutes % 10]);
     }
 
     private Path createBackgroundPath(float centerX, float centerY, float radius) {

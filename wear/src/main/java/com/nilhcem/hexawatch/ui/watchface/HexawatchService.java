@@ -4,11 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
+import com.nilhcem.hexawatch.common.core.ColorPreset;
+import com.nilhcem.hexawatch.common.core.WatchMode;
+import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
+import com.nilhcem.hexawatch.common.ui.painter.Painter;
 
 import java.util.Calendar;
 
-import static com.nilhcem.hexawatch.common.ui.Hexawatch.SHAPE_CIRCLE;
 import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_PX;
 
 public class HexawatchService extends BaseWatchFaceService {
@@ -22,16 +25,17 @@ public class HexawatchService extends BaseWatchFaceService {
 
     private class Engine extends BaseWatchFaceService.Engine {
 
-        private Hexawatch hexaWatch;
-        private Hexawatch ambiantWatch;
+        private Painter painter;
+        private Hexawatch hexawatch;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-//            getResources().getConfiguration().isScreenRound()
+            painter = new Painter(HexawatchService.this);
+            painter.setColor(ColorPreset.BLACK);
 
-            hexaWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).colorPreset(Hexawatch.ColorPreset.BLACK).build();
-            ambiantWatch = new Hexawatch.Builder(HexawatchService.this).shape(SHAPE_CIRCLE).size(400, UNIT_PX).marginWidth(BURN_IN_MARGIN, UNIT_PX).ambient().build();
+            WatchShape shape = getResources().getConfiguration().isScreenRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
+            hexawatch = new Hexawatch.Builder(HexawatchService.this).shape(shape).size(400, UNIT_PX).strokeWidth(1.5f, Hexawatch.UNIT_DP).marginWidth(BURN_IN_MARGIN, Hexawatch.UNIT_PX).painter(painter).build();
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
@@ -41,9 +45,13 @@ public class HexawatchService extends BaseWatchFaceService {
         }
 
         @Override
+        protected void onWatchModeChanged(WatchMode mode) {
+            painter.setMode(mode);
+        }
+
+        @Override
         protected void onDrawTime(Canvas canvas, Rect bounds, boolean ambiant, Calendar calendar) {
-            Hexawatch watch = ambiant ? ambiantWatch : hexaWatch;
-            watch.drawTime(canvas, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+            hexawatch.drawTime(canvas, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
         }
     }
 }
