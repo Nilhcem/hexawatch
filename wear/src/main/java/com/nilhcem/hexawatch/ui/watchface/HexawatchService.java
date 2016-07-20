@@ -16,7 +16,7 @@ import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_PX;
 
 public class HexawatchService extends BaseWatchFaceService {
 
-    private static final int BURN_IN_MARGIN = 10;
+    private static final int BURN_IN_PADDING = 10;
 
     @Override
     public Engine onCreateEngine() {
@@ -35,7 +35,7 @@ public class HexawatchService extends BaseWatchFaceService {
             painter.setColor(ColorPreset.BLACK);
 
             WatchShape shape = getResources().getConfiguration().isScreenRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
-            hexawatch = new Hexawatch.Builder(HexawatchService.this).shape(shape).size(400, UNIT_PX).strokeWidth(1.5f, Hexawatch.UNIT_DP).marginWidth(BURN_IN_MARGIN, Hexawatch.UNIT_PX).painter(painter).build();
+            hexawatch = new Hexawatch.Builder(HexawatchService.this).shape(shape).size(400, UNIT_PX).strokeWidth(1.5f, Hexawatch.UNIT_DP).paddingWidth(BURN_IN_PADDING, Hexawatch.UNIT_PX).painter(painter).build();
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)

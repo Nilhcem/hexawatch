@@ -34,7 +34,7 @@ public interface Hexawatch {
         private int width;
         private int height;
         private int strokeWidth;
-        private int marginWidth;
+        private int paddingWidth;
         private float innerHexaRatio = 0.75f;
 
         public Builder(Context context) {
@@ -75,11 +75,11 @@ public interface Hexawatch {
             return this;
         }
 
-        public Builder marginWidth(float marginWidth, @Unit int unit) {
+        public Builder paddingWidth(float paddingWidth, @Unit int unit) {
             if (unit == UNIT_DP) {
-                this.marginWidth = ContextUtils.dpToIntPx(context, marginWidth);
+                this.paddingWidth = ContextUtils.dpToIntPx(context, paddingWidth);
             } else {
-                this.marginWidth = Math.round(marginWidth);
+                this.paddingWidth = Math.round(paddingWidth);
             }
             return this;
         }
@@ -94,9 +94,9 @@ public interface Hexawatch {
             checkArgument(width != 0 && height != 0, "You must specify the size (width and height)");
 
             if (shape == WatchShape.CIRCLE) {
-                return new HexawatchCircle(context, width, height, strokeWidth, marginWidth, innerHexaRatio, painter);
+                return new HexawatchCircle(context, width, height, strokeWidth, paddingWidth, innerHexaRatio, painter);
             } else {
-                return new HexawatchSquare(context, width, height, strokeWidth, marginWidth, innerHexaRatio, painter);
+                return new HexawatchSquare(context, width, height, strokeWidth, paddingWidth, innerHexaRatio, painter);
             }
         }
     }

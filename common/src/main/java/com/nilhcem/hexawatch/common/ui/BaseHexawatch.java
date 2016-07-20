@@ -22,21 +22,21 @@ public abstract class BaseHexawatch implements Hexawatch {
     private final Path[] minutesPaths;
     private final Path[] digitsPaths;
 
-    BaseHexawatch(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, Painter painter) {
+    BaseHexawatch(Context context, int width, int height, int strokeWidth, int paddingWidth, float innerHexaRatio, Painter painter) {
         this.painter = painter;
-        this.painter.setWidths(strokeWidth, marginWidth);
+        this.painter.setWidths(strokeWidth, paddingWidth);
 
         float centerX = (float) width / 2f;
         float centerY = (float) height / 2f;
-        float marginRadius = ((float) Math.min(width, height) - marginWidth) / 2f;
-        float radius = marginRadius - marginWidth / 2 - strokeWidth / 2;
+        float paddingRadius = ((float) Math.min(width, height) - paddingWidth) / 2f;
+        float radius = paddingRadius - paddingWidth / 2 - strokeWidth / 2;
 
         float hexaRadius = radius * innerHexaRatio;
 
         PointF[] outerPoints = getCirclePoints(centerX, centerY, radius, -90f, 12);
         PointF[] hexaPoints = getCirclePoints(centerX, centerY, hexaRadius, -120f, 6);
 
-        bgPath = createBackgroundPath(centerX, centerY, marginRadius);
+        bgPath = createBackgroundPath(centerX, centerY, paddingRadius);
         skeletonPath = createSkeletonPath(centerX, centerY, radius, outerPoints, hexaPoints);
         minutesPaths = createMinutesPaths(outerPoints, hexaPoints);
         hoursPaths = createHoursPaths(centerX, centerY, radius, outerPoints, hexaPoints);

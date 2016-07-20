@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         public HexaTestView(Context context) {
             super(context);
             Painter painter = new Painter(context);
-            hexawatch = new Hexawatch.Builder(context).shape(WatchShape.CIRCLE).size(300, UNIT_DP).strokeWidth(1.5f, Hexawatch.UNIT_DP).marginWidth(60, Hexawatch.UNIT_PX).painter(painter).build();
+            hexawatch = new Hexawatch.Builder(context).shape(WatchShape.CIRCLE).size(300, UNIT_DP).strokeWidth(1.5f, Hexawatch.UNIT_DP).paddingWidth(60, Hexawatch.UNIT_PX).painter(painter).build();
 
             painter.setColor(ColorPreset.BLACK);
 //            painter.setMode(WatchMode.AMBIENT);

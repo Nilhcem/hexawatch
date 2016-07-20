@@ -22,23 +22,23 @@ public class HexawatchSquare implements Hexawatch {
     private final Path[] minutesPaths;
     private final Path[] digitsPaths;
 
-    HexawatchSquare(Context context, int width, int height, int strokeWidth, int marginWidth, float innerHexaRatio, Painter painter) {
+    HexawatchSquare(Context context, int width, int height, int strokeWidth, int paddingWidth, float innerHexaRatio, Painter painter) {
         this.painter = painter;
-        this.painter.setWidths(strokeWidth, marginWidth);
+        this.painter.setWidths(strokeWidth, paddingWidth);
 
         float centerX = (float) width / 2f;
         float centerY = (float) height / 2f;
-        float marginRadius = ((float) Math.min(width, height) - marginWidth) / 2f;
-        float radius = marginRadius - marginWidth / 2 - strokeWidth / 2;
+        float paddingRadius = ((float) Math.min(width, height) - paddingWidth) / 2f;
+        float radius = paddingRadius - paddingWidth / 2 - strokeWidth / 2;
 
         float hexaRadius = radius * innerHexaRatio;
 
-        RectF rect = new RectF(marginWidth + strokeWidth / 2, marginWidth + strokeWidth / 2, (float) width - marginWidth - strokeWidth / 2, (float) height - marginWidth - strokeWidth / 2);
+        RectF rect = new RectF(paddingWidth + strokeWidth / 2, paddingWidth + strokeWidth / 2, (float) width - paddingWidth - strokeWidth / 2, (float) height - paddingWidth - strokeWidth / 2);
 
         PointF[] outerPoints = getOuterPoints(centerX, centerY, rect);
         PointF[] hexaPoints = getCirclePoints(centerX, centerY, hexaRadius, -120f, 6);
 
-        bgPath = createBackgroundPath(new RectF(marginWidth / 2, marginWidth / 2, width - marginWidth / 2, height - marginWidth / 2));
+        bgPath = createBackgroundPath(new RectF(paddingWidth / 2, paddingWidth / 2, width - paddingWidth / 2, height - paddingWidth / 2));
         skeletonPath = createSkeletonPath(rect, outerPoints, hexaPoints);
         minutesPaths = createMinutesPaths(outerPoints, hexaPoints);
         hoursPaths = createHoursPaths(outerPoints, hexaPoints);

@@ -15,7 +15,7 @@ public class Painter {
     private final Paint bgPaint;
     private final Paint strokePaint;
     private final Paint fillPaint;
-    private final Paint marginPaint;
+    private final Paint paddingPaint;
 
     private WatchMode mode;
 
@@ -24,7 +24,7 @@ public class Painter {
     private int fillColor;
 
     private int strokeWidth;
-    private int marginWidth;
+    private int paddingWidth;
     private int strokeWidthAmbient;
 
     public Painter(Context context) {
@@ -39,9 +39,9 @@ public class Painter {
         fillPaint = new Paint();
         fillPaint.setStyle(Paint.Style.FILL);
 
-        marginPaint = new Paint();
-        marginPaint.setColor(Color.BLACK);
-        marginPaint.setStyle(Paint.Style.STROKE);
+        paddingPaint = new Paint();
+        paddingPaint.setColor(Color.BLACK);
+        paddingPaint.setStyle(Paint.Style.STROKE);
 
         setMode(WatchMode.INTERACTIVE);
     }
@@ -54,19 +54,19 @@ public class Painter {
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.FILL);
                 setColor(bgColor, strokeColor, fillColor);
-                setWidths(strokeWidth, marginWidth);
+                setWidths(strokeWidth, paddingWidth);
                 break;
             case AMBIENT:
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setColor(Color.BLACK, 0xff505050, 0xffdddddd);
-                setWidths(strokeWidthAmbient, marginWidth);
+                setWidths(strokeWidthAmbient, paddingWidth);
                 break;
             case LOW_BIT:
                 setAntiAlias(false);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setColor(Color.BLACK, Color.WHITE, Color.WHITE);
-                setWidths(strokeWidthAmbient, marginWidth);
+                setWidths(strokeWidthAmbient, paddingWidth);
                 break;
             default:
                 throw new IllegalArgumentException("This should not happen");
@@ -87,7 +87,7 @@ public class Painter {
         }
 
         if (mode != WatchMode.LOW_BIT) {
-            canvas.drawPath(background, marginPaint);
+            canvas.drawPath(background, paddingPaint);
         }
     }
 
@@ -107,15 +107,15 @@ public class Painter {
         }
     }
 
-    public void setWidths(int strokeWidth, int marginWidth) {
+    public void setWidths(int strokeWidth, int paddingWidth) {
         bgPaint.setStrokeWidth(strokeWidth);
         strokePaint.setStrokeWidth(strokeWidth);
         fillPaint.setStrokeWidth(strokeWidth);
-        marginPaint.setStrokeWidth(marginWidth);
+        paddingPaint.setStrokeWidth(paddingWidth);
 
         if (mode == WatchMode.INTERACTIVE) {
             this.strokeWidth = strokeWidth;
-            this.marginWidth = marginWidth;
+            this.paddingWidth = paddingWidth;
         }
     }
 
@@ -123,7 +123,7 @@ public class Painter {
         bgPaint.setAntiAlias(antiAlias);
         strokePaint.setAntiAlias(antiAlias);
         fillPaint.setAntiAlias(antiAlias);
-        marginPaint.setAntiAlias(antiAlias);
+        paddingPaint.setAntiAlias(antiAlias);
     }
 
     private void setFillPaintStyle(Paint.Style style) {
