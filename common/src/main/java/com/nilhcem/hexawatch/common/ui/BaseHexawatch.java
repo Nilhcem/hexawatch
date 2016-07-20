@@ -102,7 +102,7 @@ public abstract class BaseHexawatch implements Hexawatch {
     private Path createSkeletonPath(float centerX, float centerY, float radius, PointF[] outerPoints, PointF[] hexaPoints) {
         Path path = new Path();
 
-        // Outer circle
+        // Outer border
         path.addCircle(centerX, centerY, radius, Path.Direction.CW);
 
         // Minutes triangles
