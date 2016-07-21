@@ -1,5 +1,6 @@
 package com.nilhcem.hexawatch.ui.watchface;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
@@ -8,11 +9,11 @@ import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
-import com.nilhcem.hexawatch.common.ui.painter.Painter;
+import com.nilhcem.hexawatch.common.ui.Painter;
+import com.nilhcem.hexawatch.common.ui.PathGenerator;
+import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
 import java.util.Calendar;
-
-import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_PX;
 
 public class HexawatchService extends BaseWatchFaceService {
 
@@ -31,11 +32,17 @@ public class HexawatchService extends BaseWatchFaceService {
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-            painter = new Painter(HexawatchService.this);
+            Context context = HexawatchService.this;
+            painter = new Painter(context);
             painter.setColor(ColorPreset.BLACK);
 
             WatchShape shape = getResources().getConfiguration().isScreenRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
-            hexawatch = new Hexawatch.Builder(HexawatchService.this).shape(shape).size(400, UNIT_PX).strokeWidth(1.5f, Hexawatch.UNIT_DP).paddingWidth(BURN_IN_PADDING, Hexawatch.UNIT_PX).painter(painter).build();
+
+            PathGenerator pathGenerator = new PathGenerator(context, 400);
+            pathGenerator.setShape(shape);
+
+            hexawatch = new Hexawatch(painter, pathGenerator);
+            hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), BURN_IN_PADDING);
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)

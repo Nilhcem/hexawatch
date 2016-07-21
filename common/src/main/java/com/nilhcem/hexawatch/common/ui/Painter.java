@@ -1,4 +1,4 @@
-package com.nilhcem.hexawatch.common.ui.painter;
+package com.nilhcem.hexawatch.common.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -28,7 +28,7 @@ public class Painter {
     private int strokeWidthAmbient;
 
     public Painter(Context context) {
-        strokeWidthAmbient = ContextUtils.dpToIntPx(context, 1f);
+        strokeWidthAmbient = ContextUtils.dpToPx(context, 1f);
 
         bgPaint = new Paint();
         bgPaint.setStyle(Paint.Style.FILL);
@@ -107,7 +107,7 @@ public class Painter {
         }
     }
 
-    public void setWidths(int strokeWidth, int paddingWidth) {
+    void setWidths(int strokeWidth, int paddingWidth) {
         bgPaint.setStrokeWidth(strokeWidth);
         strokePaint.setStrokeWidth(strokeWidth);
         fillPaint.setStrokeWidth(strokeWidth);

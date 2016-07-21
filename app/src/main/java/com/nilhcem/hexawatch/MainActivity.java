@@ -14,10 +14,9 @@ import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
-import com.nilhcem.hexawatch.common.ui.painter.Painter;
+import com.nilhcem.hexawatch.common.ui.Painter;
+import com.nilhcem.hexawatch.common.ui.PathGenerator;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
-
-import static com.nilhcem.hexawatch.common.ui.Hexawatch.UNIT_DP;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
         public HexaTestView(Context context) {
             super(context);
             Painter painter = new Painter(context);
-            hexawatch = new Hexawatch.Builder(context).shape(WatchShape.CIRCLE).size(300, UNIT_DP).strokeWidth(1.5f, Hexawatch.UNIT_DP).paddingWidth(60, Hexawatch.UNIT_PX).painter(painter).build();
+            PathGenerator pathGenerator = new PathGenerator(context, ContextUtils.dpToPx(context, 300));
+            pathGenerator.setShape(WatchShape.CIRCLE);
+
+            hexawatch = new Hexawatch(painter, pathGenerator);
+            hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), 60);
 
             painter.setColor(ColorPreset.BLACK);
 //            painter.setMode(WatchMode.AMBIENT);
