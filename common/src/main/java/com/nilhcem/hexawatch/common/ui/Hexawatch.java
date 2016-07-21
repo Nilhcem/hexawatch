@@ -25,9 +25,9 @@ public class Hexawatch {
         painter.setMode(mode);
     }
 
-    public void setWidths(int strokeWidth, int paddingWidth) {
-        painter.setWidths(strokeWidth, paddingWidth);
-        pathGenerator.setWidths(strokeWidth, paddingWidth);
+    public void setDimensions(int width, int height, int padding, int strokeWidth) {
+        painter.setDimensions(padding, strokeWidth);
+        pathGenerator.setDimensions(width, height, padding, strokeWidth);
     }
 
     public void drawTime(Canvas canvas, int hours, int minutes) {

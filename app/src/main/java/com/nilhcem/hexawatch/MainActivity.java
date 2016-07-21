@@ -37,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
     private class HexaTestView extends View {
 
         private Hexawatch hexawatch;
+        private PathGenerator pathGenerator;
 
         public HexaTestView(final Context context) {
             super(context);
-            final PathGenerator pathGenerator = new PathGenerator(context, ContextUtils.dpToPx(context, 300));
+            pathGenerator = new PathGenerator(context);
             pathGenerator.setShape(WatchShape.CIRCLE);
 
             final Painter painter = new Painter(context, ColorPreset.BLACK);
             hexawatch = new Hexawatch(painter, pathGenerator);
-            hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), 60);
 
 // Test data
 //            new Handler().postDelayed(new Runnable() {
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 //                public void run() {
 //                    pathGenerator.setInnerHexaRatio(0.4f);
 //                    pathGenerator.setShape(WatchShape.SQUARE);
-//                    hexawatch.setWidths(ContextUtils.dpToPx(context, 4.5f), 160);
+//                    hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight() / 2, 160, ContextUtils.dpToPx(context, 4.5f));
 //                    painter.setColor(ColorPreset.BLUE);
 //                    hexawatch.setMode(WatchMode.INTERACTIVE);
 //                    invalidate();
@@ -79,11 +79,17 @@ public class MainActivity extends AppCompatActivity {
 //            new Handler().postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-//                    hexawatch.setWidths(ContextUtils.dpToPx(context, 4.5f), 160);
+//                    hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight() / 2, 160, ContextUtils.dpToPx(context, 4.5f));
 //                    hexawatch.setMode(WatchMode.LOW_BIT);
 //                    invalidate();
 //                }
 //            }, 4000);
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight(), 60, ContextUtils.dpToPx(getContext(), 1.5f));
         }
 
         @Override

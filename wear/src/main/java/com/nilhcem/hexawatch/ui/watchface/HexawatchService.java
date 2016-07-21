@@ -35,7 +35,7 @@ public class HexawatchService extends BaseWatchFaceService {
             super.onCreate(holder);
             Context context = HexawatchService.this;
 
-            pathGenerator = new PathGenerator(context, 400);
+            pathGenerator = new PathGenerator(context);
             hexawatch = new Hexawatch(new Painter(context, ColorPreset.BLACK), pathGenerator);
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
@@ -50,10 +50,12 @@ public class HexawatchService extends BaseWatchFaceService {
             super.onApplyWindowInsets(insets);
             boolean isRound = insets.isRound();
             int chinSize = insets.getSystemWindowInsetBottom();
+            int width = insets.getSystemWindowInsetRight();
+            int height = insets.getStableInsetBottom();
+            int strokeWidth = ContextUtils.dpToPx(HexawatchService.this, 1.4f);
 
-//          getResources().getConfiguration().isScreenRound()
             pathGenerator.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
-            hexawatch.setWidths(ContextUtils.dpToPx(HexawatchService.this, 1.4f), BURN_IN_PADDING + chinSize);
+            hexawatch.setDimensions(width, height, BURN_IN_PADDING + chinSize, strokeWidth);
         }
 
         @Override

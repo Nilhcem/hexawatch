@@ -23,8 +23,8 @@ public class Painter {
     private int strokeColor;
     private int fillColor;
 
+    private int padding;
     private int strokeWidth;
-    private int paddingWidth;
     private int strokeWidthAmbient;
 
     public Painter(Context context) {
@@ -91,29 +91,29 @@ public class Painter {
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.FILL);
                 setPaintColors(bgColor, strokeColor, fillColor);
-                setPaintWidths(strokeWidth, paddingWidth);
+                setPaintWidths(padding, strokeWidth);
                 break;
             case AMBIENT:
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setPaintColors(Color.BLACK, 0xff505050, 0xffdddddd);
-                setPaintWidths(strokeWidthAmbient, paddingWidth);
+                setPaintWidths(padding, strokeWidthAmbient);
                 break;
             case LOW_BIT:
                 setAntiAlias(false);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setPaintColors(Color.BLACK, Color.WHITE, Color.WHITE);
-                setPaintWidths(strokeWidthAmbient, paddingWidth);
+                setPaintWidths(padding, strokeWidthAmbient);
                 break;
             default:
                 throw new IllegalArgumentException("This should not happen");
         }
     }
 
-    void setWidths(int strokeWidth, int paddingWidth) {
+    void setDimensions(int padding, int strokeWidth) {
+        this.padding = padding;
         this.strokeWidth = strokeWidth;
-        this.paddingWidth = paddingWidth;
-        setPaintWidths(strokeWidth, paddingWidth);
+        setPaintWidths(padding, strokeWidth);
     }
 
     private void setPaintColors(int bgColor, int strokeColor, int fillColor) {
@@ -122,11 +122,11 @@ public class Painter {
         fillPaint.setColor(fillColor);
     }
 
-    private void setPaintWidths(int strokeWidth, int paddingWidth) {
+    private void setPaintWidths(int padding, int strokeWidth) {
         bgPaint.setStrokeWidth(strokeWidth);
         strokePaint.setStrokeWidth(strokeWidth);
         fillPaint.setStrokeWidth(strokeWidth);
-        paddingPaint.setStrokeWidth(paddingWidth);
+        paddingPaint.setStrokeWidth(padding);
     }
 
     private void setAntiAlias(boolean antiAlias) {

@@ -19,34 +19,21 @@ public class PathGenerator {
     private static final int NB_HOURS = 12;
     private static final int NB_MINUTES = 6;
 
-    private final int width;
-    private final int height;
-    private final int digitsMargin;
-
     private final Path bgPath = new Path();
     private final Path skeletonPath = new Path();
     private final Path[] hoursPaths = new Path[NB_HOURS];
     private final Path[] minutesPaths = new Path[NB_MINUTES];
     private final Path[] digitsPaths = new Path[NB_DIGITS];
+    private final int digitsMargin;
 
     private WatchShape shape;
+    private int width;
+    private int height;
+    private int padding;
     private int strokeWidth;
-    private int paddingWidth;
-    private float innerHexaRatio;
+    private float innerHexaRatio = 0.75f;
 
-    public PathGenerator(Context context, int size) {
-        this(context, size, size);
-    }
-
-    public PathGenerator(Context context, int width, int height) {
-        this(context, width, height, 0.75f);
-    }
-
-    public PathGenerator(Context context, int width, int height, float innerHexaRatio) {
-        this.width = width;
-        this.height = height;
-        this.innerHexaRatio = innerHexaRatio;
-
+    public PathGenerator(Context context) {
         int i;
         for (i = 0; i < NB_HOURS; i++) {
             hoursPaths[i] = new Path();
@@ -57,7 +44,6 @@ public class PathGenerator {
         for (i = 0; i < NB_DIGITS; i++) {
             digitsPaths[i] = new Path();
         }
-
         digitsMargin = ContextUtils.dpToPx(context, 10f);
     }
 
@@ -72,7 +58,7 @@ public class PathGenerator {
     }
 
     public Path get(PathType pathType) {
-        Preconditions.checkArgument(isDataInitialized(), "You must initialize data first");
+        Preconditions.checkArgument(isDataInitialized(), "Data must be initialized");
 
         switch (pathType) {
             case BACKGROUND:
@@ -85,7 +71,7 @@ public class PathGenerator {
     }
 
     public Path get(PathType pathType, int index) {
-        Preconditions.checkArgument(isDataInitialized(), "You must initialize data first");
+        Preconditions.checkArgument(isDataInitialized(), "Data must be initialized");
 
         switch (pathType) {
             case HOURS:
@@ -99,14 +85,16 @@ public class PathGenerator {
         }
     }
 
-    void setWidths(int strokeWidth, int paddingWidth) {
+    void setDimensions(int width, int height, int padding, int strokeWidth) {
+        this.width = width;
+        this.height = height;
+        this.padding = padding;
         this.strokeWidth = strokeWidth;
-        this.paddingWidth = paddingWidth;
         generatePaths();
     }
 
     private boolean isDataInitialized() {
-        return shape != null && strokeWidth != 0;
+        return width > 0 && height > 0 && shape != null && strokeWidth != 0;
     }
 
     private void generatePaths() {
@@ -117,8 +105,8 @@ public class PathGenerator {
 
         float centerX = (float) width / 2f;
         float centerY = (float) height / 2f;
-        float paddingRadius = ((float) Math.min(width, height) - paddingWidth) / 2f;
-        float radius = paddingRadius - paddingWidth / 2 - strokeWidth / 2;
+        float paddingRadius = ((float) Math.min(width, height) - padding) / 2f;
+        float radius = paddingRadius - padding / 2 - strokeWidth / 2;
 
         float hexaRadius = radius * innerHexaRatio;
 
@@ -136,10 +124,10 @@ public class PathGenerator {
         if (shape == CIRCLE) {
             return createCirclePoints(centerX, centerY, radius, -90f, NB_HOURS);
         } else {
-            float left = (float) paddingWidth + strokeWidth / 2;
-            float top = (float) paddingWidth + strokeWidth / 2;
-            float right = (float) width - paddingWidth - strokeWidth / 2;
-            float bottom = (float) height - paddingWidth - strokeWidth / 2;
+            float left = (float) padding + strokeWidth / 2;
+            float top = (float) padding + strokeWidth / 2;
+            float right = (float) width - padding - strokeWidth / 2;
+            float bottom = (float) height - padding - strokeWidth / 2;
             float xQuarter = (right - left) / 4;
 
             PointF[] points = new PointF[NB_HOURS];
@@ -181,7 +169,7 @@ public class PathGenerator {
         if (shape == CIRCLE) {
             path.addCircle(centerX, centerY, radius, Path.Direction.CW);
         } else {
-            path.addRect((float) paddingWidth / 2, (float) paddingWidth / 2, (float) width - paddingWidth / 2, (float) height - paddingWidth / 2, Path.Direction.CW);
+            path.addRect((float) padding / 2, (float) padding / 2, (float) width - padding / 2, (float) height - padding / 2, Path.Direction.CW);
         }
     }
 
@@ -193,7 +181,7 @@ public class PathGenerator {
         if (shape == CIRCLE) {
             path.addCircle(centerX, centerY, radius, Path.Direction.CW);
         } else {
-            path.addRect((float) paddingWidth + strokeWidth / 2, (float) paddingWidth + strokeWidth / 2, (float) width - paddingWidth - strokeWidth / 2, (float) height - paddingWidth - strokeWidth / 2, Path.Direction.CW);
+            path.addRect((float) padding + strokeWidth / 2, (float) padding + strokeWidth / 2, (float) width - padding - strokeWidth / 2, (float) height - padding - strokeWidth / 2, Path.Direction.CW);
         }
 
         // Minutes triangles
