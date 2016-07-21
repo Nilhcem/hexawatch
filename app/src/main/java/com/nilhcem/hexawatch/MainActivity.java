@@ -39,14 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         public HexaTestView(Context context) {
             super(context);
-            Painter painter = new Painter(context);
+            Painter painter = new Painter(context, ColorPreset.BLACK);
             PathGenerator pathGenerator = new PathGenerator(context, ContextUtils.dpToPx(context, 300));
             pathGenerator.setShape(WatchShape.CIRCLE);
 
             hexawatch = new Hexawatch(painter, pathGenerator);
             hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), 60);
 
-            painter.setColor(ColorPreset.BLACK);
 //            painter.setMode(WatchMode.AMBIENT);
 //            painter.setMode(WatchMode.LOW_BIT);
         }

@@ -33,8 +33,7 @@ public class HexawatchService extends BaseWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
             Context context = HexawatchService.this;
-            painter = new Painter(context);
-            painter.setColor(ColorPreset.BLACK);
+            painter = new Painter(context, ColorPreset.BLACK);
 
             WatchShape shape = getResources().getConfiguration().isScreenRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
 

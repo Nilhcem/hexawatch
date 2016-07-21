@@ -46,6 +46,16 @@ public class Painter {
         setMode(WatchMode.INTERACTIVE);
     }
 
+    public Painter(Context context, ColorPreset colorPreset) {
+        this(context);
+        setColor(colorPreset);
+    }
+
+    public Painter(Context context, int bgColor, int strokeColor, int fillColor) {
+        this(context);
+        setColor(bgColor, strokeColor, fillColor);
+    }
+
     public void setMode(WatchMode mode) {
         this.mode = mode;
 
