@@ -1,6 +1,6 @@
 package com.nilhcem.hexawatch.common.ui;
 
-public enum PathType {
+enum PathType {
 
     BACKGROUND,
     SKELETON,
