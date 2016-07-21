@@ -46,16 +46,15 @@ public class HexawatchService extends BaseWatchFaceService {
         }
 
         @Override
-        public void onApplyWindowInsets(WindowInsets insets) {
-            super.onApplyWindowInsets(insets);
-            boolean isRound = insets.isRound();
-            int chinSize = insets.getSystemWindowInsetBottom();
-            int width = insets.getSystemWindowInsetRight();
-            int height = insets.getStableInsetBottom();
-            int strokeWidth = ContextUtils.dpToPx(HexawatchService.this, 1.4f);
+        protected void onShapeChanged(WatchShape shape) {
+            pathGenerator.setShape(shape);
+        }
 
-            pathGenerator.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
-            hexawatch.setDimensions(width, height, BURN_IN_PADDING + chinSize, strokeWidth);
+        @Override
+        protected void onBurnInProtectionChanged(boolean burnInProtection) {
+            int strokeWidth = ContextUtils.dpToPx(HexawatchService.this, 1.5f);
+            hexawatch.setDimensions(width, height, burnInProtection ? BURN_IN_PADDING : 0, strokeWidth);
+            invalidate();
         }
 
         @Override

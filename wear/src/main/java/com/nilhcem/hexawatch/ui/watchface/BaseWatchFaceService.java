@@ -1,14 +1,18 @@
 package com.nilhcem.hexawatch.ui.watchface;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
+import android.view.WindowManager;
 
 import com.nilhcem.hexawatch.BuildConfig;
 import com.nilhcem.hexawatch.common.core.WatchMode;
+import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.core.watchface.TimeHelper;
 
 import java.util.Calendar;
@@ -30,6 +34,11 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
 
         private boolean ambient;
         private boolean lowBitAmbient;
+        private Boolean burnInProtection;
+        private WatchShape shape;
+
+        protected int width;
+        protected int height;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
@@ -49,16 +58,43 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
         }
 
         @Override
+        public void onApplyWindowInsets(WindowInsets insets) {
+            super.onApplyWindowInsets(insets);
+
+            Point screenSize = new Point();
+            int chinSize = insets.getSystemWindowInsetBottom();
+            ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(screenSize);
+            width = screenSize.x;
+            height = screenSize.y + chinSize;
+
+            WatchShape shape = insets.isRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
+            if (!shape.equals(this.shape)) {
+                this.shape = shape;
+                onShapeChanged(shape);
+            }
+        }
+
+        @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             super.onDraw(canvas, bounds);
-            timeHelper.setTimeToNow();
-            onDrawTime(canvas, bounds, isInAmbientMode(), timeHelper.getCalendar());
+
+            // Only draw if watch is fully initialized.
+            if (burnInProtection != null) {
+                timeHelper.setTimeToNow();
+                onDrawTime(canvas, bounds, isInAmbientMode(), timeHelper.getCalendar());
+            }
         }
 
         @Override
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
             lowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
+            boolean burnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
+
+            if (this.burnInProtection == null || this.burnInProtection != burnInProtection) {
+                this.burnInProtection = burnInProtection;
+                onBurnInProtectionChanged(burnInProtection);
+            }
         }
 
         @Override
@@ -86,6 +122,10 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
             }
             return watchMode;
         }
+
+        protected abstract void onShapeChanged(WatchShape shape);
+
+        protected abstract void onBurnInProtectionChanged(boolean burnInProtection);
 
         protected abstract void onDrawTime(Canvas canvas, Rect bounds, boolean ambiant, Calendar calendar);
 
