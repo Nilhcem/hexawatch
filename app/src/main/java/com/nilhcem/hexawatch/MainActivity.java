@@ -3,6 +3,7 @@ package com.nilhcem.hexawatch;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -37,17 +38,52 @@ public class MainActivity extends AppCompatActivity {
 
         private Hexawatch hexawatch;
 
-        public HexaTestView(Context context) {
+        public HexaTestView(final Context context) {
             super(context);
-            Painter painter = new Painter(context, ColorPreset.BLACK);
-            PathGenerator pathGenerator = new PathGenerator(context, ContextUtils.dpToPx(context, 300));
+            final PathGenerator pathGenerator = new PathGenerator(context, ContextUtils.dpToPx(context, 300));
             pathGenerator.setShape(WatchShape.CIRCLE);
 
+            final Painter painter = new Painter(context, ColorPreset.BLACK);
             hexawatch = new Hexawatch(painter, pathGenerator);
             hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), 60);
 
-//            painter.setMode(WatchMode.AMBIENT);
-//            painter.setMode(WatchMode.LOW_BIT);
+// Test data
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    painter.setColor(ColorPreset.PINK);
+//                    invalidate();
+//                }
+//            }, 1000);
+//
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    hexawatch.setMode(WatchMode.AMBIENT);
+//                    invalidate();
+//                }
+//            }, 2000);
+//
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    pathGenerator.setInnerHexaRatio(0.4f);
+//                    pathGenerator.setShape(WatchShape.SQUARE);
+//                    hexawatch.setWidths(ContextUtils.dpToPx(context, 4.5f), 160);
+//                    painter.setColor(ColorPreset.BLUE);
+//                    hexawatch.setMode(WatchMode.INTERACTIVE);
+//                    invalidate();
+//                }
+//            }, 3000);
+//
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    hexawatch.setWidths(ContextUtils.dpToPx(context, 4.5f), 160);
+//                    hexawatch.setMode(WatchMode.LOW_BIT);
+//                    invalidate();
+//                }
+//            }, 4000);
         }
 
         @Override

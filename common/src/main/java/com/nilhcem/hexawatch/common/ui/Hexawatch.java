@@ -2,6 +2,8 @@ package com.nilhcem.hexawatch.common.ui;
 
 import android.graphics.Canvas;
 
+import com.nilhcem.hexawatch.common.core.WatchMode;
+
 import static com.nilhcem.hexawatch.common.ui.PathType.BACKGROUND;
 import static com.nilhcem.hexawatch.common.ui.PathType.DIGITS;
 import static com.nilhcem.hexawatch.common.ui.PathType.HOURS;
@@ -16,6 +18,11 @@ public class Hexawatch {
     public Hexawatch(Painter painter, PathGenerator pathGenerator) {
         this.painter = painter;
         this.pathGenerator = pathGenerator;
+        setMode(WatchMode.INTERACTIVE);
+    }
+
+    public void setMode(WatchMode mode) {
+        painter.setMode(mode);
     }
 
     public void setWidths(int strokeWidth, int paddingWidth) {

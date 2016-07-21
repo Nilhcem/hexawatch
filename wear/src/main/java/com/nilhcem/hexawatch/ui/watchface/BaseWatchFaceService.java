@@ -30,8 +30,6 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
 
         private boolean ambient;
         private boolean lowBitAmbient;
-        private boolean isRound;
-        private int chinSize;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
@@ -48,13 +46,6 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
                 onWatchModeChanged(getCurrentWatchMode());
                 invalidate();
             }
-        }
-
-        @Override
-        public void onApplyWindowInsets(WindowInsets insets) {
-            super.onApplyWindowInsets(insets);
-            isRound = insets.isRound();
-            chinSize = insets.getSystemWindowInsetBottom();
         }
 
         @Override

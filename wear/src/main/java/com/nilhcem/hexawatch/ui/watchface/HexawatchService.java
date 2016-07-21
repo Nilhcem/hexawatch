@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
+import android.view.WindowInsets;
 
 import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
@@ -26,22 +27,16 @@ public class HexawatchService extends BaseWatchFaceService {
 
     private class Engine extends BaseWatchFaceService.Engine {
 
-        private Painter painter;
         private Hexawatch hexawatch;
+        private PathGenerator pathGenerator;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
             Context context = HexawatchService.this;
-            painter = new Painter(context, ColorPreset.BLACK);
 
-            WatchShape shape = getResources().getConfiguration().isScreenRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
-
-            PathGenerator pathGenerator = new PathGenerator(context, 400);
-            pathGenerator.setShape(shape);
-
-            hexawatch = new Hexawatch(painter, pathGenerator);
-            hexawatch.setWidths(ContextUtils.dpToPx(context, 1.5f), BURN_IN_PADDING);
+            pathGenerator = new PathGenerator(context, 400);
+            hexawatch = new Hexawatch(new Painter(context, ColorPreset.BLACK), pathGenerator);
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
@@ -51,8 +46,19 @@ public class HexawatchService extends BaseWatchFaceService {
         }
 
         @Override
+        public void onApplyWindowInsets(WindowInsets insets) {
+            super.onApplyWindowInsets(insets);
+            boolean isRound = insets.isRound();
+            int chinSize = insets.getSystemWindowInsetBottom();
+
+//          getResources().getConfiguration().isScreenRound()
+            pathGenerator.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
+            hexawatch.setWidths(ContextUtils.dpToPx(HexawatchService.this, 1.4f), BURN_IN_PADDING + chinSize);
+        }
+
+        @Override
         protected void onWatchModeChanged(WatchMode mode) {
-            painter.setMode(mode);
+            hexawatch.setMode(mode);
         }
 
         @Override
