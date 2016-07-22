@@ -1,15 +1,30 @@
 (function() {
-    var canvasContent,
+    var canvasBackground,
+        canvasContent,
         canvasSkeleton,
+        contextBackground,
         contextContent,
         contextSkeleton,
 
-        strokeWidth = 3.0,
         digitsMargin = 12,
         innerRadiusRatio = 0.75,
-        bgColor = '#333333',
-        strokeColor = '#e6e6e6',
-        fillColor = '#b9b9b9',
+        ambientMode = false,
+
+        strokeWidthInteractive = 3.0,
+        strokeWidthAmbient = 1.0,
+        strokeWidth = strokeWidthInteractive,
+
+        bgColorInteractive = '#333333',
+        bgColorAmbient = '#000000',
+        bgColor = bgColorInteractive,
+
+        strokeColorInteractive = '#e6e6e6',
+        strokeColorAmbient = '#505050',
+        strokeColor = strokeColorInteractive,
+
+        fillColorInteractive = '#b9b9b9',
+        fillColorAmbient = '#dddddd',
+        fillColor = fillColorInteractive,
 
         center,
         radius,
@@ -30,25 +45,16 @@
         context.lineTo(point.x, point.y);
     }
 
-    function drawWatchContent() {
-        var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
-            hour = datetime.getHours() % 12,
-            minute = Math.floor(datetime.getMinutes() / 10),
-            digit = datetime.getMinutes() % 10;
-
-        contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
-        drawBackground(contextContent, center, radius);
-        drawMinute(contextContent, outerPoints, hexaPoints, minute);
-        drawDigit(contextContent, center, hexaRadius - strokeWidth, digit);
-        drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, hour);
-    }
-
     function setDefaultVariables() {
+        canvasBackground = document.querySelector('#canvas-background');
+        contextBackground = canvasBackground.getContext('2d');
         canvasContent = document.querySelector('#canvas-content');
         contextContent = canvasContent.getContext('2d');
         canvasSkeleton = document.querySelector('#canvas-skeleton');
         contextSkeleton = canvasSkeleton.getContext('2d');
 
+        canvasBackground.width = document.body.clientWidth;
+        canvasBackground.height = document.body.clientHeight;
         canvasContent.width = document.body.clientWidth;
         canvasContent.height = document.body.clientHeight;
         canvasSkeleton.width = document.body.clientWidth;
@@ -75,6 +81,27 @@
         });
     }
 
+    function drawBackground() {
+      contextBackground.beginPath();
+      contextBackground.arc(center.x, center.y, radius, 0, Math.radians(360));
+      contextBackground.lineWidth = strokeWidth;
+
+      contextBackground.fillStyle = bgColor;
+      contextBackground.fill();
+    }
+
+    function drawWatchContent() {
+        var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
+            hour = datetime.getHours() % 12,
+            minute = Math.floor(datetime.getMinutes() / 10),
+            digit = datetime.getMinutes() % 10;
+
+        contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
+        drawMinute(contextContent, outerPoints, hexaPoints, minute);
+        drawDigit(contextContent, center, hexaRadius - strokeWidth, digit);
+        drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, hour);
+    }
+
     function getCirclePoints(center, radius, rotation, dividingPoints) {
         var points = [],
             angle;
@@ -89,38 +116,31 @@
         return points;
     }
 
-    function drawBackground(context, center, radius) {
-        context.beginPath();
-        context.arc(center.x, center.y, radius, 0, Math.radians(360));
-        context.lineWidth = strokeWidth;
+    function drawSkeleton() {
+        contextSkeleton.clearRect(0, 0, contextSkeleton.canvas.width, contextSkeleton.canvas.height);
 
-        context.fillStyle = bgColor;
-        context.fill();
-    }
-
-    function drawSkeleton(context, center, radius, outerPoints, hexaPoints) {
         // Outer circle
-        context.beginPath();
-        context.arc(center.x, center.y, radius, 0, Math.radians(360));
+        contextSkeleton.beginPath();
+        contextSkeleton.arc(center.x, center.y, radius, 0, Math.radians(360));
 
         // Minutes triangles
         var i;
         for (i = 0; i < 6; i++) {
-            moveTo(context, hexaPoints[i]);
-            lineTo(context, outerPoints[i * 2]);
-            lineTo(context, hexaPoints[i === 5 ? 0 : i + 1]);
-            lineTo(context, hexaPoints[i]);
+            moveTo(contextSkeleton, hexaPoints[i]);
+            lineTo(contextSkeleton, outerPoints[i * 2]);
+            lineTo(contextSkeleton, hexaPoints[i === 5 ? 0 : i + 1]);
+            lineTo(contextSkeleton, hexaPoints[i]);
         }
 
         // Hours separators
         for (i = 0; i < 6; i++) {
-            moveTo(context, hexaPoints[i]);
-            lineTo(context, outerPoints[i === 0 ? 11 : i * 2 - 1]);
+            moveTo(contextSkeleton, hexaPoints[i]);
+            lineTo(contextSkeleton, outerPoints[i === 0 ? 11 : i * 2 - 1]);
         }
 
-        context.lineWidth = strokeWidth;
-        context.strokeStyle = strokeColor;
-        context.stroke();
+        contextSkeleton.lineWidth = strokeWidth;
+        contextSkeleton.strokeStyle = strokeColor;
+        contextSkeleton.stroke();
     }
 
     function drawMinute(context, outerPoints, hexaPoints, minute) {
@@ -128,9 +148,16 @@
         moveTo(context, hexaPoints[minute]);
         lineTo(context, outerPoints[minute * 2]);
         lineTo(context, hexaPoints[minute === 5 ? 0 : minute + 1]);
+        lineTo(context, hexaPoints[minute]);
 
-        context.fillStyle = fillColor;
-        context.fill();
+        context.lineWidth = strokeWidth
+        if (ambientMode) {
+          context.strokeStyle = fillColor;
+          context.stroke();
+        } else {
+          context.fillStyle = fillColor;
+          context.fill();
+        }
     }
 
     function drawHour(context, center, radius, outerPoints, hexaPoints, hour) {
@@ -152,8 +179,14 @@
         lineTo(context, hexaPoints[nextInnerIdx]);
         lineTo(context, outerPoints[hour]);
 
-        context.fillStyle = fillColor;
-        context.fill();
+        context.lineWidth = strokeWidth
+        if (ambientMode) {
+          context.strokeStyle = fillColor;
+          context.stroke();
+        } else {
+          context.fillStyle = fillColor;
+          context.fill();
+        }
     }
 
     function drawDigit(context, center, radius, digit) {
@@ -193,8 +226,33 @@
         }
 
         context.lineWidth = strokeWidth;
-        context.strokeStyle = strokeColor;
+        context.strokeStyle = ambientMode ? fillColor : strokeColor;
         context.stroke();
+    }
+
+    function setAmbient(inAmbient) {
+      ambientMode = inAmbient;
+
+      if (inAmbient) {
+        strokeWidth = strokeWidthAmbient;
+        bgColor = bgColorAmbient;
+        strokeColor = strokeColorAmbient;
+        fillColor = fillColorAmbient;
+        canvasContent.style.zIndex = "3";
+        canvasSkeleton.style.zIndex = "2";
+      } else {
+        strokeWidth = strokeWidthInteractive;
+        bgColor = bgColorInteractive;
+        strokeColor = strokeColorInteractive;
+        fillColor = fillColorInteractive;
+        canvasContent.style.zIndex = "2";
+        canvasSkeleton.style.zIndex = "3";
+      }
+
+      setDefaultVariables();
+      drawBackground();
+      drawSkeleton();
+      drawWatchContent();
     }
 
     function init() {
@@ -202,8 +260,9 @@
         setDefaultEvents();
 
         // Draw the basic layout and the content of the watch at the beginning
+        drawBackground();
         drawWatchContent();
-        drawSkeleton(contextSkeleton, center, radius, outerPoints, hexaPoints);
+        drawSkeleton();
 
         // Update the content of the watch every second
         setInterval(function() {
