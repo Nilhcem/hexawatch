@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
-import android.view.WindowInsets;
 
 import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
@@ -36,7 +35,7 @@ public class HexawatchService extends BaseWatchFaceService {
             Context context = HexawatchService.this;
 
             pathGenerator = new PathGenerator(context);
-            hexawatch = new Hexawatch(new Painter(context, ColorPreset.BLACK), pathGenerator);
+            hexawatch = new Hexawatch(new Painter(context, ColorPreset.DEFAULT), pathGenerator);
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
 //                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
