@@ -31,7 +31,8 @@
         outerRadius,
         hexaRadius,
         outerPoints,
-        hexaPoints;
+        hexaPoints,
+        lastMinute;
 
     Math.radians = function(degrees) {
         return degrees * Math.PI / 180;
@@ -76,7 +77,7 @@
         // add eventListener to update the screen immediately when the device wakes up
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) {
-                drawWatchContent();
+                drawWatchContent(true);
             }
         });
     }
@@ -90,16 +91,16 @@
       contextBackground.fill();
     }
 
-    function drawWatchContent() {
+    function drawWatchContent(forceDraw) {
         var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
-            hour = datetime.getHours() % 12,
-            minute = Math.floor(datetime.getMinutes() / 10),
-            digit = datetime.getMinutes() % 10;
-
-        contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
-        drawMinute(contextContent, outerPoints, hexaPoints, minute);
-        drawDigit(contextContent, center, hexaRadius - strokeWidth, digit);
-        drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, hour);
+            minutes = datetime.getMinutes();
+        if (forceDraw || minutes != lastMinute) {
+            contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
+            drawMinute(contextContent, outerPoints, hexaPoints, Math.floor(minutes / 10));
+            drawDigit(contextContent, center, hexaRadius - strokeWidth, minutes % 10);
+            drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, datetime.getHours() % 12);
+        }
+        lastMinute = minutes;
     }
 
     function getCirclePoints(center, radius, rotation, dividingPoints) {
@@ -252,7 +253,7 @@
       setDefaultVariables();
       drawBackground();
       drawSkeleton();
-      drawWatchContent();
+      drawWatchContent(true);
     }
 
     function init() {
@@ -261,12 +262,12 @@
 
         // Draw the basic layout and the content of the watch at the beginning
         drawBackground();
-        drawWatchContent();
+        drawWatchContent(true);
         drawSkeleton();
 
         // Update the content of the watch every second
         setInterval(function() {
-            drawWatchContent();
+            drawWatchContent(false);
         }, 1000);
     }
 
