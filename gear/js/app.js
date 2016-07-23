@@ -1,29 +1,29 @@
 (function() {
-    var canvasBackground,
-        canvasContent,
+    var canvasContent,
         canvasSkeleton,
-        contextBackground,
         contextContent,
         contextSkeleton,
 
         digitsMargin = 12,
         innerRadiusRatio = 0.75,
-        ambientMode = false,
+        isAmbientMode = false,
+
+        marginInteractive = 0,
+        marginAmbient = 10,
+        margin = marginInteractive,
 
         strokeWidthInteractive = 3.0,
-        strokeWidthAmbient = 1.0,
+        strokeWidthAmbient = 2.0,
         strokeWidth = strokeWidthInteractive,
 
         bgColorInteractive = '#333333',
         bgColorAmbient = '#000000',
         bgColor = bgColorInteractive,
 
-        strokeColorInteractive = '#e6e6e6',
-        strokeColorAmbient = '#505050',
-        strokeColor = strokeColorInteractive,
+        strokeColor = '#e6e6e6',
 
         fillColorInteractive = '#b9b9b9',
-        fillColorAmbient = '#dddddd',
+        fillColorAmbient = '#ffffff',
         fillColor = fillColorInteractive,
 
         center,
@@ -47,15 +47,11 @@
     }
 
     function setDefaultVariables() {
-        canvasBackground = document.querySelector('#canvas-background');
-        contextBackground = canvasBackground.getContext('2d');
         canvasContent = document.querySelector('#canvas-content');
         contextContent = canvasContent.getContext('2d');
         canvasSkeleton = document.querySelector('#canvas-skeleton');
         contextSkeleton = canvasSkeleton.getContext('2d');
 
-        canvasBackground.width = document.body.clientWidth;
-        canvasBackground.height = document.body.clientHeight;
         canvasContent.width = document.body.clientWidth;
         canvasContent.height = document.body.clientHeight;
         canvasSkeleton.width = document.body.clientWidth;
@@ -66,7 +62,7 @@
             y: document.body.clientHeight / 2
         };
 
-        radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2;
+        radius = (Math.min(document.body.clientWidth, document.body.clientHeight) - strokeWidth) / 2 - margin;
         outerRadius = radius - strokeWidth / 2;
         hexaRadius = outerRadius * innerRadiusRatio;
         outerPoints = getCirclePoints(center, outerRadius, -90, 12);
@@ -74,21 +70,17 @@
     }
 
     function setDefaultEvents() {
-        // add eventListener to update the screen immediately when the device wakes up
-        document.addEventListener('visibilitychange', function() {
+        // Add an eventListener for ambientmodechanged
+        window.addEventListener("ambientmodechanged", function(e) {
+            setAmbient(e.detail.ambientMode);
+        });
+
+        // Add an event listener to update the screen immediately when the device wakes up
+        document.addEventListener("visibilitychange", function() {
             if (!document.hidden) {
-                drawWatchContent(true);
+                setAmbient(isAmbientMode);
             }
         });
-    }
-
-    function drawBackground() {
-      contextBackground.beginPath();
-      contextBackground.arc(center.x, center.y, radius, 0, Math.radians(360));
-      contextBackground.lineWidth = strokeWidth;
-
-      contextBackground.fillStyle = bgColor;
-      contextBackground.fill();
     }
 
     function drawWatchContent(forceDraw) {
@@ -96,6 +88,7 @@
             minutes = datetime.getMinutes();
         if (forceDraw || minutes != lastMinute) {
             contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
+            drawBackground(contextContent, center, radius);
             drawMinute(contextContent, outerPoints, hexaPoints, Math.floor(minutes / 10));
             drawDigit(contextContent, center, hexaRadius - strokeWidth, minutes % 10);
             drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, datetime.getHours() % 12);
@@ -119,6 +112,9 @@
 
     function drawSkeleton() {
         contextSkeleton.clearRect(0, 0, contextSkeleton.canvas.width, contextSkeleton.canvas.height);
+        if (isAmbientMode) {
+            return;
+        }
 
         // Outer circle
         contextSkeleton.beginPath();
@@ -144,6 +140,15 @@
         contextSkeleton.stroke();
     }
 
+    function drawBackground(context, center, radius) {
+      context.beginPath();
+      context.arc(center.x, center.y, radius, 0, Math.radians(360));
+      context.lineWidth = strokeWidth;
+
+      context.fillStyle = bgColor;
+      context.fill();
+    }
+
     function drawMinute(context, outerPoints, hexaPoints, minute) {
         context.beginPath();
         moveTo(context, hexaPoints[minute]);
@@ -152,7 +157,7 @@
         lineTo(context, hexaPoints[minute]);
 
         context.lineWidth = strokeWidth
-        if (ambientMode) {
+        if (isAmbientMode) {
           context.strokeStyle = fillColor;
           context.stroke();
         } else {
@@ -181,7 +186,7 @@
         lineTo(context, outerPoints[hour]);
 
         context.lineWidth = strokeWidth
-        if (ambientMode) {
+        if (isAmbientMode) {
           context.strokeStyle = fillColor;
           context.stroke();
         } else {
@@ -227,31 +232,26 @@
         }
 
         context.lineWidth = strokeWidth;
-        context.strokeStyle = ambientMode ? fillColor : strokeColor;
+        context.strokeStyle = isAmbientMode ? fillColor : strokeColor;
         context.stroke();
     }
 
     function setAmbient(inAmbient) {
-      ambientMode = inAmbient;
+      isAmbientMode = inAmbient;
 
       if (inAmbient) {
+        margin = marginAmbient;
         strokeWidth = strokeWidthAmbient;
         bgColor = bgColorAmbient;
-        strokeColor = strokeColorAmbient;
         fillColor = fillColorAmbient;
-        canvasContent.style.zIndex = "3";
-        canvasSkeleton.style.zIndex = "2";
       } else {
+        margin = marginInteractive;
         strokeWidth = strokeWidthInteractive;
         bgColor = bgColorInteractive;
-        strokeColor = strokeColorInteractive;
         fillColor = fillColorInteractive;
-        canvasContent.style.zIndex = "2";
-        canvasSkeleton.style.zIndex = "3";
       }
 
       setDefaultVariables();
-      drawBackground();
       drawSkeleton();
       drawWatchContent(true);
     }
@@ -261,7 +261,6 @@
         setDefaultEvents();
 
         // Draw the basic layout and the content of the watch at the beginning
-        drawBackground();
         drawWatchContent(true);
         drawSkeleton();
 
