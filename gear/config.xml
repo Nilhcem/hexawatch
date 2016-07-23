@@ -6,5 +6,6 @@
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon.png"/>
     <name>HexaWatch</name>
+    <tizen:privilege name="http://tizen.org/privilege/alarm"/>
     <tizen:profile name="wearable"/>
 </widget>

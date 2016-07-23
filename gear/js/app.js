@@ -32,7 +32,9 @@
         hexaRadius,
         outerPoints,
         hexaPoints,
-        lastMinute;
+
+        animRequest,
+        animTimeout;
 
     Math.radians = function(degrees) {
         return degrees * Math.PI / 180;
@@ -70,6 +72,9 @@
     }
 
     function setDefaultEvents() {
+        // Add an eventListener for timetick (called in ambient mode)
+        window.addEventListener("timetick", drawWatchContent);
+
         // Add an eventListener for ambientmodechanged
         window.addEventListener("ambientmodechanged", function(e) {
             setAmbient(e.detail.ambientMode);
@@ -83,17 +88,22 @@
         });
     }
 
-    function drawWatchContent(forceDraw) {
+    function drawWatchContent() {
         var datetime = (typeof tizen === 'undefined') ? new Date() : tizen.time.getCurrentDateTime(),
             minutes = datetime.getMinutes();
-        if (forceDraw || minutes != lastMinute) {
-            contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
-            drawBackground(contextContent, center, radius);
-            drawMinute(contextContent, outerPoints, hexaPoints, Math.floor(minutes / 10));
-            drawDigit(contextContent, center, hexaRadius - strokeWidth, minutes % 10);
-            drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, datetime.getHours() % 12);
+
+        contextContent.clearRect(0, 0, contextContent.canvas.width, contextContent.canvas.height);
+        drawBackground(contextContent, center, radius);
+        drawMinute(contextContent, outerPoints, hexaPoints, Math.floor(minutes / 10));
+        drawDigit(contextContent, center, hexaRadius - strokeWidth, minutes % 10);
+        drawHour(contextContent, center, outerRadius, outerPoints, hexaPoints, datetime.getHours() % 12);
+
+        if (!isAmbientMode) {
+            var nextMove = (60 - datetime.getSeconds()) * 1000 - (1000 - datetime.getMilliseconds());
+            animTimeout = setTimeout(function() {
+                animRequest = window.requestAnimationFrame(drawWatchContent);
+            }, nextMove);
         }
-        lastMinute = minutes;
     }
 
     function getCirclePoints(center, radius, rotation, dividingPoints) {
@@ -237,23 +247,31 @@
     }
 
     function setAmbient(inAmbient) {
-      isAmbientMode = inAmbient;
+        // Stop the animation before mode changing
+        if (animTimeout) {
+            window.clearTimeout(animTimeout);
+        }
+        if (animRequest) {
+            window.cancelAnimationFrame(animRequest);
+        }
 
-      if (inAmbient) {
-        margin = marginAmbient;
-        strokeWidth = strokeWidthAmbient;
-        bgColor = bgColorAmbient;
-        fillColor = fillColorAmbient;
-      } else {
-        margin = marginInteractive;
-        strokeWidth = strokeWidthInteractive;
-        bgColor = bgColorInteractive;
-        fillColor = fillColorInteractive;
-      }
+        isAmbientMode = inAmbient;
 
-      setDefaultVariables();
-      drawSkeleton();
-      drawWatchContent(true);
+        if (inAmbient) {
+            margin = marginAmbient;
+            strokeWidth = strokeWidthAmbient;
+            bgColor = bgColorAmbient;
+            fillColor = fillColorAmbient;
+        } else {
+            margin = marginInteractive;
+            strokeWidth = strokeWidthInteractive;
+            bgColor = bgColorInteractive;
+            fillColor = fillColorInteractive;
+        }
+
+        setDefaultVariables();
+        drawSkeleton();
+        drawWatchContent();
     }
 
     function init() {
@@ -261,13 +279,8 @@
         setDefaultEvents();
 
         // Draw the basic layout and the content of the watch at the beginning
-        drawWatchContent(true);
         drawSkeleton();
-
-        // Update the content of the watch every second
-        setInterval(function() {
-            drawWatchContent(false);
-        }, 1000);
+        animRequest = window.requestAnimationFrame(drawWatchContent);
     }
 
     window.onload = init;
