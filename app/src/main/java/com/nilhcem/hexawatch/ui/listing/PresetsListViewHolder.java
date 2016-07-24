@@ -21,6 +21,6 @@ public class PresetsListViewHolder extends RecyclerView.ViewHolder {
 
     public void bindData(ColorPreset colorPreset) {
         watchface.setColor(colorPreset);
-        name.setText(colorPreset.name());
+        name.setText(colorPreset.nameRes);
     }
 }
