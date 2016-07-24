@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WearableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nilhcem.hexawatch.R;
+import com.nilhcem.hexawatch.common.core.ColorPreset;
+import com.nilhcem.hexawatch.core.config.ConfigHelper;
 
 public class WatchConfigActivity extends Activity {
 
@@ -24,7 +25,8 @@ public class WatchConfigActivity extends Activity {
         list.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
-                Toast.makeText(WatchConfigActivity.this, "#" + viewHolder.getLayoutPosition() + " selected", Toast.LENGTH_SHORT).show();
+                ConfigHelper.INSTANCE.setColorPreset(WatchConfigActivity.this, ColorPreset.values()[viewHolder.getLayoutPosition()]);
+                finish();
             }
 
             @Override

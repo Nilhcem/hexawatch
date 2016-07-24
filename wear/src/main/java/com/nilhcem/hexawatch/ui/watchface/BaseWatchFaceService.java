@@ -37,12 +37,14 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
         private Boolean burnInProtection;
         private WatchShape shape;
 
+        protected Context context;
         protected int width;
         protected int height;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
+            context = BaseWatchFaceService.this;
             timeHelper = new TimeHelper(BaseWatchFaceService.this, this);
         }
 

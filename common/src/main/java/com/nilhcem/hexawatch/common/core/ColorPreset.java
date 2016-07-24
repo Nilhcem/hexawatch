@@ -40,4 +40,21 @@ public enum ColorPreset {
         this.fillColor = fillColor;
         this.nameRes = nameRes;
     }
+
+    public static ColorPreset fromName(String name) {
+        ColorPreset colorPreset = null;
+
+        if (name != null) {
+            try {
+                colorPreset = ColorPreset.valueOf(name);
+            } catch (IllegalArgumentException e) {
+                // Do nothing
+            }
+        }
+
+        if (colorPreset == null) {
+            colorPreset = ColorPreset.DEFAULT;
+        }
+        return colorPreset;
+    }
 }
