@@ -1,5 +1,5 @@
 buildscript {
-    ext.supportVersion = '24.1.0'
+    ext.supportVersion = '24.1.1'
 
     repositories {
         jcenter()
