@@ -1,7 +1,8 @@
 package com.nilhcem.hexawatch.ui.listing;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nilhcem.hexawatch.R;
@@ -13,8 +14,8 @@ public class PresetsListViewHolder extends RecyclerView.ViewHolder {
     private HexawatchView watchface;
     private TextView name;
 
-    public PresetsListViewHolder(View itemView) {
-        super(itemView);
+    public PresetsListViewHolder(ViewGroup parent) {
+        super(LayoutInflater.from(parent.getContext()).inflate(R.layout.presets_list_item, parent, false));
         watchface = (HexawatchView) itemView.findViewById(R.id.watchface);
         name = (TextView) itemView.findViewById(R.id.name);
     }
