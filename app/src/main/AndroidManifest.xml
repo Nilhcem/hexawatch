@@ -17,5 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.config.CompanionConfigActivity"
+            android:label="@string/config_label">
+
+            <intent-filter>
+                <action android:name="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
+                <category android:name="com.google.android.wearable.watchface.category.COMPANION_CONFIGURATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

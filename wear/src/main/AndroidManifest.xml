@@ -28,10 +28,27 @@
                 android:name="com.google.android.wearable.watchface.preview_circular"
                 android:resource="@drawable/preview_circular"/>
 
+            <meta-data
+                android:name="com.google.android.wearable.watchface.companionConfigurationAction"
+                android:value="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
+            <meta-data
+                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                android:value="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
+
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService"/>
                 <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE"/>
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".ui.config.WatchConfigActivity"
+            android:label="@string/config_label">
+            <intent-filter>
+                <action android:name="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
+                <category android:name="com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
