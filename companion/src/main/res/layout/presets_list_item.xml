@@ -17,5 +17,6 @@
     <com.nilhcem.hexawatch.ui.widget.HexawatchView
         android:id="@+id/watchface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="1dp"/>
 </LinearLayout>
