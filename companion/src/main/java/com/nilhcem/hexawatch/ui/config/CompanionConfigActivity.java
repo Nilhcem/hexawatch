@@ -1,7 +1,6 @@
 package com.nilhcem.hexawatch.ui.config;
 
-import android.support.v7.app.AppCompatActivity;
+import com.nilhcem.hexawatch.ui.BaseActivity;
 
-public class CompanionConfigActivity extends AppCompatActivity {
-
+public class CompanionConfigActivity extends BaseActivity {
 }
