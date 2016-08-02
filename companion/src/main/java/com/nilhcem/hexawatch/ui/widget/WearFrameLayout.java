@@ -9,9 +9,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 
 public class WearFrameLayout extends ViewGroup {
 
@@ -19,12 +21,16 @@ public class WearFrameLayout extends ViewGroup {
     private final RectF strapRect = new RectF();
     private final RectF marginRect = new RectF();
     private final RectF borderRect = new RectF();
+    private final RectF buttonRect = new RectF();
     private final Rect childRect = new Rect();
     private final PorterDuffXfermode clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
     private final int color;
     private final float marginWidth;
     private final float borderWidth;
+    private final float buttonWidth;
+    private final float buttonHeight;
     private final boolean isRound;
+    private final boolean showButton;
 
     private float marginRadius;
     private float borderRadius;
@@ -46,10 +52,13 @@ public class WearFrameLayout extends ViewGroup {
         // Get from attrs, or set manually
         isRound = true;
         color = 0xff909090;
+        showButton = isRound;
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        marginWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, displayMetrics);
-        borderWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, displayMetrics);
+        marginWidth = applyDimension(COMPLEX_UNIT_DIP, 4, displayMetrics);
+        borderWidth = applyDimension(COMPLEX_UNIT_DIP, 8, displayMetrics);
+        buttonWidth = applyDimension(COMPLEX_UNIT_DIP, 20, displayMetrics);
+        buttonHeight = applyDimension(COMPLEX_UNIT_DIP, 20, displayMetrics);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
@@ -80,6 +89,11 @@ public class WearFrameLayout extends ViewGroup {
         float halfStrapWidth = borderRadius / 2;
         strapRect.set(centerX - halfStrapWidth, 0, centerX + halfStrapWidth, height);
 
+        // button
+        if (showButton) {
+            buttonRect.set(borderRect.right - buttonWidth, centerY - buttonHeight / 2, borderRect.right + buttonWidth, centerY + buttonHeight / 2);
+        }
+
         // inner child
         float childRadius = borderRadius - borderWidth / 2;
         int childSize = Math.round(childRadius * 2);
@@ -101,6 +115,11 @@ public class WearFrameLayout extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         // watch-strap
         canvas.drawRect(strapRect, paint);
+
+        // button
+        if (showButton) {
+            canvas.drawRoundRect(buttonRect, marginWidth, marginWidth, paint);
+        }
 
         // transparent watch margin
         paint.setXfermode(clearMode);
