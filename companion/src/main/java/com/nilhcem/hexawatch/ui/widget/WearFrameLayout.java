@@ -2,7 +2,6 @@ package com.nilhcem.hexawatch.ui.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -70,7 +69,7 @@ public class WearFrameLayout extends ViewGroup {
         float centerY = (float) height / 2;
 
         // transparent margin
-        marginRadius = (Math.min(width, height * 0.86f) * 0.9f) / 2;
+        marginRadius = Math.min(width * 0.9f, height * 0.82f) / 2;
         marginRect.set(centerX - marginRadius, centerY - marginRadius, centerX + marginRadius, centerY + marginRadius);
 
         // watch border
