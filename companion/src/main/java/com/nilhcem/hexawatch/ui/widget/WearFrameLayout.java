@@ -22,6 +22,7 @@ public class WearFrameLayout extends ViewGroup {
     private final RectF borderRect = new RectF();
     private final Rect childRect = new Rect();
     private final PorterDuffXfermode clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+    private final int color;
     private final float marginWidth;
     private final float borderWidth;
     private final boolean isRound;
@@ -43,15 +44,16 @@ public class WearFrameLayout extends ViewGroup {
         // We need to turn off hardware acceleration to be able to draw a clear Xfer on the canvas
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        // Get shape from attrs, or set it manually
+        // Get from attrs, or set manually
         isRound = true;
+        color = 0xff909090;
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         marginWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, displayMetrics);
         borderWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, displayMetrics);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.GRAY);
+        paint.setColor(color);
         paint.setStrokeWidth(borderWidth);
         paint.setStyle(Paint.Style.FILL);
     }
@@ -85,7 +87,7 @@ public class WearFrameLayout extends ViewGroup {
         childRect.set(Math.round(centerX - childRadius), Math.round(centerY - childRadius), Math.round(centerX + childRadius), Math.round(centerY + childRadius));
         getChildAt(0).measure(MeasureSpec.makeMeasureSpec(childSize, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(childSize, MeasureSpec.EXACTLY));
 
-        // layout
+        // this
         setMeasuredDimension(width, height);
     }
 
