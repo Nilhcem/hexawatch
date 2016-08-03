@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <com.nilhcem.hexawatch.ui.custom.ColorChooserView
+        android:id="@+id/custom_bg_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_bg_color"/>
+
+    <com.nilhcem.hexawatch.ui.custom.ColorChooserView
+        android:id="@+id/custom_fill_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_fill_color"/>
+
+    <com.nilhcem.hexawatch.ui.custom.ColorChooserView
+        android:id="@+id/custom_stroke_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_stroke_color"/>
+
+    <com.nilhcem.hexawatch.ui.custom.SeekBarChooserView
+        android:id="@+id/custom_stroke_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_stroke_size"/>
+
+    <com.nilhcem.hexawatch.ui.custom.SeekBarChooserView
+        android:id="@+id/custom_hexagon_ratio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_hexagon_ratio"/>
+</LinearLayout>

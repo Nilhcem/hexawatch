@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.nilhcem.hexawatch.ui.widget.WearFrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.nilhcem.hexawatch.ui.widget.HexawatchView
+            android:id="@+id/custom_hexawatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:is_round="true"/>
+    </com.nilhcem.hexawatch.ui.widget.WearFrameLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:paddingStart="16dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/custom_buttons_container">
+
+            <include layout="@layout/custom_controls"/>
+        </ScrollView>
+
+        <include
+            android:id="@+id/custom_buttons_container"
+            layout="@layout/custom_buttons"/>
+    </RelativeLayout>
+</LinearLayout>

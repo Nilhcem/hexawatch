@@ -17,6 +17,7 @@ import com.nilhcem.hexawatch.common.utils.ContextUtils;
 public class HexawatchView extends View {
 
     private final Hexawatch hexawatch;
+    private final PathGenerator pathGenerator;
     private final Painter painter;
     private final int padding;
 
@@ -32,7 +33,7 @@ public class HexawatchView extends View {
         padding = a.getDimensionPixelSize(R.styleable.HexawatchView_android_padding, 0);
         a.recycle();
 
-        PathGenerator pathGenerator = new PathGenerator(context);
+        pathGenerator = new PathGenerator(context);
         pathGenerator.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
 
         painter = new Painter(context);
@@ -53,6 +54,21 @@ public class HexawatchView extends View {
 
     public void setColor(ColorPreset colorPreset) {
         painter.setColor(colorPreset);
+        invalidate();
+    }
+
+    public void setColor(int bgColor, int strokeColor, int fillColor) {
+        painter.setColor(bgColor, strokeColor, fillColor);
+        invalidate();
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight(), padding, strokeWidth);
+        invalidate();
+    }
+
+    public void setInnerHexaRatio(float innerHexaRatio) {
+        pathGenerator.setInnerHexaRatio(innerHexaRatio);
         invalidate();
     }
 }

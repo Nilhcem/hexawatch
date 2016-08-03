@@ -2,4 +2,15 @@
 <resources>
     <string name="app_name">Hexawatch</string>
     <string name="config_label">Hexawatch Configuration</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="custom_bg_color">Background color</string>
+    <string name="custom_fill_color">Fill color</string>
+    <string name="custom_stroke_color">Stroke color</string>
+    <string name="custom_stroke_size">Stroke size:</string>
+    <string name="custom_hexagon_ratio">Hexagon ratio:</string>
+    <string name="custom_reset">Reset</string>
+    <string name="custom_save">Save</string>
 </resources>

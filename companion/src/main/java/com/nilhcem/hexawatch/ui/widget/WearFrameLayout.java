@@ -126,12 +126,12 @@ public class WearFrameLayout extends ViewGroup {
         canvas.drawRoundRect(marginRect, isRound ? marginRadius : 0, isRound ? marginRadius : 0, paint);
         paint.setXfermode(null);
 
+        // sub views
+        super.dispatchDraw(canvas);
+
         // watch border
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawRoundRect(borderRect, isRound ? borderRadius : marginWidth, isRound ? borderRadius : marginWidth, paint);
         paint.setStyle(Paint.Style.FILL);
-
-        // sub views
-        super.dispatchDraw(canvas);
     }
 }

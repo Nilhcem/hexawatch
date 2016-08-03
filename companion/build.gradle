@@ -7,6 +7,11 @@ buildscript {
     }
 }
 
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
@@ -42,4 +47,6 @@ dependencies {
 
     compile "com.jakewharton:butterknife:$butterknifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    compile 'com.github.QuadFlask:colorpicker:0.0.10'
 }
