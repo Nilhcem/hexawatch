@@ -11,19 +11,19 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.listing.PresetsListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <activity
-            android:name=".ui.config.CompanionConfigActivity"
+            android:name=".ui.config.ConfigActivity"
             android:label="@string/config_label">
+
+            <!-- TODO: Remove this intent filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
+
                 <category android:name="com.google.android.wearable.watchface.category.COMPANION_CONFIGURATION"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

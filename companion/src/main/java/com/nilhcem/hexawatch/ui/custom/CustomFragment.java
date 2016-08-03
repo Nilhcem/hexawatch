@@ -2,16 +2,19 @@ package com.nilhcem.hexawatch.ui.custom;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
-import com.nilhcem.hexawatch.ui.BaseActivity;
+import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
 
 import butterknife.BindView;
 
-public class CustomActivity extends BaseActivity {
+public class CustomFragment extends BaseFragment {
 
     @BindView(R.id.custom_hexawatch) HexawatchView hexawatch;
     @BindView(R.id.custom_bg_color) ColorChooserView bgColorChooser;
@@ -28,9 +31,13 @@ public class CustomActivity extends BaseActivity {
     private float hexagonRatio = 0.75f;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.custom, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         hexawatch.setColor(ColorPreset.PINK);
 
         bgColorChooser.setColor(bgColor);
@@ -65,7 +72,7 @@ public class CustomActivity extends BaseActivity {
             @Override
             public void onValueChanged(int value) {
                 strokeSize = 1f + 0.04f * value;
-                hexawatch.setStrokeWidth(ContextUtils.dpToPx(CustomActivity.this, strokeSize));
+                hexawatch.setStrokeWidth(ContextUtils.dpToPx(getContext(), strokeSize));
             }
         });
 
