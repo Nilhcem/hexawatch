@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
+import com.nilhcem.hexawatch.common.core.Preset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
@@ -29,14 +30,18 @@ public class HexawatchService extends BaseWatchFaceService {
         private Hexawatch hexawatch;
         private PathGenerator pathGenerator;
         private Painter painter;
+        private Preset preset;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
             ConfigHelper.INSTANCE.getSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
 
+            preset = ConfigHelper.INSTANCE.getPreset(context);
             pathGenerator = new PathGenerator(context);
-            painter = new Painter(context, ConfigHelper.INSTANCE.getColorPreset(context));
+            pathGenerator.setInnerHexaRatio(preset.innerHexaRatio);
+            painter = new Painter(context);
+            painter.setColors(preset.bgColor, preset.strokeColor, preset.fillColor);
             hexawatch = new Hexawatch(painter, pathGenerator);
 
 //            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
@@ -53,7 +58,7 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         protected void onBurnInProtectionChanged(boolean burnInProtection) {
-            int strokeWidth = ContextUtils.dpToPx(context, 1.5f);
+            int strokeWidth = ContextUtils.dpToPx(context, preset.strokeSizeDp);
             hexawatch.setDimensions(width, height, burnInProtection ? BURN_IN_PADDING : 0, strokeWidth);
             invalidate();
         }
@@ -76,7 +81,11 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            painter.setColor(ConfigHelper.INSTANCE.getColorPreset(context));
+            Preset preset = ConfigHelper.INSTANCE.getPreset(context);
+            painter.setColors(preset.bgColor, preset.strokeColor, preset.fillColor);
+            int strokeWidth = ContextUtils.dpToPx(context, preset.strokeSizeDp);
+            hexawatch.setDimensions(width, height, burnInProtection != null && burnInProtection ? BURN_IN_PADDING : 0, strokeWidth);
+            pathGenerator.setInnerHexaRatio(preset.innerHexaRatio);
             invalidate();
         }
     }

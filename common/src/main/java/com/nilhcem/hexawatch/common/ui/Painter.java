@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
@@ -44,16 +43,6 @@ public class Painter {
         paddingPaint.setStyle(Paint.Style.STROKE);
     }
 
-    public Painter(Context context, ColorPreset colorPreset) {
-        this(context);
-        setColor(colorPreset);
-    }
-
-    public Painter(Context context, int bgColor, int strokeColor, int fillColor) {
-        this(context);
-        setColor(bgColor, strokeColor, fillColor);
-    }
-
     public void draw(Canvas canvas, Path background, Path skeleton, Path hours, Path minutes, Path digits) {
         canvas.drawPath(background, bgPaint);
 
@@ -72,11 +61,7 @@ public class Painter {
         }
     }
 
-    public void setColor(ColorPreset colorPreset) {
-        setColor(colorPreset.bgColor, colorPreset.strokeColor, colorPreset.fillColor);
-    }
-
-    public void setColor(int bgColor, int strokeColor, int fillColor) {
+    public void setColors(int bgColor, int strokeColor, int fillColor) {
         this.bgColor = bgColor;
         this.strokeColor = strokeColor;
         this.fillColor = fillColor;

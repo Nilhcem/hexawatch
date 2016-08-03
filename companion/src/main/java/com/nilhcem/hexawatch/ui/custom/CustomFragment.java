@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.ColorPreset;
+import com.nilhcem.hexawatch.common.core.Preset;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
@@ -23,9 +23,9 @@ public class CustomFragment extends BaseFragment {
     @BindView(R.id.custom_stroke_size) SeekBarChooserView strokeSizeChooser;
     @BindView(R.id.custom_hexagon_ratio) SeekBarChooserView hexagonRatioChooser;
 
-    private int bgColor = ColorPreset.PINK.bgColor;
-    private int fillColor = ColorPreset.PINK.fillColor;
-    private int strokeColor = ColorPreset.PINK.strokeColor;
+    private int bgColor = Preset.CUSTOM.bgColor;
+    private int fillColor = Preset.CUSTOM.fillColor;
+    private int strokeColor = Preset.CUSTOM.strokeColor;
 
     private float strokeSize = 1.5f;
     private float hexagonRatio = 0.75f;
@@ -38,7 +38,7 @@ public class CustomFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hexawatch.setColor(ColorPreset.PINK);
+        hexawatch.setColors(bgColor, strokeColor, fillColor);
 
         bgColorChooser.setColor(bgColor);
         bgColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
@@ -87,6 +87,6 @@ public class CustomFragment extends BaseFragment {
     }
 
     private void updateHexawatchColors() {
-        hexawatch.setColor(bgColor, strokeColor, fillColor);
+        hexawatch.setColors(bgColor, strokeColor, fillColor);
     }
 }

@@ -34,12 +34,12 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
 
         private boolean ambient;
         private boolean lowBitAmbient;
-        private Boolean burnInProtection;
         private WatchShape shape;
 
         protected Context context;
         protected int width;
         protected int height;
+        protected Boolean burnInProtection;
 
         @Override
         public void onCreate(SurfaceHolder holder) {

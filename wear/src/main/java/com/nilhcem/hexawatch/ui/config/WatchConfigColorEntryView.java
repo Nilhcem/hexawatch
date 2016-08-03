@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.ColorPreset;
+import com.nilhcem.hexawatch.common.core.Preset;
 
 public class WatchConfigColorEntryView extends LinearLayout implements WearableListView.OnCenterProximityListener {
 
@@ -39,10 +39,10 @@ public class WatchConfigColorEntryView extends LinearLayout implements WearableL
         onPositionChanged(animate, false);
     }
 
-    public void bindData(ColorPreset colorPreset) {
-        circle.setCircleColor(colorPreset.bgColor);
-        circle.setCircleBorderColor(colorPreset.strokeColor);
-        name.setText(colorPreset.nameRes);
+    public void bindData(Preset preset) {
+        circle.setCircleColor(preset.bgColor);
+        circle.setCircleBorderColor(preset.strokeColor);
+        name.setText(preset.nameRes);
         onPositionChanged(false, false);
     }
 

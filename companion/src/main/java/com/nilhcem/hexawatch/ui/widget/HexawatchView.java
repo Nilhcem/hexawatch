@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.ColorPreset;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
 import com.nilhcem.hexawatch.common.ui.Painter;
@@ -52,13 +51,8 @@ public class HexawatchView extends View {
         hexawatch.drawTime(canvas, 10, 10);
     }
 
-    public void setColor(ColorPreset colorPreset) {
-        painter.setColor(colorPreset);
-        invalidate();
-    }
-
-    public void setColor(int bgColor, int strokeColor, int fillColor) {
-        painter.setColor(bgColor, strokeColor, fillColor);
+    public void setColors(int bgColor, int strokeColor, int fillColor) {
+        painter.setColors(bgColor, strokeColor, fillColor);
         invalidate();
     }
 
