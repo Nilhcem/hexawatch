@@ -3,6 +3,8 @@ package com.nilhcem.hexawatch.ui.watchface;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.wearable.watchface.WatchFaceStyle;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 
 import com.nilhcem.hexawatch.common.core.Preset;
@@ -44,11 +46,18 @@ public class HexawatchService extends BaseWatchFaceService {
             painter.setColors(preset.bgColor, preset.strokeColor, preset.fillColor);
             hexawatch = new Hexawatch(painter, pathGenerator);
 
-//            setWatchFaceStyle(new WatchFaceStyle.Builder(MyWatchFace.this)
-//                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
-//                    .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
-//                    .setShowSystemUiTime(false)
-//                    .build());
+            setWatchFaceStyle(new WatchFaceStyle.Builder(HexawatchService.this)
+                    .setAcceptsTapEvents(false)
+                    .setAmbientPeekMode(WatchFaceStyle.AMBIENT_PEEK_MODE_VISIBLE)
+                    .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
+                    .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
+                    .setHotwordIndicatorGravity(Gravity.CENTER_VERTICAL)
+                    .setPeekOpacityMode(WatchFaceStyle.PEEK_OPACITY_MODE_OPAQUE)
+                    .setShowSystemUiTime(false)
+                    .setShowUnreadCountIndicator(true)
+                    .setStatusBarGravity(Gravity.CENTER_VERTICAL)
+                    .setViewProtectionMode(WatchFaceStyle.PROTECT_STATUS_BAR | WatchFaceStyle.PROTECT_HOTWORD_INDICATOR)
+                    .build());
         }
 
         @Override
