@@ -51,11 +51,11 @@ public class HexawatchService extends BaseWatchFaceService {
                     .setAmbientPeekMode(WatchFaceStyle.AMBIENT_PEEK_MODE_VISIBLE)
                     .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
                     .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
-                    .setHotwordIndicatorGravity(Gravity.CENTER_VERTICAL)
+                    .setHotwordIndicatorGravity(Gravity.TOP)
                     .setPeekOpacityMode(WatchFaceStyle.PEEK_OPACITY_MODE_OPAQUE)
                     .setShowSystemUiTime(false)
                     .setShowUnreadCountIndicator(true)
-                    .setStatusBarGravity(Gravity.CENTER_VERTICAL)
+                    .setStatusBarGravity(Gravity.TOP)
                     .setViewProtectionMode(WatchFaceStyle.PROTECT_STATUS_BAR | WatchFaceStyle.PROTECT_HOTWORD_INDICATOR)
                     .build());
         }
