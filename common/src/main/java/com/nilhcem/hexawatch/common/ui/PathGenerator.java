@@ -246,15 +246,33 @@ public class PathGenerator {
 
     private void generateDigits(float centerX, float centerY, float radius) {
         PointF[] innerNumbersPoints = createCirclePoints(centerX, centerY, radius - digitsMargin, -120f, NB_MINUTES);
-        generateDigitsFromCoords(digitsPaths[0], innerNumbersPoints, 0, 1, 2, 3, 4, 5, 0);
+        generateDigitsFromCoords(digitsPaths[0], innerNumbersPoints, 0, 1, 2, 3, 4, 5);
+        digitsPaths[0].close();
+
         generateDigitsFromCoords(digitsPaths[1], innerNumbersPoints, 1, 2, 3);
+
         generateDigitsFromCoords(digitsPaths[2], innerNumbersPoints, 0, 1, 2, 5, 4, 3);
-        generateDigitsFromCoords(digitsPaths[3], innerNumbersPoints, 0, 1, 2, 5, 2, 3, 4);
-        generateDigitsFromCoords(digitsPaths[4], innerNumbersPoints, 0, 5, 2, 1, 2, 3);
+
+        generateDigitsFromCoords(digitsPaths[3], innerNumbersPoints, 0, 1, 2, 3, 4);
+        moveTo(digitsPaths[3], innerNumbersPoints[2]);
+        lineTo(digitsPaths[3], innerNumbersPoints[5]);
+
+        generateDigitsFromCoords(digitsPaths[4], innerNumbersPoints, 1, 2, 3);
+        moveTo(digitsPaths[4], innerNumbersPoints[2]);
+        lineTo(digitsPaths[4], innerNumbersPoints[5]);
+        lineTo(digitsPaths[4], innerNumbersPoints[0]);
+
         generateDigitsFromCoords(digitsPaths[5], innerNumbersPoints, 1, 0, 5, 2, 3, 4);
+
         generateDigitsFromCoords(digitsPaths[6], innerNumbersPoints, 1, 0, 5, 4, 3, 2, 5);
+
         generateDigitsFromCoords(digitsPaths[7], innerNumbersPoints, 0, 1, 2, 3);
-        generateDigitsFromCoords(digitsPaths[8], innerNumbersPoints, 2, 5, 0, 1, 2, 3, 4, 5);
+
+        generateDigitsFromCoords(digitsPaths[8], innerNumbersPoints, 0, 1, 2, 3, 4, 5);
+        digitsPaths[8].close();
+        moveTo(digitsPaths[8], innerNumbersPoints[2]);
+        lineTo(digitsPaths[8], innerNumbersPoints[5]);
+
         generateDigitsFromCoords(digitsPaths[9], innerNumbersPoints, 2, 5, 0, 1, 2, 3, 4);
     }
 
