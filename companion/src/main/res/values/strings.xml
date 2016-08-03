@@ -8,6 +8,7 @@
 
     <string name="config_tab_themes">Themes</string>
     <string name="config_tab_custom">Custom</string>
+    <string name="config_tab_about">About</string>
 
     <string name="custom_bg_color">Background color</string>
     <string name="custom_fill_color">Fill color</string>
