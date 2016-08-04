@@ -17,4 +17,6 @@
     <string name="custom_hexagon_ratio">Hexagon ratio:</string>
     <string name="custom_reset">Reset</string>
     <string name="custom_save">Save</string>
+    <string name="custom_reset_msg">Custom theme restored</string>
+    <string name="custom_save_msg">Custom theme saved</string>
 </resources>

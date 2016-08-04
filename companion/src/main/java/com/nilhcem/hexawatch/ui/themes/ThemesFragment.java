@@ -1,5 +1,6 @@
 package com.nilhcem.hexawatch.ui.themes;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,9 +14,11 @@ import com.nilhcem.hexawatch.ui.BaseFragment;
 
 import butterknife.BindView;
 
-public class ThemesFragment extends BaseFragment {
+public class ThemesFragment extends BaseFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.presets_recyclerview) RecyclerView recyclerView;
+
+    private ThemesAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,6 +29,24 @@ public class ThemesFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        recyclerView.setAdapter(new ThemesAdapter(configHelper.getCustomTheme()));
+        adapter = new ThemesAdapter(configHelper.getCustomTheme());
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        configHelper.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        configHelper.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        adapter.updateCustomTheme(configHelper.getCustomTheme());
     }
 }
