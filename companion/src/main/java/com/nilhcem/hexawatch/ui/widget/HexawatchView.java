@@ -8,16 +8,12 @@ import android.view.View;
 
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.core.WatchShape;
+import com.nilhcem.hexawatch.common.core.theme.Theme;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
-import com.nilhcem.hexawatch.common.ui.Painter;
-import com.nilhcem.hexawatch.common.ui.PathGenerator;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
 public class HexawatchView extends View {
 
     private final Hexawatch hexawatch;
-    private final PathGenerator pathGenerator;
-    private final Painter painter;
     private final int padding;
 
     public HexawatchView(Context context) {
@@ -32,17 +28,14 @@ public class HexawatchView extends View {
         padding = a.getDimensionPixelSize(R.styleable.HexawatchView_android_padding, 0);
         a.recycle();
 
-        pathGenerator = new PathGenerator(context);
-        pathGenerator.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
-
-        painter = new Painter(context);
-        hexawatch = new Hexawatch(painter, pathGenerator);
+        hexawatch = new Hexawatch(context);
+        hexawatch.setShape(isRound ? WatchShape.CIRCLE : WatchShape.SQUARE);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-        hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight(), padding, ContextUtils.dpToPx(getContext(), 1.5f));
+        hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight(), padding);
     }
 
     @Override
@@ -51,18 +44,8 @@ public class HexawatchView extends View {
         hexawatch.drawTime(canvas, 10, 10);
     }
 
-    public void setColors(int bgColor, int strokeColor, int fillColor) {
-        painter.setColors(bgColor, strokeColor, fillColor);
-        invalidate();
-    }
-
-    public void setStrokeWidth(int strokeWidth) {
-        hexawatch.setDimensions(getMeasuredWidth(), getMeasuredHeight(), padding, strokeWidth);
-        invalidate();
-    }
-
-    public void setInnerHexaRatio(float innerHexaRatio) {
-        pathGenerator.setInnerHexaRatio(innerHexaRatio);
+    public void setTheme(Theme theme) {
+        hexawatch.setTheme(theme);
         invalidate();
     }
 }

@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.R;
+import com.nilhcem.hexawatch.common.core.theme.Theme;
 import com.nilhcem.hexawatch.common.core.theme.ThemePreset;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
 
@@ -23,12 +23,7 @@ public class CustomFragment extends BaseFragment {
     @BindView(R.id.custom_stroke_size) SeekBarChooserView strokeSizeChooser;
     @BindView(R.id.custom_hexagon_ratio) SeekBarChooserView hexagonRatioChooser;
 
-    private int bgColor = ThemePreset.CUSTOM.theme.bgColor;
-    private int fillColor = ThemePreset.CUSTOM.theme.fillColor;
-    private int strokeColor = ThemePreset.CUSTOM.theme.strokeColor;
-
-    private float strokeSize = 1.5f;
-    private float hexagonRatio = 0.75f;
+    private Theme theme = ThemePreset.CUSTOM.theme;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,32 +33,32 @@ public class CustomFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hexawatch.setColors(bgColor, strokeColor, fillColor);
+        hexawatch.setTheme(theme);
 
-        bgColorChooser.setColor(bgColor);
+        bgColorChooser.setColor(theme.bgColor);
         bgColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                bgColor = color;
-                updateHexawatchColors();
+                theme = new Theme(color, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
+                hexawatch.setTheme(theme);
             }
         });
 
-        fillColorChooser.setColor(fillColor);
+        fillColorChooser.setColor(theme.fillColor);
         fillColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                fillColor = color;
-                updateHexawatchColors();
+                theme = new Theme(theme.bgColor, color, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
+                hexawatch.setTheme(theme);
             }
         });
 
-        strokeColorChooser.setColor(strokeColor);
+        strokeColorChooser.setColor(theme.strokeColor);
         strokeColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                strokeColor = color;
-                updateHexawatchColors();
+                theme = new Theme(theme.bgColor, theme.fillColor, color, theme.strokeWidthDp, theme.innerHexaRatio);
+                hexawatch.setTheme(theme);
             }
         });
 
@@ -71,8 +66,8 @@ public class CustomFragment extends BaseFragment {
         strokeSizeChooser.setOnValueChangedListener(new SeekBarChooserView.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                strokeSize = 1f + 0.04f * value;
-                hexawatch.setStrokeWidth(ContextUtils.dpToPx(getContext(), strokeSize));
+                theme = new Theme(theme.bgColor, theme.fillColor, theme.strokeColor, 1f + 0.04f * value, theme.innerHexaRatio);
+                hexawatch.setTheme(theme);
             }
         });
 
@@ -80,13 +75,9 @@ public class CustomFragment extends BaseFragment {
         hexagonRatioChooser.setOnValueChangedListener(new SeekBarChooserView.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                hexagonRatio = 0.1f + 0.008f * value;
-                hexawatch.setInnerHexaRatio(hexagonRatio);
+                theme = new Theme(theme.bgColor, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, 0.1f + 0.008f * value);
+                hexawatch.setTheme(theme);
             }
         });
-    }
-
-    private void updateHexawatchColors() {
-        hexawatch.setColors(bgColor, strokeColor, fillColor);
     }
 }

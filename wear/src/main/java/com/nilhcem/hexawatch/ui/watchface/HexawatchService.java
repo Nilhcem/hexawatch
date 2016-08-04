@@ -9,11 +9,7 @@ import android.view.SurfaceHolder;
 
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
-import com.nilhcem.hexawatch.common.ui.Painter;
-import com.nilhcem.hexawatch.common.ui.PathGenerator;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import com.nilhcem.hexawatch.core.config.ConfigHelper;
 
 import java.util.Calendar;
@@ -30,21 +26,14 @@ public class HexawatchService extends BaseWatchFaceService {
     private class Engine extends BaseWatchFaceService.Engine implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private Hexawatch hexawatch;
-        private PathGenerator pathGenerator;
-        private Painter painter;
-        private Theme theme;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
             ConfigHelper.INSTANCE.getSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
 
-            theme = ConfigHelper.INSTANCE.getPreset(context).theme;
-            pathGenerator = new PathGenerator(context);
-            pathGenerator.setInnerHexaRatio(theme.innerHexaRatio);
-            painter = new Painter(context);
-            painter.setColors(theme.bgColor, theme.strokeColor, theme.fillColor);
-            hexawatch = new Hexawatch(painter, pathGenerator);
+            hexawatch = new Hexawatch(context);
+            hexawatch.setTheme(ConfigHelper.INSTANCE.getPreset(context).theme);
 
             setWatchFaceStyle(new WatchFaceStyle.Builder(HexawatchService.this)
                     .setAcceptsTapEvents(false)
@@ -62,13 +51,12 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         protected void onShapeChanged(WatchShape shape) {
-            pathGenerator.setShape(shape);
+            hexawatch.setShape(shape);
         }
 
         @Override
         protected void onBurnInProtectionChanged(boolean burnInProtection) {
-            int strokeWidth = ContextUtils.dpToPx(context, theme.strokeWidthDp);
-            hexawatch.setDimensions(width, height, burnInProtection ? BURN_IN_PADDING : 0, strokeWidth);
+            hexawatch.setDimensions(width, height, burnInProtection ? BURN_IN_PADDING : 0);
             invalidate();
         }
 
@@ -90,11 +78,7 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Theme theme = ConfigHelper.INSTANCE.getPreset(context).theme;
-            painter.setColors(theme.bgColor, theme.strokeColor, theme.fillColor);
-            int strokeWidth = ContextUtils.dpToPx(context, theme.strokeWidthDp);
-            hexawatch.setDimensions(width, height, burnInProtection != null && burnInProtection ? BURN_IN_PADDING : 0, strokeWidth);
-            pathGenerator.setInnerHexaRatio(theme.innerHexaRatio);
+            hexawatch.setTheme(ConfigHelper.INSTANCE.getPreset(context).theme);
             invalidate();
         }
     }

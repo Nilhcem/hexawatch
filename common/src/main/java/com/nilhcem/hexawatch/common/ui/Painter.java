@@ -7,27 +7,22 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.nilhcem.hexawatch.common.core.WatchMode;
+import com.nilhcem.hexawatch.common.core.theme.Theme;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
-public class Painter {
+class Painter {
 
+    private final Context context;
     private final Paint bgPaint;
     private final Paint strokePaint;
     private final Paint fillPaint;
     private final Paint paddingPaint;
 
     private WatchMode mode;
-
-    private int bgColor;
-    private int strokeColor;
-    private int fillColor;
-
-    private int padding;
-    private int strokeWidth;
-    private int strokeWidthAmbient;
+    private Theme theme;
 
     public Painter(Context context) {
-        strokeWidthAmbient = ContextUtils.dpToPx(context, 1f);
+        this.context = context;
 
         bgPaint = new Paint();
         bgPaint.setStyle(Paint.Style.FILL);
@@ -61,11 +56,12 @@ public class Painter {
         }
     }
 
-    public void setColors(int bgColor, int strokeColor, int fillColor) {
-        this.bgColor = bgColor;
-        this.strokeColor = strokeColor;
-        this.fillColor = fillColor;
-        setPaintColors(bgColor, strokeColor, fillColor);
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+        if (theme != null) {
+            setPaintColors(theme.bgColor, theme.strokeColor, theme.fillColor);
+            setPaintWidths(theme.strokeWidthDp);
+        }
     }
 
     void setMode(WatchMode mode) {
@@ -75,30 +71,27 @@ public class Painter {
             case INTERACTIVE:
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.FILL);
-                setPaintColors(bgColor, strokeColor, fillColor);
-                setPaintWidths(padding, strokeWidth);
+                setTheme(theme);
                 break;
             case AMBIENT:
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setPaintColors(Color.BLACK, 0xff505050, 0xffdddddd);
-                setPaintWidths(padding, strokeWidthAmbient);
+                setPaintWidths(1f);
                 break;
             case LOW_BIT:
                 setAntiAlias(false);
                 setFillPaintStyle(Paint.Style.STROKE);
                 setPaintColors(Color.BLACK, Color.WHITE, Color.WHITE);
-                setPaintWidths(padding, strokeWidthAmbient);
+                setPaintWidths(1f);
                 break;
             default:
                 throw new IllegalArgumentException("This should not happen");
         }
     }
 
-    void setDimensions(int padding, int strokeWidth) {
-        this.padding = padding;
-        this.strokeWidth = strokeWidth;
-        setPaintWidths(padding, strokeWidth);
+    void setPadding(int padding) {
+        paddingPaint.setStrokeWidth(padding);
     }
 
     private void setPaintColors(int bgColor, int strokeColor, int fillColor) {
@@ -107,11 +100,11 @@ public class Painter {
         fillPaint.setColor(fillColor);
     }
 
-    private void setPaintWidths(int padding, int strokeWidth) {
+    private void setPaintWidths(float strokeWidthDp) {
+        int strokeWidth = ContextUtils.dpToPx(context, strokeWidthDp);
         bgPaint.setStrokeWidth(strokeWidth);
         strokePaint.setStrokeWidth(strokeWidth);
         fillPaint.setStrokeWidth(strokeWidth);
-        paddingPaint.setStrokeWidth(padding);
     }
 
     private void setAntiAlias(boolean antiAlias) {

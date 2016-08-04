@@ -14,7 +14,8 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
 
     @Override
     public void onBindViewHolder(ThemesViewHolder holder, int position) {
-        holder.bindData(ThemePreset.values()[position]);
+        ThemePreset themePreset = ThemePreset.values()[position];
+        holder.bindData(themePreset.nameRes, themePreset.theme);
     }
 
     @Override

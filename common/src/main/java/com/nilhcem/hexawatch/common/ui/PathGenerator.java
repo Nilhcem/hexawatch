@@ -6,34 +6,37 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.common.utils.ContextUtils;
+import com.nilhcem.hexawatch.common.core.theme.Theme;
 import com.nilhcem.hexawatch.common.utils.Preconditions;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 import static com.nilhcem.hexawatch.common.core.WatchShape.CIRCLE;
 import static com.nilhcem.hexawatch.common.utils.PathUtils.lineTo;
 import static com.nilhcem.hexawatch.common.utils.PathUtils.moveTo;
 
-public class PathGenerator {
+class PathGenerator {
 
     private static final int NB_DIGITS = 10;
     private static final int NB_HOURS = 12;
     private static final int NB_MINUTES = 6;
 
+    private final Context context;
     private final Path bgPath = new Path();
     private final Path skeletonPath = new Path();
     private final Path[] hoursPaths = new Path[NB_HOURS];
     private final Path[] minutesPaths = new Path[NB_MINUTES];
     private final Path[] digitsPaths = new Path[NB_DIGITS];
-    private final int digitsMargin;
 
     private WatchShape shape;
+    private Theme theme;
     private int width;
     private int height;
     private int padding;
-    private int strokeWidth;
-    private float innerHexaRatio = 0.75f;
 
     public PathGenerator(Context context) {
+        this.context = context;
+
         int i;
         for (i = 0; i < NB_HOURS; i++) {
             hoursPaths[i] = new Path();
@@ -44,16 +47,22 @@ public class PathGenerator {
         for (i = 0; i < NB_DIGITS; i++) {
             digitsPaths[i] = new Path();
         }
-        digitsMargin = ContextUtils.dpToPx(context, 10f);
-    }
-
-    public void setInnerHexaRatio(float innerHexaRatio) {
-        this.innerHexaRatio = innerHexaRatio;
-        generatePaths();
     }
 
     public void setShape(WatchShape shape) {
         this.shape = shape;
+        generatePaths();
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+        generatePaths();
+    }
+
+    public void setDimensions(int width, int height, int padding) {
+        this.width = width;
+        this.height = height;
+        this.padding = padding;
         generatePaths();
     }
 
@@ -85,16 +94,8 @@ public class PathGenerator {
         }
     }
 
-    void setDimensions(int width, int height, int padding, int strokeWidth) {
-        this.width = width;
-        this.height = height;
-        this.padding = padding;
-        this.strokeWidth = strokeWidth;
-        generatePaths();
-    }
-
     private boolean isDataInitialized() {
-        return width > 0 && height > 0 && shape != null && strokeWidth != 0;
+        return width > 0 && height > 0 && shape != null && theme != null;
     }
 
     private void generatePaths() {
@@ -103,24 +104,25 @@ public class PathGenerator {
             return;
         }
 
+        float strokeWidth = applyDimension(COMPLEX_UNIT_DIP, theme.strokeWidthDp, context.getResources().getDisplayMetrics());
         float centerX = (float) width / 2f;
         float centerY = (float) height / 2f;
         float paddingRadius = ((float) Math.min(width, height) - padding) / 2f;
         float radius = paddingRadius - padding / 2 - strokeWidth / 2;
 
-        float hexaRadius = radius * innerHexaRatio;
+        float hexaRadius = radius * theme.innerHexaRatio;
 
-        PointF[] outerPoints = createOuterPoints(centerX, centerY, radius);
+        PointF[] outerPoints = createOuterPoints(centerX, centerY, radius, strokeWidth);
         PointF[] hexaPoints = createCirclePoints(centerX, centerY, hexaRadius, -120f, NB_MINUTES);
 
         generateBackground(centerX, centerY, paddingRadius);
-        generateSkeleton(centerX, centerY, radius, outerPoints, hexaPoints);
+        generateSkeleton(centerX, centerY, radius, strokeWidth, outerPoints, hexaPoints);
         generateMinutes(outerPoints, hexaPoints);
         generateHours(centerX, centerY, radius, outerPoints, hexaPoints);
         generateDigits(centerX, centerY, hexaRadius - strokeWidth);
     }
 
-    private PointF[] createOuterPoints(float centerX, float centerY, float radius) {
+    private PointF[] createOuterPoints(float centerX, float centerY, float radius, float strokeWidth) {
         if (shape == CIRCLE) {
             return createCirclePoints(centerX, centerY, radius, -90f, NB_HOURS);
         } else {
@@ -173,7 +175,7 @@ public class PathGenerator {
         }
     }
 
-    private void generateSkeleton(float centerX, float centerY, float radius, PointF[] outerPoints, PointF[] hexaPoints) {
+    private void generateSkeleton(float centerX, float centerY, float radius, float strokeWidth, PointF[] outerPoints, PointF[] hexaPoints) {
         Path path = skeletonPath;
         path.reset();
 
@@ -245,6 +247,7 @@ public class PathGenerator {
     }
 
     private void generateDigits(float centerX, float centerY, float radius) {
+        float digitsMargin = applyDimension(COMPLEX_UNIT_DIP, 10f, context.getResources().getDisplayMetrics());
         PointF[] innerNumbersPoints = createCirclePoints(centerX, centerY, radius - digitsMargin, -120f, NB_MINUTES);
         generateDigitsFromCoords(digitsPaths[0], innerNumbersPoints, 0, 1, 2, 3, 4, 5);
         digitsPaths[0].close();
