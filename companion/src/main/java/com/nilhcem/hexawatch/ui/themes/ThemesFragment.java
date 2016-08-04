@@ -26,6 +26,6 @@ public class ThemesFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        recyclerView.setAdapter(new ThemesAdapter());
+        recyclerView.setAdapter(new ThemesAdapter(configHelper.getCustomTheme()));
     }
 }

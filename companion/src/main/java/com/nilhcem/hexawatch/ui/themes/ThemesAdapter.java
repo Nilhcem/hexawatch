@@ -7,6 +7,12 @@ import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
 
+    private final WatchTheme customTheme;
+
+    public ThemesAdapter(WatchTheme customTheme) {
+        this.customTheme = customTheme;
+    }
+
     @Override
     public ThemesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ThemesViewHolder(parent);
@@ -15,7 +21,8 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
     @Override
     public void onBindViewHolder(ThemesViewHolder holder, int position) {
         WatchTheme.Preset themePreset = WatchTheme.Preset.values()[position];
-        holder.bindData(themePreset.nameRes, themePreset.theme);
+        WatchTheme theme = themePreset == WatchTheme.Preset.CUSTOM ? customTheme : themePreset.theme;
+        holder.bindData(themePreset.nameRes, theme);
     }
 
     @Override

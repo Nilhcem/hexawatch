@@ -43,6 +43,17 @@ public class ConfigHelper {
         }
     }
 
+    public WatchTheme getCustomTheme() {
+        WatchTheme custom = WatchTheme.Preset.CUSTOM.theme;
+        return new WatchTheme(
+                prefs.getInt(KEY_CUSTOM_BG_COLOR, custom.bgColor),
+                prefs.getInt(KEY_CUSTOM_FILL_COLOR, custom.fillColor),
+                prefs.getInt(KEY_CUSTOM_STROKE_COLOR, custom.strokeColor),
+                prefs.getFloat(KEY_CUSTOM_STROKE_WIDTH, custom.strokeWidthDp),
+                prefs.getFloat(KEY_CUSTOM_INNER_HEXA_RATIO, custom.innerHexaRatio)
+        );
+    }
+
     public void setTheme(@NonNull WatchTheme.Preset themePreset) {
         prefs.edit().putString(KEY_PRESET_NAME, themePreset.name()).apply();
     }
@@ -56,16 +67,5 @@ public class ConfigHelper {
                 .putFloat(KEY_CUSTOM_STROKE_WIDTH, theme.strokeWidthDp)
                 .putFloat(KEY_CUSTOM_INNER_HEXA_RATIO, theme.innerHexaRatio)
                 .apply();
-    }
-
-    private WatchTheme getCustomTheme() {
-        WatchTheme custom = WatchTheme.Preset.CUSTOM.theme;
-        return new WatchTheme(
-                prefs.getInt(KEY_CUSTOM_BG_COLOR, custom.bgColor),
-                prefs.getInt(KEY_CUSTOM_FILL_COLOR, custom.fillColor),
-                prefs.getInt(KEY_CUSTOM_STROKE_COLOR, custom.strokeColor),
-                prefs.getFloat(KEY_CUSTOM_STROKE_WIDTH, custom.strokeWidthDp),
-                prefs.getFloat(KEY_CUSTOM_INNER_HEXA_RATIO, custom.innerHexaRatio)
-        );
     }
 }

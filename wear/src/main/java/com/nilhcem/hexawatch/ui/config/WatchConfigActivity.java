@@ -22,7 +22,7 @@ public class WatchConfigActivity extends Activity {
         setContentView(R.layout.watch_config);
         header = (TextView) findViewById(R.id.config_header);
         WearableListView list = (WearableListView) findViewById(R.id.config_list);
-        list.setAdapter(new WatchConfigAdapter());
+        list.setAdapter(new WatchConfigAdapter(configHelper.getCustomTheme()));
 
         // List item selection
         list.setClickListener(new WearableListView.ClickListener() {
