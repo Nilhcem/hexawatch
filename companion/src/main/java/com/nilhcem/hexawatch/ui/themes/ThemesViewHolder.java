@@ -17,7 +17,7 @@ public class ThemesViewHolder extends BaseViewHolder {
     @BindView(R.id.name) TextView name;
 
     public ThemesViewHolder(ViewGroup parent) {
-        super(parent, R.layout.presets_item);
+        super(parent, R.layout.themes_item);
     }
 
     public void bindData(@StringRes int nameRes, WatchTheme theme) {

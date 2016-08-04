@@ -23,7 +23,7 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.presets, container, false);
+        return inflater.inflate(R.layout.themes, container, false);
     }
 
     @Override
