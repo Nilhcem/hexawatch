@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.ui.about.AboutFragment;
 import com.nilhcem.hexawatch.ui.custom.CustomFragment;
-import com.nilhcem.hexawatch.ui.presets.PresetsFragment;
+import com.nilhcem.hexawatch.ui.themes.ThemesFragment;
 
 public class ConfigAdapter extends FragmentPagerAdapter {
 
@@ -24,7 +24,7 @@ public class ConfigAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new PresetsFragment();
+            return new ThemesFragment();
         } else if (position == 1) {
             return new CustomFragment();
         }

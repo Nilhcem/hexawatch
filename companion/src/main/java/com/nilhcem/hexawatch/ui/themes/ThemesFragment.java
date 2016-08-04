@@ -1,4 +1,4 @@
-package com.nilhcem.hexawatch.ui.presets;
+package com.nilhcem.hexawatch.ui.themes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import com.nilhcem.hexawatch.ui.BaseFragment;
 
 import butterknife.BindView;
 
-public class PresetsFragment extends BaseFragment {
+public class ThemesFragment extends BaseFragment {
 
     @BindView(R.id.presets_recyclerview) RecyclerView recyclerView;
 
@@ -25,9 +25,7 @@ public class PresetsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        PresetsAdapter adapter = new PresetsAdapter();
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(new ThemesAdapter());
     }
 }

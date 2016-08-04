@@ -6,7 +6,7 @@ import android.support.wearable.view.WearableListView;
 import android.widget.TextView;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.Preset;
+import com.nilhcem.hexawatch.common.core.theme.ThemePreset;
 import com.nilhcem.hexawatch.core.config.ConfigHelper;
 
 public class WatchConfigActivity extends Activity {
@@ -25,7 +25,7 @@ public class WatchConfigActivity extends Activity {
         list.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
-                ConfigHelper.INSTANCE.setPreset(WatchConfigActivity.this, Preset.values()[viewHolder.getLayoutPosition()]);
+                ConfigHelper.INSTANCE.setPreset(WatchConfigActivity.this, ThemePreset.values()[viewHolder.getLayoutPosition()]);
                 finish();
             }
 
