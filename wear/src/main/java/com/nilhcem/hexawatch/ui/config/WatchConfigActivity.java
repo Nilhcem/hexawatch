@@ -6,16 +6,19 @@ import android.support.wearable.view.WearableListView;
 import android.widget.TextView;
 
 import com.nilhcem.hexawatch.R;
+import com.nilhcem.hexawatch.common.config.ConfigHelper;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
-import com.nilhcem.hexawatch.core.config.ConfigHelper;
 
 public class WatchConfigActivity extends Activity {
 
     private TextView header;
+    private ConfigHelper configHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configHelper = new ConfigHelper(this);
+
         setContentView(R.layout.configuration_color);
         header = (TextView) findViewById(R.id.config_header);
         WearableListView list = (WearableListView) findViewById(R.id.config_list);
@@ -25,7 +28,8 @@ public class WatchConfigActivity extends Activity {
         list.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
-                ConfigHelper.INSTANCE.setPreset(WatchConfigActivity.this, WatchTheme.Preset.values()[viewHolder.getLayoutPosition()]);
+                WatchTheme.Preset preset = WatchTheme.Preset.values()[viewHolder.getLayoutPosition()];
+                configHelper.setTheme(preset);
                 finish();
             }
 

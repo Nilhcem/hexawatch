@@ -7,10 +7,10 @@ import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 
+import com.nilhcem.hexawatch.common.config.ConfigHelper;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
-import com.nilhcem.hexawatch.core.config.ConfigHelper;
 
 import java.util.Calendar;
 
@@ -26,14 +26,16 @@ public class HexawatchService extends BaseWatchFaceService {
     private class Engine extends BaseWatchFaceService.Engine implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private Hexawatch hexawatch;
+        private ConfigHelper configHelper;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-            ConfigHelper.INSTANCE.getSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
+            configHelper = new ConfigHelper(context);
+            configHelper.registerOnSharedPreferenceChangeListener(this);
 
             hexawatch = new Hexawatch(context);
-            hexawatch.setTheme(ConfigHelper.INSTANCE.getPreset(context).theme);
+            hexawatch.setTheme(configHelper.getTheme());
 
             setWatchFaceStyle(new WatchFaceStyle.Builder(HexawatchService.this)
                     .setAcceptsTapEvents(false)
@@ -72,13 +74,13 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         public void onDestroy() {
-            ConfigHelper.INSTANCE.getSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this);
+            configHelper.unregisterOnSharedPreferenceChangeListener(this);
             super.onDestroy();
         }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            hexawatch.setTheme(ConfigHelper.INSTANCE.getPreset(context).theme);
+            hexawatch.setTheme(configHelper.getTheme());
             invalidate();
         }
     }
