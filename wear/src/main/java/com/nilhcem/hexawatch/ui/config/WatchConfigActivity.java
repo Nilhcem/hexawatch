@@ -59,5 +59,9 @@ public class WatchConfigActivity extends Activity {
             public void onCentralPositionChanged(int i) {
             }
         });
+
+        // Automatically select current theme
+        WatchTheme.Preset themePreset = configHelper.getThemePreset();
+        list.scrollToPosition(themePreset.ordinal());
     }
 }
