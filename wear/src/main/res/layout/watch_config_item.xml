@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nilhcem.hexawatch.ui.config.WatchConfigColorEntryView
+<com.nilhcem.hexawatch.ui.config.WatchConfigEntryView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:showIn="@layout/configuration_color">
+    tools:showIn="@layout/watch_config">
 
     <android.support.wearable.view.CircledImageView
         android:id="@+id/config_item_circle"
@@ -25,4 +25,4 @@
         android:maxLines="1"
         android:textColor="@android:color/white"
         android:textSize="16sp"/>
-</com.nilhcem.hexawatch.ui.config.WatchConfigColorEntryView>
+</com.nilhcem.hexawatch.ui.config.WatchConfigEntryView>

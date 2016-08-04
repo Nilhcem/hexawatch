@@ -27,6 +27,6 @@
             android:id="@+id/config_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/configuration_color_item"/>
+            tools:listitem="@layout/watch_config_item"/>
     </RelativeLayout>
 </android.support.wearable.view.BoxInsetLayout>

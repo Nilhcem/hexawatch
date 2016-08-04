@@ -19,10 +19,10 @@ public class WatchConfigActivity extends Activity {
         super.onCreate(savedInstanceState);
         configHelper = new ConfigHelper(this);
 
-        setContentView(R.layout.configuration_color);
+        setContentView(R.layout.watch_config);
         header = (TextView) findViewById(R.id.config_header);
         WearableListView list = (WearableListView) findViewById(R.id.config_list);
-        list.setAdapter(new WatchConfigColorAdapter());
+        list.setAdapter(new WatchConfigAdapter());
 
         // List item selection
         list.setClickListener(new WearableListView.ClickListener() {

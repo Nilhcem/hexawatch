@@ -11,15 +11,15 @@ import android.widget.TextView;
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
-public class WatchConfigColorEntryView extends LinearLayout implements WearableListView.OnCenterProximityListener {
+public class WatchConfigEntryView extends LinearLayout implements WearableListView.OnCenterProximityListener {
 
-    public static final int LAYOUT_RES = R.layout.configuration_color_item;
+    public static final int LAYOUT_RES = R.layout.watch_config_item;
     private static final int ANIM_DURATION = 200;
 
     private CircledImageView circle;
     private TextView name;
 
-    public WatchConfigColorEntryView(Context context, AttributeSet attrs) {
+    public WatchConfigEntryView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
