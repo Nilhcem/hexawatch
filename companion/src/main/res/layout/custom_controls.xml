@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/white"
+    android:elevation="4dp"
     android:orientation="vertical"
     android:padding="8dp">
 
@@ -35,4 +38,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/custom_hexagon_ratio"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end"
+        android:orientation="horizontal"
+        android:paddingEnd="6dp"
+        android:paddingStart="6dp"
+        android:paddingTop="2dp">
+
+        <Button
+            android:id="@+id/custom_buttons_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="42dp"
+            android:text="@string/custom_reset"/>
+
+        <Button
+            android:id="@+id/custom_buttons_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="42dp"
+            android:text="@string/custom_save"/>
+    </LinearLayout>
 </LinearLayout>

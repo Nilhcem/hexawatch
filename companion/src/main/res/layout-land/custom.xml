@@ -19,22 +19,13 @@
             app:is_round="true"/>
     </com.nilhcem.hexawatch.ui.widget.WearFrameLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:fillViewport="true"
         android:paddingStart="16dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/custom_buttons_container">
-
-            <include layout="@layout/custom_controls"/>
-        </ScrollView>
-
-        <include
-            android:id="@+id/custom_buttons_container"
-            layout="@layout/custom_buttons"/>
-    </RelativeLayout>
+        <include layout="@layout/custom_controls"/>
+    </ScrollView>
 </LinearLayout>

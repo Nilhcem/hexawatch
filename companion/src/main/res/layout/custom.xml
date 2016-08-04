@@ -4,12 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <com.nilhcem.hexawatch.ui.widget.WearFrameLayout
         android:id="@+id/custom_hexawatch_container"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/custom_controls_container"
         android:layout_alignParentTop="true">
 
         <com.nilhcem.hexawatch.ui.widget.HexawatchView
@@ -19,17 +21,7 @@
             app:is_round="true"/>
     </com.nilhcem.hexawatch.ui.widget.WearFrameLayout>
 
-    <ScrollView
-        android:id="@+id/custom_controls_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/custom_buttons_container"
-        android:layout_below="@+id/custom_hexawatch_container">
-
-        <include layout="@layout/custom_controls"/>
-    </ScrollView>
-
     <include
-        android:id="@+id/custom_buttons_container"
-        layout="@layout/custom_buttons"/>
+        android:id="@+id/custom_controls_container"
+        layout="@layout/custom_controls"/>
 </RelativeLayout>
