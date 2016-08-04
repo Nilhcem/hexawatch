@@ -6,7 +6,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.common.utils.Preconditions;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
@@ -29,12 +29,12 @@ class PathGenerator {
     private final Path[] digitsPaths = new Path[NB_DIGITS];
 
     private WatchShape shape;
-    private Theme theme;
+    private WatchTheme theme;
     private int width;
     private int height;
     private int padding;
 
-    public PathGenerator(Context context) {
+    PathGenerator(Context context) {
         this.context = context;
 
         int i;
@@ -49,24 +49,24 @@ class PathGenerator {
         }
     }
 
-    public void setShape(WatchShape shape) {
-        this.shape = shape;
-        generatePaths();
-    }
-
-    public void setTheme(Theme theme) {
-        this.theme = theme;
-        generatePaths();
-    }
-
-    public void setDimensions(int width, int height, int padding) {
+    void setDimensions(int width, int height, int padding) {
         this.width = width;
         this.height = height;
         this.padding = padding;
         generatePaths();
     }
 
-    public Path get(PathType pathType) {
+    void setTheme(WatchTheme theme) {
+        this.theme = theme;
+        generatePaths();
+    }
+
+    void setShape(WatchShape shape) {
+        this.shape = shape;
+        generatePaths();
+    }
+
+    Path get(PathType pathType) {
         Preconditions.checkArgument(isDataInitialized(), "Data must be initialized");
 
         switch (pathType) {
@@ -79,7 +79,7 @@ class PathGenerator {
         }
     }
 
-    public Path get(PathType pathType, int index) {
+    Path get(PathType pathType, int index) {
         Preconditions.checkArgument(isDataInitialized(), "Data must be initialized");
 
         switch (pathType) {

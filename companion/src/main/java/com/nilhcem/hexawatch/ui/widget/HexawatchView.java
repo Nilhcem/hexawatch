@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
 
 public class HexawatchView extends View {
@@ -44,7 +44,7 @@ public class HexawatchView extends View {
         hexawatch.drawTime(canvas, 10, 10);
     }
 
-    public void setTheme(Theme theme) {
+    public void setTheme(WatchTheme theme) {
         hexawatch.setTheme(theme);
         invalidate();
     }

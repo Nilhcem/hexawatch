@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.ui.BaseViewHolder;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
 
@@ -20,7 +20,7 @@ public class ThemesViewHolder extends BaseViewHolder {
         super(parent, R.layout.presets_item);
     }
 
-    public void bindData(@StringRes int nameRes, Theme theme) {
+    public void bindData(@StringRes int nameRes, WatchTheme theme) {
         watchface.setTheme(theme);
         name.setText(nameRes);
     }

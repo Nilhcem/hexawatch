@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.nilhcem.hexawatch.common.core.WatchMode;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 
 class Painter {
@@ -19,9 +19,9 @@ class Painter {
     private final Paint paddingPaint;
 
     private WatchMode mode;
-    private Theme theme;
+    private WatchTheme theme;
 
-    public Painter(Context context) {
+    Painter(Context context) {
         this.context = context;
 
         bgPaint = new Paint();
@@ -38,7 +38,7 @@ class Painter {
         paddingPaint.setStyle(Paint.Style.STROKE);
     }
 
-    public void draw(Canvas canvas, Path background, Path skeleton, Path hours, Path minutes, Path digits) {
+    void draw(Canvas canvas, Path background, Path skeleton, Path hours, Path minutes, Path digits) {
         canvas.drawPath(background, bgPaint);
 
         if (mode == WatchMode.AMBIENT) {
@@ -53,14 +53,6 @@ class Painter {
 
         if (mode != WatchMode.LOW_BIT) {
             canvas.drawPath(background, paddingPaint);
-        }
-    }
-
-    public void setTheme(Theme theme) {
-        this.theme = theme;
-        if (theme != null) {
-            setPaintColors(theme.bgColor, theme.strokeColor, theme.fillColor);
-            setPaintWidths(theme.strokeWidthDp);
         }
     }
 
@@ -92,6 +84,14 @@ class Painter {
 
     void setPadding(int padding) {
         paddingPaint.setStrokeWidth(padding);
+    }
+
+    void setTheme(WatchTheme theme) {
+        this.theme = theme;
+        if (theme != null) {
+            setPaintColors(theme.bgColor, theme.strokeColor, theme.fillColor);
+            setPaintWidths(theme.strokeWidthDp);
+        }
     }
 
     private void setPaintColors(int bgColor, int strokeColor, int fillColor) {

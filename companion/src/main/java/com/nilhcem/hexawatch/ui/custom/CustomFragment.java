@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
-import com.nilhcem.hexawatch.common.core.theme.ThemePreset;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
 
@@ -23,7 +22,7 @@ public class CustomFragment extends BaseFragment {
     @BindView(R.id.custom_stroke_size) SeekBarChooserView strokeSizeChooser;
     @BindView(R.id.custom_hexagon_ratio) SeekBarChooserView hexagonRatioChooser;
 
-    private Theme theme = ThemePreset.CUSTOM.theme;
+    private WatchTheme theme = WatchTheme.Preset.CUSTOM.theme;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class CustomFragment extends BaseFragment {
         bgColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                theme = new Theme(color, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
+                theme = new WatchTheme(color, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
                 hexawatch.setTheme(theme);
             }
         });
@@ -48,7 +47,7 @@ public class CustomFragment extends BaseFragment {
         fillColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                theme = new Theme(theme.bgColor, color, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
+                theme = new WatchTheme(theme.bgColor, color, theme.strokeColor, theme.strokeWidthDp, theme.innerHexaRatio);
                 hexawatch.setTheme(theme);
             }
         });
@@ -57,7 +56,7 @@ public class CustomFragment extends BaseFragment {
         strokeColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                theme = new Theme(theme.bgColor, theme.fillColor, color, theme.strokeWidthDp, theme.innerHexaRatio);
+                theme = new WatchTheme(theme.bgColor, theme.fillColor, color, theme.strokeWidthDp, theme.innerHexaRatio);
                 hexawatch.setTheme(theme);
             }
         });
@@ -66,7 +65,7 @@ public class CustomFragment extends BaseFragment {
         strokeSizeChooser.setOnValueChangedListener(new SeekBarChooserView.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                theme = new Theme(theme.bgColor, theme.fillColor, theme.strokeColor, 1f + 0.04f * value, theme.innerHexaRatio);
+                theme = new WatchTheme(theme.bgColor, theme.fillColor, theme.strokeColor, 1f + 0.04f * value, theme.innerHexaRatio);
                 hexawatch.setTheme(theme);
             }
         });
@@ -75,7 +74,7 @@ public class CustomFragment extends BaseFragment {
         hexagonRatioChooser.setOnValueChangedListener(new SeekBarChooserView.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                theme = new Theme(theme.bgColor, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, 0.1f + 0.008f * value);
+                theme = new WatchTheme(theme.bgColor, theme.fillColor, theme.strokeColor, theme.strokeWidthDp, 0.1f + 0.008f * value);
                 hexawatch.setTheme(theme);
             }
         });

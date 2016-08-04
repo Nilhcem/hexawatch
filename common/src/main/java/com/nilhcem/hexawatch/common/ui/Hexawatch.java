@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.common.core.theme.Theme;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 import static com.nilhcem.hexawatch.common.ui.PathType.BACKGROUND;
 import static com.nilhcem.hexawatch.common.ui.PathType.DIGITS;
@@ -24,24 +24,6 @@ public class Hexawatch {
         setMode(WatchMode.INTERACTIVE);
     }
 
-    public void setShape(WatchShape shape) {
-        pathGenerator.setShape(shape);
-    }
-
-    public void setMode(WatchMode mode) {
-        painter.setMode(mode);
-    }
-
-    public void setDimensions(int width, int height, int padding) {
-        painter.setPadding(padding);
-        pathGenerator.setDimensions(width, height, padding);
-    }
-
-    public void setTheme(Theme theme) {
-        painter.setTheme(theme);
-        pathGenerator.setTheme(theme);
-    }
-
     public void drawTime(Canvas canvas, int hours, int minutes) {
         painter.draw(canvas,
                 pathGenerator.get(BACKGROUND),
@@ -49,5 +31,23 @@ public class Hexawatch {
                 pathGenerator.get(HOURS, hours),
                 pathGenerator.get(MINUTES, minutes / 10),
                 pathGenerator.get(DIGITS, minutes % 10));
+    }
+
+    public void setDimensions(int width, int height, int padding) {
+        painter.setPadding(padding);
+        pathGenerator.setDimensions(width, height, padding);
+    }
+
+    public void setMode(WatchMode mode) {
+        painter.setMode(mode);
+    }
+
+    public void setShape(WatchShape shape) {
+        pathGenerator.setShape(shape);
+    }
+
+    public void setTheme(WatchTheme theme) {
+        painter.setTheme(theme);
+        pathGenerator.setTheme(theme);
     }
 }
