@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import com.nilhcem.hexawatch.common.config.ConfigHelper;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.common.ui.Hexawatch;
 
 import java.util.Calendar;
@@ -26,6 +27,7 @@ public class HexawatchService extends BaseWatchFaceService {
     private class Engine extends BaseWatchFaceService.Engine implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private Hexawatch hexawatch;
+        private WatchTheme theme;
         private ConfigHelper configHelper;
 
         @Override
@@ -33,9 +35,10 @@ public class HexawatchService extends BaseWatchFaceService {
             super.onCreate(holder);
             configHelper = new ConfigHelper(context);
             configHelper.registerOnSharedPreferenceChangeListener(this);
+            theme = configHelper.getTheme();
 
             hexawatch = new Hexawatch(context);
-            hexawatch.setTheme(configHelper.getTheme());
+            hexawatch.setTheme(theme);
 
             setWatchFaceStyle(new WatchFaceStyle.Builder(HexawatchService.this)
                     .setAcceptsTapEvents(false)
@@ -80,8 +83,12 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            hexawatch.setTheme(configHelper.getTheme());
-            invalidate();
+            WatchTheme newTheme = configHelper.getTheme();
+            if (theme != newTheme) {
+                theme = newTheme;
+                hexawatch.setTheme(theme);
+                invalidate();
+            }
         }
     }
 }
