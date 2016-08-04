@@ -1,16 +1,26 @@
 package com.nilhcem.hexawatch.ui.themes;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
 
-    private WatchTheme customTheme;
+    public interface OnThemePresetSelectedListener {
+        void onThemePresetSelected(WatchTheme.Preset preset);
+    }
 
-    public ThemesAdapter(WatchTheme customTheme) {
+
+    private WatchTheme customTheme;
+    private WatchTheme.Preset selectedPreset;
+    private final OnThemePresetSelectedListener listener;
+
+    public ThemesAdapter(WatchTheme customTheme, WatchTheme.Preset selectedPreset, OnThemePresetSelectedListener listener) {
         this.customTheme = customTheme;
+        this.selectedPreset = selectedPreset;
+        this.listener = listener;
     }
 
     @Override
@@ -20,9 +30,17 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
 
     @Override
     public void onBindViewHolder(ThemesViewHolder holder, int position) {
-        WatchTheme.Preset themePreset = WatchTheme.Preset.values()[position];
+        final WatchTheme.Preset themePreset = WatchTheme.Preset.values()[position];
         WatchTheme theme = themePreset == WatchTheme.Preset.CUSTOM ? customTheme : themePreset.theme;
-        holder.bindData(themePreset.nameRes, theme);
+        holder.bindData(themePreset.nameRes, theme, themePreset == selectedPreset);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedPreset = themePreset;
+                notifyDataSetChanged();
+                listener.onThemePresetSelected(themePreset);
+            }
+        });
     }
 
     @Override

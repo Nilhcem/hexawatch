@@ -29,7 +29,7 @@ public class WatchConfigActivity extends Activity {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
                 WatchTheme.Preset preset = WatchTheme.Preset.values()[viewHolder.getLayoutPosition()];
-                configHelper.setTheme(preset);
+                configHelper.setThemePreset(preset);
                 finish();
             }
 

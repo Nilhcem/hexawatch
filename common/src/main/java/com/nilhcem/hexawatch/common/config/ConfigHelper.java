@@ -54,7 +54,7 @@ public class ConfigHelper {
         );
     }
 
-    public void setTheme(@NonNull WatchTheme.Preset themePreset) {
+    public void setThemePreset(@NonNull WatchTheme.Preset themePreset) {
         prefs.edit().putString(KEY_PRESET_NAME, themePreset.name()).apply();
     }
 

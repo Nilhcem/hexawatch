@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@drawable/themes_item_bg"
+    android:foreground="?attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        tools:text="NAME"/>
+        android:orientation="vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp">
 
-    <com.nilhcem.hexawatch.ui.widget.HexawatchView
-        android:id="@+id/watchface"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="1dp"/>
-</LinearLayout>
+        <com.nilhcem.hexawatch.ui.widget.HexawatchView
+            android:id="@+id/watchface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            tools:background="@color/accent"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            android:minHeight="42sp"
+            android:padding="3dp"
+            android:textSize="14sp"
+            tools:text="@string/app_name"/>
+    </LinearLayout>
+</FrameLayout>

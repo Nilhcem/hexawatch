@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.R;
+import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.common.utils.ContextUtils;
 import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.recyclerview.MarginDecoration;
 
 import butterknife.BindView;
 
-public class ThemesFragment extends BaseFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class ThemesFragment extends BaseFragment implements SharedPreferences.OnSharedPreferenceChangeListener, ThemesAdapter.OnThemePresetSelectedListener {
 
     @BindView(R.id.presets_recyclerview) RecyclerView recyclerView;
 
@@ -29,7 +30,7 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ThemesAdapter(configHelper.getCustomTheme());
+        adapter = new ThemesAdapter(configHelper.getCustomTheme(), configHelper.getThemePreset(), this);
 
         recyclerView.addItemDecoration(new MarginDecoration(ContextUtils.dpToPx(getContext(), 4f)));
         recyclerView.setHasFixedSize(true);
@@ -51,5 +52,10 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         adapter.updateCustomTheme(configHelper.getCustomTheme());
+    }
+
+    @Override
+    public void onThemePresetSelected(WatchTheme.Preset preset) {
+        configHelper.setThemePreset(preset);
     }
 }
