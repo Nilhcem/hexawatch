@@ -51,7 +51,7 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        adapter.updateCustomTheme(configHelper.getCustomTheme());
+        adapter.updateTheme(configHelper.getThemePreset(), configHelper.getCustomTheme());
     }
 
     @Override

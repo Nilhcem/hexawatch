@@ -1,0 +1,14 @@
+syntax = "proto3";
+package hexawatch;
+
+option java_package = "com.nilhcem.hexawatch.common.config.services.model.proto";
+option java_outer_classname = "Config";
+
+message Model {
+  string preset = 1;
+  int32 bg_color = 2;
+  int32 fill_color = 3;
+  int32 stroke_color = 4;
+  float stroke_width = 5;
+  float inner_hexa_ratio = 6;
+}

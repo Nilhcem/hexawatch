@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_data_layer_path">/hexawatch/config</string>
+    <string name="config_node_capability">hexawatch_config</string>
+</resources>

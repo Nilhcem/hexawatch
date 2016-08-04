@@ -88,7 +88,7 @@ class Painter {
 
     void setTheme(WatchTheme theme) {
         this.theme = theme;
-        if (theme != null) {
+        if (theme != null && mode == WatchMode.INTERACTIVE) {
             setPaintColors(theme.bgColor, theme.strokeColor, theme.fillColor);
             setPaintWidths(theme.strokeWidthDp);
         }

@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.nilhcem.hexawatch.common"/>
+<manifest
+    package="com.nilhcem.hexawatch.common"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <service android:name=".config.services.SendConfigChangeIntentService"/>
+
+        <service
+            android:name=".config.services.ConfigChangeListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED"/>
+                <data
+                    android:host="*"
+                    android:path="@string/config_data_layer_path"
+                    android:scheme="wear"/>
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

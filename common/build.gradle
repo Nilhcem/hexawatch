@@ -14,5 +14,7 @@ android {
 
     dependencies {
         compile "com.android.support:support-annotations:$supportVersion"
+        compile 'com.google.android.gms:play-services-wearable:9.4.0'
+        compile 'com.google.protobuf:protobuf-java:3.0.0'
     }
 }

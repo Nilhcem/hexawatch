@@ -12,7 +12,6 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
         void onThemePresetSelected(WatchTheme.Preset preset);
     }
 
-
     private WatchTheme customTheme;
     private WatchTheme.Preset selectedPreset;
     private final OnThemePresetSelectedListener listener;
@@ -48,10 +47,11 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
         return WatchTheme.Preset.values().length;
     }
 
-    public void updateCustomTheme(WatchTheme customTheme) {
-        if (this.customTheme != customTheme) {
+    public void updateTheme(WatchTheme.Preset selectedPreset, WatchTheme customTheme) {
+        if (this.customTheme != customTheme || this.selectedPreset != selectedPreset) {
             this.customTheme = customTheme;
-            notifyItemChanged(WatchTheme.Preset.CUSTOM.ordinal());
+            this.selectedPreset = selectedPreset;
+            notifyDataSetChanged();
         }
     }
 }
