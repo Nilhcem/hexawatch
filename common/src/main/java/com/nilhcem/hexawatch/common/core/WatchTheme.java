@@ -25,7 +25,7 @@ public class WatchTheme {
         DEFAULT(R.string.theme_preset_default, new WatchTheme(0xff202020, 0xff808080, 0xffe0e0e0, 1.5f, 0.75f)),
         CUSTOM(R.string.theme_preset_custom, new WatchTheme(0xff0089b6, 0xff71b8d0, 0xffe8f4ff, 1.5f, 0.75f)),
         BLUE(R.string.theme_preset_blue, new WatchTheme(0xff1c5090, 0xff6e88a8, 0xffffffff, 1.5f, 0.75f)),
-        GREEN(R.string.theme_preset_green, new WatchTheme(0xff289465, 0xff55af88, 0xffffffff, 1.5f, 0.75f)),
+        GREEN(R.string.theme_preset_green, new WatchTheme(0xff00b387, 0xff498778, 0xffe8fff4, 1.5f, 0.75f)),
         RED(R.string.theme_preset_red, new WatchTheme(0xffb62e2e, 0xffd06a6a, 0xffffffff, 1.5f, 0.75f)),
         PURPLE(R.string.theme_preset_purple, new WatchTheme(0xff794787, 0xff9b79a5, 0xffffffff, 1.5f, 0.75f)),
         BROWN(R.string.theme_preset_brown, new WatchTheme(0xff875647, 0xffa58379, 0xffffffff, 1.5f, 0.75f)),
