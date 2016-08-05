@@ -21,6 +21,7 @@ public class ConfigActivity extends BaseActivity {
         setContentView(R.layout.config);
 
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new ConfigAdapter(this, getSupportFragmentManager()));
     }
 }
