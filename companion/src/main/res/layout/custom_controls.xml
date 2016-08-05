@@ -40,6 +40,7 @@
         android:text="@string/custom_hexagon_ratio"/>
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|end"
@@ -50,16 +51,16 @@
 
         <Button
             android:id="@+id/custom_buttons_reset"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="42dp"
             android:text="@string/custom_reset"/>
 
         <Button
             android:id="@+id/custom_buttons_save"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="42dp"
             android:text="@string/custom_save"/>
     </LinearLayout>
 </LinearLayout>
