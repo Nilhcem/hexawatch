@@ -3,6 +3,7 @@ package com.nilhcem.hexawatch.common.config.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,12 +23,12 @@ import java.util.concurrent.TimeUnit;
 
 public class SendConfigChangeIntentService extends IntentService {
 
-    public static void start(Context context) {
-        context.startService(new Intent(context, SendConfigChangeIntentService.class));
-    }
-
     public SendConfigChangeIntentService() {
         super(SendConfigChangeIntentService.class.getSimpleName());
+    }
+
+    public static void start(Context context) {
+        context.startService(new Intent(context, SendConfigChangeIntentService.class));
     }
 
     @Override
@@ -37,21 +38,12 @@ public class SendConfigChangeIntentService extends IntentService {
 
         if (connectionResult.isSuccess()) {
             try {
-                MessageApi.SendMessageResult result;
-                String path = getString(R.string.config_data_layer_path);
-                byte[] config = getSerializedConfig();
-
-                for (String nodeId : getNodesIds(googleApiClient)) {
-                    result = Wearable.MessageApi.sendMessage(googleApiClient, nodeId, path, config).await();
-                    if (!result.getStatus().isSuccess()) {
-                        // TODO log: failed to send message to node: nodeId
-                    }
-                }
+                sendConfigToNodes(googleApiClient, getSerializedConfig(), getNodesIds(googleApiClient));
             } finally {
                 googleApiClient.disconnect();
             }
         } else {
-//            Log.e(TAG, "Failed to connect to GoogleApiClient: " + connectionResult.getErrorCode());
+            Log.w(getClass().getSimpleName(), "Failed to connect to GoogleApiClient: " + connectionResult.getErrorCode());
         }
     }
 
@@ -65,6 +57,18 @@ public class SendConfigChangeIntentService extends IntentService {
             results.add(node.getId());
         }
         return results;
+    }
+
+    private void sendConfigToNodes(GoogleApiClient googleApiClient, byte[] config, Collection<String> nodesIds) {
+        MessageApi.SendMessageResult result;
+        String path = getString(R.string.config_data_layer_path);
+
+        for (String nodeId : nodesIds) {
+            result = Wearable.MessageApi.sendMessage(googleApiClient, nodeId, path, config).await();
+            if (!result.getStatus().isSuccess()) {
+                Log.e(getClass().getSimpleName(), "Failed sending message to node: " + nodeId + ".\n" + result.getStatus().getStatusMessage());
+            }
+        }
     }
 
     private byte[] getSerializedConfig() {

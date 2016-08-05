@@ -69,10 +69,10 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
             width = screenSize.x;
             height = screenSize.y + chinSize;
 
-            WatchShape shape = insets.isRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
-            if (!shape.equals(this.shape)) {
-                this.shape = shape;
-                onShapeChanged(shape);
+            WatchShape newShape = insets.isRound() ? WatchShape.CIRCLE : WatchShape.SQUARE;
+            if (!newShape.equals(shape)) {
+                shape = newShape;
+                onShapeChanged(newShape);
             }
         }
 
@@ -91,11 +91,11 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
             lowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
-            boolean burnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
+            boolean newBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
 
-            if (this.burnInProtection == null || this.burnInProtection != burnInProtection) {
-                this.burnInProtection = burnInProtection;
-                onBurnInProtectionChanged(burnInProtection);
+            if (burnInProtection == null || burnInProtection != newBurnInProtection) {
+                burnInProtection = newBurnInProtection;
+                onBurnInProtectionChanged(newBurnInProtection);
             }
         }
 

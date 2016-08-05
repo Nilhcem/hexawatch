@@ -1,5 +1,7 @@
 package com.nilhcem.hexawatch.common.config.services;
 
+import android.util.Log;
+
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -21,7 +23,7 @@ public class ConfigChangeListenerService extends WearableListenerService {
                 WatchTheme theme = new WatchTheme(model.getBgColor(), model.getFillColor(), model.getStrokeColor(), model.getStrokeWidth(), model.getInnerHexaRatio());
                 new ConfigHelper(this).setDataInternally(preset, theme);
             } catch (InvalidProtocolBufferException e) {
-                // TODO
+                Log.e(getClass().getSimpleName(), "Error receiving protobuf message", e);
             }
         }
     }

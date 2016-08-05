@@ -58,10 +58,12 @@ public class SeekBarChooserView extends LinearLayout implements SeekBar.OnSeekBa
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        // Do nothing
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        // Do nothing
     }
 
     public void setOnValueChangedListener(OnValueChangedListener listener) {

@@ -5,6 +5,10 @@ import android.graphics.PointF;
 
 public class PathUtils {
 
+    private PathUtils() {
+        throw new UnsupportedOperationException();
+    }
+
     public static void moveTo(Path path, PointF point) {
         path.moveTo(point.x, point.y);
     }

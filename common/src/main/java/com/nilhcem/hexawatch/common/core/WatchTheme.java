@@ -1,6 +1,7 @@
 package com.nilhcem.hexawatch.common.core;
 
 import android.support.annotation.StringRes;
+import android.util.Log;
 
 import com.nilhcem.hexawatch.common.R;
 
@@ -64,7 +65,7 @@ public class WatchTheme {
                 try {
                     preset = Preset.valueOf(name);
                 } catch (IllegalArgumentException e) {
-                    // Do nothing
+                    Log.w(Preset.class.getSimpleName(), "Can't find Preset with name: " + name, e);
                 }
             }
 

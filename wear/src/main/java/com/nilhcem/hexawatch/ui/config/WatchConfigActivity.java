@@ -3,7 +3,7 @@ package com.nilhcem.hexawatch.ui.config;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WearableListView;
-import android.widget.TextView;
+import android.view.View;
 
 import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.config.ConfigHelper;
@@ -11,7 +11,6 @@ import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 public class WatchConfigActivity extends Activity {
 
-    private TextView header;
     private ConfigHelper configHelper;
 
     @Override
@@ -20,7 +19,6 @@ public class WatchConfigActivity extends Activity {
         configHelper = new ConfigHelper(this);
 
         setContentView(R.layout.watch_config);
-        header = (TextView) findViewById(R.id.config_header);
         WearableListView list = (WearableListView) findViewById(R.id.config_list);
         list.setAdapter(new WatchConfigAdapter(configHelper.getCustomTheme()));
 
@@ -35,33 +33,46 @@ public class WatchConfigActivity extends Activity {
 
             @Override
             public void onTopEmptyRegionClick() {
+                // Do nothing
             }
         });
 
         // Move header on list scroll
-        list.addOnScrollListener(new WearableListView.OnScrollListener() {
-            @Override
-            public void onAbsoluteScrollChange(int i) {
-                if (i > 0) {
-                    header.setY(-i);
-                }
-            }
-
-            @Override
-            public void onScroll(int i) {
-            }
-
-            @Override
-            public void onScrollStateChanged(int i) {
-            }
-
-            @Override
-            public void onCentralPositionChanged(int i) {
-            }
-        });
+        list.addOnScrollListener(new ScrollHeaderListener(findViewById(R.id.config_header)));
 
         // Automatically select current theme
         WatchTheme.Preset themePreset = configHelper.getThemePreset();
         list.scrollToPosition(themePreset.ordinal());
+    }
+
+    static class ScrollHeaderListener implements WearableListView.OnScrollListener {
+
+        private final View header;
+
+        public ScrollHeaderListener(View header) {
+            this.header = header;
+        }
+
+        @Override
+        public void onAbsoluteScrollChange(int i) {
+            if (i > 0) {
+                header.setY(-i);
+            }
+        }
+
+        @Override
+        public void onScroll(int i) {
+            // Do nothing
+        }
+
+        @Override
+        public void onScrollStateChanged(int i) {
+            // Do nothing
+        }
+
+        @Override
+        public void onCentralPositionChanged(int i) {
+            // Do nothing
+        }
     }
 }
