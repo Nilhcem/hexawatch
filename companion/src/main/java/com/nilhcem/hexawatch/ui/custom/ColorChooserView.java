@@ -42,17 +42,18 @@ public class ColorChooserView extends AppCompatTextView implements View.OnClickL
 
     public ColorChooserView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        boolean rtl = getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
 
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.custom_text_size));
         int padding = getResources().getDimensionPixelSize(R.dimen.custom_default_padding);
-        setGravity(Gravity.CENTER_VERTICAL);
+        setGravity(Gravity.CENTER_VERTICAL | (rtl ? Gravity.RIGHT : Gravity.LEFT));
         setPadding(padding, padding, padding, padding);
 
         // Left circle
         int size = ContextUtils.dpToPx(context, CIRCLE_SIZE_DP);
         circle = ContextCompat.getDrawable(context, R.drawable.circle_drawable);
         circle.setBounds(0, 0, size, size);
-        setCompoundDrawables(circle, null, null, null);
+        setCompoundDrawables(rtl ? null : circle, null, rtl ? circle : null, null);
         setCompoundDrawablePadding(ContextUtils.dpToPx(context, COMPOUND_DRAWABLE_PADDING_DP));
 
         setOnClickListener(this);
