@@ -10,13 +10,13 @@ import com.nilhcem.hexawatch.ui.about.AboutFragment;
 import com.nilhcem.hexawatch.ui.custom.CustomFragment;
 import com.nilhcem.hexawatch.ui.themes.ThemesFragment;
 
-public class ConfigAdapter extends FragmentPagerAdapter {
+class ConfigAdapter extends FragmentPagerAdapter {
 
     private static final int[] TITLES = {R.string.config_tab_themes, R.string.config_tab_custom, R.string.config_tab_about};
 
     private final Context context;
 
-    public ConfigAdapter(Context context, FragmentManager fm) {
+    ConfigAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
     }

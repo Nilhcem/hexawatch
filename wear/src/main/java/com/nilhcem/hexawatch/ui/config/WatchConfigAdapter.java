@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
-public class WatchConfigAdapter extends WearableListView.Adapter {
+class WatchConfigAdapter extends WearableListView.Adapter {
 
     private final WatchTheme customTheme;
 
-    public WatchConfigAdapter(WatchTheme customTheme) {
+    WatchConfigAdapter(WatchTheme customTheme) {
         this.customTheme = customTheme;
     }
 

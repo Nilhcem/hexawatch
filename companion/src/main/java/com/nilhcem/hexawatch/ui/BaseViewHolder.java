@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
-    public BaseViewHolder(ViewGroup parent, @LayoutRes int layout) {
+    protected BaseViewHolder(ViewGroup parent, @LayoutRes int layout) {
         super(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false));
         ButterKnife.bind(this, itemView);
     }

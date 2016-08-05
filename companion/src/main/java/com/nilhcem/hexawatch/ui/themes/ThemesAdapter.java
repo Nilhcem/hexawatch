@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
-public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
+class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
 
-    public interface OnThemePresetSelectedListener {
+    interface OnThemePresetSelectedListener {
         void onThemePresetSelected(WatchTheme.Preset preset);
     }
 
@@ -16,7 +16,7 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
     private WatchTheme.Preset selectedPreset;
     private final OnThemePresetSelectedListener listener;
 
-    public ThemesAdapter(WatchTheme customTheme, WatchTheme.Preset selectedPreset, OnThemePresetSelectedListener listener) {
+    ThemesAdapter(WatchTheme customTheme, WatchTheme.Preset selectedPreset, OnThemePresetSelectedListener listener) {
         this.customTheme = customTheme;
         this.selectedPreset = selectedPreset;
         this.listener = listener;
@@ -47,7 +47,7 @@ public class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
         return WatchTheme.Preset.values().length;
     }
 
-    public void updateTheme(WatchTheme.Preset selectedPreset, WatchTheme customTheme) {
+    void updateTheme(WatchTheme.Preset selectedPreset, WatchTheme customTheme) {
         if (this.customTheme != customTheme || this.selectedPreset != selectedPreset) {
             this.customTheme = customTheme;
             this.selectedPreset = selectedPreset;
