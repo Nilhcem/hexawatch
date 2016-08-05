@@ -11,7 +11,7 @@ import android.util.AttributeSet;
  */
 public class AutofitRecyclerView extends RecyclerView {
 
-    private GridLayoutManager manager;
+    private final GridLayoutManager manager;
     private int columnWidth = -1;
 
     public AutofitRecyclerView(Context context) {
