@@ -20,6 +20,8 @@ import butterknife.OnClick;
 
 public class CustomFragment extends BaseFragment {
 
+    private static final String STATE_KEY_THEME = "theme";
+
     @BindView(R.id.custom_layout) ViewGroup rootView;
     @BindView(R.id.custom_hexawatch) HexawatchView hexawatch;
     @BindView(R.id.custom_bg_color) ColorChooserView bgColorChooser;
@@ -38,7 +40,12 @@ public class CustomFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        theme = configHelper.getCustomTheme();
+        if (savedInstanceState == null) {
+            theme = configHelper.getCustomTheme();
+        } else {
+            theme = savedInstanceState.getParcelable(STATE_KEY_THEME);
+        }
+
         setControlValues(theme);
 
         bgColorChooser.setOnColorSelectedListener(new ColorChooserView.OnColorSelectedListener() {
@@ -80,6 +87,12 @@ public class CustomFragment extends BaseFragment {
                 hexawatch.setTheme(theme);
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(STATE_KEY_THEME, theme);
     }
 
     @OnClick(R.id.custom_buttons_reset)

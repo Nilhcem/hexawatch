@@ -70,7 +70,13 @@ public class SeekBarChooserView extends LinearLayout implements SeekBar.OnSeekBa
         this.listener = listener;
     }
 
-    public void setValue(int value) {
-        seekbar.setProgress(value);
+    public void setValue(final int value) {
+        // http://stackoverflow.com/questions/17313197/using-seekbar-and-setprogress-doesnt-change-seekbar-position
+        seekbar.post(new Runnable() {
+            @Override
+            public void run() {
+                seekbar.setProgress(value);
+            }
+        });
     }
 }

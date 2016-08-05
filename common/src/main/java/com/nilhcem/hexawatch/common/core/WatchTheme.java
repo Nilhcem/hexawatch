@@ -1,17 +1,31 @@
 package com.nilhcem.hexawatch.common.core;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.nilhcem.hexawatch.common.R;
 
-public class WatchTheme {
+public class WatchTheme implements Parcelable {
 
     public final int bgColor;
     public final int fillColor;
     public final int strokeColor;
     public final float strokeWidthDp;
     public final float innerHexaRatio;
+
+    public static final Parcelable.Creator<WatchTheme> CREATOR = new Parcelable.Creator<WatchTheme>() {
+        @Override
+        public WatchTheme createFromParcel(Parcel source) {
+            return new WatchTheme(source);
+        }
+
+        @Override
+        public WatchTheme[] newArray(int size) {
+            return new WatchTheme[size];
+        }
+    };
 
     public WatchTheme(int bgColor, int fillColor, int strokeColor, float strokeWidthDp, float innerHexaRatio) {
         this.bgColor = bgColor;
@@ -21,8 +35,29 @@ public class WatchTheme {
         this.innerHexaRatio = innerHexaRatio;
     }
 
-    public enum Preset {
+    protected WatchTheme(Parcel in) {
+        bgColor = in.readInt();
+        fillColor = in.readInt();
+        strokeColor = in.readInt();
+        strokeWidthDp = in.readFloat();
+        innerHexaRatio = in.readFloat();
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(bgColor);
+        dest.writeInt(fillColor);
+        dest.writeInt(strokeColor);
+        dest.writeFloat(strokeWidthDp);
+        dest.writeFloat(innerHexaRatio);
+    }
+
+    public enum Preset {
         DEFAULT(R.string.theme_preset_default, new WatchTheme(0xff202020, 0xff808080, 0xffe0e0e0, 1.5f, 0.75f)),
         CUSTOM(R.string.theme_preset_custom, new WatchTheme(0xff0089b6, 0xff71b8d0, 0xffe8f4ff, 1.5f, 0.75f)),
         BLUE(R.string.theme_preset_blue, new WatchTheme(0xff1c5090, 0xff6e88a8, 0xffffffff, 1.5f, 0.75f)),
