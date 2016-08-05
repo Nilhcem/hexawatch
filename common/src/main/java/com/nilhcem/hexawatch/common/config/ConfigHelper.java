@@ -2,7 +2,6 @@ package com.nilhcem.hexawatch.common.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.nilhcem.hexawatch.common.config.services.SendConfigChangeIntentService;
@@ -10,6 +9,7 @@ import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 public class ConfigHelper {
 
+    private static final String PREFS_NAME = "shared_config";
     private static final String KEY_PRESET_NAME = "preset";
     private static final String KEY_CUSTOM_BG_COLOR = "custom_bg";
     private static final String KEY_CUSTOM_FILL_COLOR = "custom_fill";
@@ -22,7 +22,7 @@ public class ConfigHelper {
 
     public ConfigHelper(Context context) {
         this.context = context;
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
