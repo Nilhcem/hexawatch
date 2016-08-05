@@ -19,4 +19,11 @@
     <string name="custom_save">Save</string>
     <string name="custom_reset_msg">Custom theme restored</string>
     <string name="custom_save_msg">Custom theme saved</string>
+
+    <string name="about_version">Version %1$s (#%2$d)\nhomemade with love, by Nilhcem</string>
+    <string name="about_how_to_title">How to tell the time?</string>
+    <string name="about_how_to_desc">• The 12 triangles around the outside of the clock indicate hours (from 1 to 12) in the same position as in a conventional clock\n• The 6 large triangles at each side of the inner hexagon indicate the first digit of the minutes (0X, 1X, 2X, 3X, 4X, 5X)\n• The digit displayed at the center of the hexagon is the last digit of the minutes (0 to 9)</string>
+    <string name="about_try_title">Try it out!</string>
+    <string name="about_try_desc">Noticed the hexawatch above?\nIt is set to display the following time:</string>
+    <string name="about_try_button">Show me a different time (please)</string>
 </resources>

@@ -16,6 +16,9 @@ public class HexawatchView extends View {
     private final Hexawatch hexawatch;
     private final int padding;
 
+    private int hour = 10;
+    private int minute = 10;
+
     public HexawatchView(Context context) {
         this(context, null);
     }
@@ -41,7 +44,13 @@ public class HexawatchView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        hexawatch.drawTime(canvas, 10, 10);
+        hexawatch.drawTime(canvas, hour % 12, minute);
+    }
+
+    public void setTime(int hour, int minute) {
+        this.hour = hour;
+        this.minute = minute;
+        invalidate();
     }
 
     public void setTheme(WatchTheme theme) {
