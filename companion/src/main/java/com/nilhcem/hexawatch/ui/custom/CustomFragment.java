@@ -101,8 +101,8 @@ public class CustomFragment extends BaseFragment {
         bgColorChooser.setColor(theme.bgColor);
         fillColorChooser.setColor(theme.fillColor);
         strokeColorChooser.setColor(theme.strokeColor);
-        strokeSizeChooser.setValue(getValueInRange(0, 100, (theme.strokeWidthDp - 1f) / 0.04f));
-        hexagonRatioChooser.setValue(getValueInRange(0, 100, (theme.innerHexaRatio - 0.1f) / 0.008f));
+        strokeSizeChooser.setValue(getValueInRange((theme.strokeWidthDp - 1f) / 0.04f));
+        hexagonRatioChooser.setValue(getValueInRange((theme.innerHexaRatio - 0.1f) / 0.008f));
         hexawatch.setTheme(theme);
     }
 
@@ -114,7 +114,7 @@ public class CustomFragment extends BaseFragment {
         snack.show();
     }
 
-    private int getValueInRange(int min, int max, float value) {
-        return Math.max(min, Math.min(max, Math.round(value)));
+    private int getValueInRange(float value) {
+        return Math.max(0, Math.min(100, Math.round(value)));
     }
 }

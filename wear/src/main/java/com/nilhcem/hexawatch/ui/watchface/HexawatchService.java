@@ -71,7 +71,7 @@ public class HexawatchService extends BaseWatchFaceService {
         }
 
         @Override
-        protected void onDrawTime(Canvas canvas, Rect bounds, boolean ambiant, Calendar calendar) {
+        protected void onDrawTime(Canvas canvas, Rect bounds, Calendar calendar) {
             hexawatch.drawTime(canvas, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
         }
 

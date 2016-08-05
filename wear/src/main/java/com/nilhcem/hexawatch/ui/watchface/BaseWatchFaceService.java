@@ -83,7 +83,7 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
             // Only draw if watch is fully initialized.
             if (burnInProtection != null) {
                 timeHelper.setTimeToNow();
-                onDrawTime(canvas, bounds, isInAmbientMode(), timeHelper.getCalendar());
+                onDrawTime(canvas, bounds, timeHelper.getCalendar());
             }
         }
 
@@ -129,7 +129,7 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
 
         protected abstract void onBurnInProtectionChanged(boolean burnInProtection);
 
-        protected abstract void onDrawTime(Canvas canvas, Rect bounds, boolean ambiant, Calendar calendar);
+        protected abstract void onDrawTime(Canvas canvas, Rect bounds, Calendar calendar);
 
         protected abstract void onWatchModeChanged(WatchMode mode);
     }

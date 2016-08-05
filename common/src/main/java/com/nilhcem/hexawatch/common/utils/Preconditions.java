@@ -12,27 +12,9 @@ public class Preconditions {
         throw new UnsupportedOperationException();
     }
 
-    public static void checkArgument(boolean expression) {
-        if (!expression) {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public static void checkArgument(boolean expression, @NonNull String errorMessage) {
         if (!expression) {
             throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
-    public static <T> void checkNotNull(T reference) {
-        if (reference == null) {
-            throw new NullPointerException();
-        }
-    }
-
-    public static <T> void checkNotNull(T reference, @NonNull String errorMessage) {
-        if (reference == null) {
-            throw new NullPointerException(errorMessage);
         }
     }
 }
