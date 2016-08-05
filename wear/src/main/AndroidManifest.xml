@@ -10,7 +10,7 @@
 
     <application
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.DeviceDefault">
+        android:theme="@style/WearAppTheme">
 
         <service
             android:name=".ui.watchface.HexawatchService"
@@ -40,7 +40,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.config.WatchConfigActivity">
+        <activity
+            android:name=".ui.config.WatchConfigActivity"
+            android:theme="@style/WearAppTheme.Gray">
             <intent-filter>
                 <action android:name="com.nilhcem.hexawatch.CONFIG_WATCHFACE"/>
 
