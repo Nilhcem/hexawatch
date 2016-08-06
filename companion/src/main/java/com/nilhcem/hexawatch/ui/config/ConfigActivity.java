@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.nilhcem.hexawatch.R;
+import com.nilhcem.hexawatch.config.AppConfig;
 import com.nilhcem.hexawatch.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -23,5 +24,9 @@ public class ConfigActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new ConfigAdapter(this, getSupportFragmentManager()));
+
+        if (new AppConfig(this).isFirstLaunch()) {
+            viewPager.setCurrentItem(2);
+        }
     }
 }

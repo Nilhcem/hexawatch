@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 public class AppConfig {
 
     public static final String KEY_IS_CIRCLE = "isCircle";
+    private static final String KEY_IS_USER_AWESOME = "isUserAwesome";
 
     private final SharedPreferences prefs;
 
@@ -28,5 +29,14 @@ public class AppConfig {
 
     public boolean isPreviewCircle() {
         return prefs.getBoolean(KEY_IS_CIRCLE, true);
+    }
+
+    public boolean isFirstLaunch() {
+        if (prefs.contains(KEY_IS_USER_AWESOME)) {
+            return false;
+        } else {
+            prefs.edit().putBoolean(KEY_IS_USER_AWESOME, true).apply();
+            return true;
+        }
     }
 }
