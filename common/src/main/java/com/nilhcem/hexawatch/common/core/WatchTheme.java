@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.nilhcem.hexawatch.common.R;
 
+import java.util.Locale;
+
 public class WatchTheme implements Parcelable {
 
     public final int bgColor;
@@ -55,6 +57,12 @@ public class WatchTheme implements Parcelable {
         dest.writeInt(strokeColor);
         dest.writeFloat(strokeWidthDp);
         dest.writeFloat(innerHexaRatio);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.US, "WatchTheme{bgColor=#%X, fillColor=#%X, strokeColor=#%X, strokeWidthDp=%.2f, innerHexaRatio=%.2f}",
+                bgColor, fillColor, strokeColor, strokeWidthDp, innerHexaRatio);
     }
 
     public enum Preset {

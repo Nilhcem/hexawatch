@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import butterknife.OnClick;
 
 public class CustomFragment extends BaseFragment {
 
+    private static final String TAG = CustomFragment.class.getSimpleName();
     private static final String STATE_KEY_THEME = "theme";
 
     @BindView(R.id.custom_layout) ViewGroup rootView;
@@ -119,6 +121,7 @@ public class CustomFragment extends BaseFragment {
         sharedConfig.setCustomTheme(theme);
         hexawatch.setTheme(theme);
         snackbar(R.string.custom_save_msg);
+        Log.i(TAG, "Custom theme saved: " + theme);
     }
 
     private void setControlValues(WatchTheme theme) {
