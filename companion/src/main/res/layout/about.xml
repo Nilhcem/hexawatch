@@ -40,37 +40,29 @@
             android:paddingTop="8dp">
 
             <TextView
+                style="@style/About.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingBottom="4dp"
-                android:text="@string/about_how_to_title"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"/>
+                android:text="@string/about_how_to_title"/>
 
             <TextView
+                style="@style/About.Desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:text="@string/about_how_to_desc"
-                android:textSize="14sp"/>
+                android:text="@string/about_how_to_desc"/>
 
             <TextView
+                style="@style/About.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingBottom="4dp"
-                android:text="@string/about_try_title"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"/>
+                android:text="@string/about_try_title"/>
 
             <TextView
+                style="@style/About.Desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:text="@string/about_try_desc"
-                android:textSize="14sp"/>
+                android:text="@string/about_try_desc"/>
 
             <TextView
                 android:id="@+id/about_time"
@@ -90,24 +82,18 @@
 
             <TextView
                 android:id="@+id/about_toggle_title"
+                style="@style/About.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingBottom="4dp"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
                 tools:text="@string/about_toggle_shape_title_round"/>
 
             <TextView
                 android:id="@+id/about_toggle_desc"
+                style="@style/About.Desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
-                android:paddingBottom="8dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:textSize="14sp"
                 tools:text="@string/about_toggle_shape_desc_round"/>
 
             <TextView
