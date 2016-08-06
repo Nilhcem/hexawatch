@@ -7,7 +7,7 @@ import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 
-import com.nilhcem.hexawatch.common.config.ConfigHelper;
+import com.nilhcem.hexawatch.common.config.SharedConfig;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
@@ -28,14 +28,14 @@ public class HexawatchService extends BaseWatchFaceService {
 
         private Hexawatch hexawatch;
         private WatchTheme theme;
-        private ConfigHelper configHelper;
+        private SharedConfig config;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-            configHelper = new ConfigHelper(context);
-            configHelper.registerOnSharedPreferenceChangeListener(this);
-            theme = configHelper.getTheme();
+            config = new SharedConfig(context);
+            config.registerOnSharedPreferenceChangeListener(this);
+            theme = config.getTheme();
 
             hexawatch = new Hexawatch(context);
             hexawatch.setTheme(theme);
@@ -77,13 +77,13 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         public void onDestroy() {
-            configHelper.unregisterOnSharedPreferenceChangeListener(this);
+            config.unregisterOnSharedPreferenceChangeListener(this);
             super.onDestroy();
         }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            WatchTheme newTheme = configHelper.getTheme();
+            WatchTheme newTheme = config.getTheme();
             if (theme != newTheme) {
                 theme = newTheme;
                 hexawatch.setTheme(theme);

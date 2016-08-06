@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import com.nilhcem.hexawatch.common.config.services.SendConfigChangeIntentService;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
-public class ConfigHelper {
+public class SharedConfig {
 
     private static final String PREFS_NAME = "shared_config";
     private static final String KEY_PRESET_NAME = "preset";
@@ -20,7 +20,7 @@ public class ConfigHelper {
     private final Context context;
     private final SharedPreferences prefs;
 
-    public ConfigHelper(Context context) {
+    public SharedConfig(Context context) {
         this.context = context;
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }

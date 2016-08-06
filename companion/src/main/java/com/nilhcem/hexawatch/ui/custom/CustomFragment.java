@@ -42,10 +42,10 @@ public class CustomFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        onPreviewShapeChanged(appPrefs.isPreviewCircle());
+        onPreviewShapeChanged(appConfig.isPreviewCircle());
 
         if (savedInstanceState == null) {
-            theme = configHelper.getCustomTheme();
+            theme = sharedConfig.getCustomTheme();
         } else {
             theme = savedInstanceState.getParcelable(STATE_KEY_THEME);
         }
@@ -109,14 +109,14 @@ public class CustomFragment extends BaseFragment {
     @OnClick(R.id.custom_buttons_reset)
     public void resetCustomTheme() {
         theme = WatchTheme.Preset.CUSTOM.theme;
-        configHelper.setCustomTheme(theme);
+        sharedConfig.setCustomTheme(theme);
         setControlValues(theme);
         snackbar(R.string.custom_reset_msg);
     }
 
     @OnClick(R.id.custom_buttons_save)
     public void saveCustomTheme() {
-        configHelper.setCustomTheme(theme);
+        sharedConfig.setCustomTheme(theme);
         hexawatch.setTheme(theme);
         snackbar(R.string.custom_save_msg);
     }

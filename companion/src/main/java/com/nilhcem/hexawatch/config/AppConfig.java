@@ -1,16 +1,16 @@
-package com.nilhcem.hexawatch.core;
+package com.nilhcem.hexawatch.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class AppPreferences {
+public class AppConfig {
 
     public static final String KEY_IS_CIRCLE = "isCircle";
 
     private final SharedPreferences prefs;
 
-    public AppPreferences(Context context) {
+    public AppConfig(Context context) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 

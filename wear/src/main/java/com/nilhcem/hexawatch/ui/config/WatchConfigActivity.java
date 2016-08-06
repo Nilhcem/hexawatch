@@ -6,28 +6,28 @@ import android.support.wearable.view.WearableListView;
 import android.view.View;
 
 import com.nilhcem.hexawatch.R;
-import com.nilhcem.hexawatch.common.config.ConfigHelper;
+import com.nilhcem.hexawatch.common.config.SharedConfig;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
 public class WatchConfigActivity extends Activity {
 
-    private ConfigHelper configHelper;
+    private SharedConfig config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        configHelper = new ConfigHelper(this);
+        config = new SharedConfig(this);
 
         setContentView(R.layout.watch_config);
         WearableListView list = (WearableListView) findViewById(R.id.config_list);
-        list.setAdapter(new WatchConfigAdapter(configHelper.getCustomTheme()));
+        list.setAdapter(new WatchConfigAdapter(config.getCustomTheme()));
 
         // List item selection
         list.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
                 WatchTheme.Preset preset = WatchTheme.Preset.values()[viewHolder.getLayoutPosition()];
-                configHelper.setThemePreset(preset);
+                config.setThemePreset(preset);
                 finish();
             }
 
@@ -41,7 +41,7 @@ public class WatchConfigActivity extends Activity {
         list.addOnScrollListener(new ScrollHeaderListener(findViewById(R.id.config_header)));
 
         // Automatically select current theme
-        WatchTheme.Preset themePreset = configHelper.getThemePreset();
+        WatchTheme.Preset themePreset = config.getThemePreset();
         list.scrollToPosition(themePreset.ordinal());
     }
 

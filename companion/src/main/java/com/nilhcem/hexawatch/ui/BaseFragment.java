@@ -7,34 +7,33 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.nilhcem.hexawatch.common.config.ConfigHelper;
-import com.nilhcem.hexawatch.core.AppPreferences;
+import com.nilhcem.hexawatch.common.config.SharedConfig;
+import com.nilhcem.hexawatch.config.AppConfig;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
+    protected AppConfig appConfig;
+    protected SharedConfig sharedConfig;
+
     private Unbinder unbinder;
-    private SharedPreferences.OnSharedPreferenceChangeListener onAppPrefsChangedListener =
+    private final SharedPreferences.OnSharedPreferenceChangeListener onAppPrefsChangedListener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                    if (AppPreferences.KEY_IS_CIRCLE.equals(key)) {
-                        onPreviewShapeChanged(appPrefs.isPreviewCircle());
+                    if (AppConfig.KEY_IS_CIRCLE.equals(key)) {
+                        onPreviewShapeChanged(appConfig.isPreviewCircle());
                     }
                 }
             };
 
-
-    protected ConfigHelper configHelper;
-    protected AppPreferences appPrefs;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        configHelper = new ConfigHelper(context);
-        appPrefs = new AppPreferences(context);
+        appConfig = new AppConfig(context);
+        sharedConfig = new SharedConfig(context);
     }
 
     @Override
@@ -46,12 +45,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        appPrefs.registerOnSharedPreferenceChangeListener(onAppPrefsChangedListener);
+        appConfig.registerOnSharedPreferenceChangeListener(onAppPrefsChangedListener);
     }
 
     @Override
     public void onPause() {
-        appPrefs.unregisterOnSharedPreferenceChangeListener(onAppPrefsChangedListener);
+        appConfig.unregisterOnSharedPreferenceChangeListener(onAppPrefsChangedListener);
         super.onPause();
     }
 

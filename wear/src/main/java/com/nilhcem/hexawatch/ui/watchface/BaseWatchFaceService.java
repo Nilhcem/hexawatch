@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import com.nilhcem.hexawatch.BuildConfig;
 import com.nilhcem.hexawatch.common.core.WatchMode;
 import com.nilhcem.hexawatch.common.core.WatchShape;
-import com.nilhcem.hexawatch.core.watchface.TimeHelper;
+import com.nilhcem.hexawatch.core.TimeHelper;
 
 import java.util.Calendar;
 

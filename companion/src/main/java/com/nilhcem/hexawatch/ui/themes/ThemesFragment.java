@@ -21,11 +21,11 @@ public class ThemesFragment extends BaseFragment implements ThemesAdapter.OnThem
     @BindView(R.id.presets_recyclerview) RecyclerView recyclerView;
 
     private ThemesAdapter adapter;
-    private SharedPreferences.OnSharedPreferenceChangeListener customThemeChangedListener =
+    private final SharedPreferences.OnSharedPreferenceChangeListener customThemeChangedListener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                    adapter.updateTheme(configHelper.getThemePreset(), configHelper.getCustomTheme());
+                    adapter.updateTheme(sharedConfig.getThemePreset(), sharedConfig.getCustomTheme());
                 }
             };
 
@@ -37,7 +37,7 @@ public class ThemesFragment extends BaseFragment implements ThemesAdapter.OnThem
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ThemesAdapter(appPrefs.isPreviewCircle(), configHelper.getCustomTheme(), configHelper.getThemePreset(), this);
+        adapter = new ThemesAdapter(appConfig.isPreviewCircle(), sharedConfig.getCustomTheme(), sharedConfig.getThemePreset(), this);
 
         recyclerView.addItemDecoration(new MarginDecoration(ContextUtils.dpToPx(getContext(), 4f)));
         recyclerView.setHasFixedSize(true);
@@ -47,18 +47,18 @@ public class ThemesFragment extends BaseFragment implements ThemesAdapter.OnThem
     @Override
     public void onResume() {
         super.onResume();
-        configHelper.registerOnSharedPreferenceChangeListener(customThemeChangedListener);
+        sharedConfig.registerOnSharedPreferenceChangeListener(customThemeChangedListener);
     }
 
     @Override
     public void onPause() {
-        configHelper.unregisterOnSharedPreferenceChangeListener(customThemeChangedListener);
+        sharedConfig.unregisterOnSharedPreferenceChangeListener(customThemeChangedListener);
         super.onPause();
     }
 
     @Override
     public void onThemePresetSelected(WatchTheme.Preset preset) {
-        configHelper.setThemePreset(preset);
+        sharedConfig.setThemePreset(preset);
     }
 
     @Override

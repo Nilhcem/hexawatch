@@ -45,7 +45,7 @@ public class AboutFragment extends BaseFragment implements TimePickerDialog.OnTi
 
         version.setText(getString(R.string.about_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
         watchface.setTheme(WatchTheme.Preset.FRANCE.theme);
-        onPreviewShapeChanged(appPrefs.isPreviewCircle());
+        onPreviewShapeChanged(appConfig.isPreviewCircle());
 
         if (savedInstanceState == null) {
             setTime(3, 35);
@@ -86,7 +86,7 @@ public class AboutFragment extends BaseFragment implements TimePickerDialog.OnTi
 
     @OnClick(R.id.about_toggle_desc)
     public void togglePreviewShape() {
-        appPrefs.togglePreviewShape();
+        appConfig.togglePreviewShape();
     }
 
     private void setTime(int hour, int minute) {

@@ -12,7 +12,7 @@ import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
 import com.nilhcem.hexawatch.common.R;
-import com.nilhcem.hexawatch.common.config.ConfigHelper;
+import com.nilhcem.hexawatch.common.config.SharedConfig;
 import com.nilhcem.hexawatch.common.config.services.model.proto.Config;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 
@@ -72,9 +72,9 @@ public class SendConfigChangeIntentService extends IntentService {
     }
 
     private byte[] getSerializedConfig() {
-        ConfigHelper configHelper = new ConfigHelper(this);
-        WatchTheme.Preset themePreset = configHelper.getThemePreset();
-        WatchTheme customTheme = configHelper.getCustomTheme();
+        SharedConfig config = new SharedConfig(this);
+        WatchTheme.Preset themePreset = config.getThemePreset();
+        WatchTheme customTheme = config.getCustomTheme();
 
         return Config.Model.newBuilder()
                 .setPreset(themePreset.name())
