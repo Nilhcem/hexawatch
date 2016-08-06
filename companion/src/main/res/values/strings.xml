@@ -26,4 +26,8 @@
     <string name="about_try_title">Try it out!</string>
     <string name="about_try_desc">Noticed the hexawatch above?\nIt is set to display the following time:</string>
     <string name="about_try_button">Show me a different time (please)</string>
+    <string name="about_toggle_shape_title_round">Got a square watch?</string>
+    <string name="about_toggle_shape_title_square">Got a circle watch?</string>
+    <string name="about_toggle_shape_desc_round">Please don\'t be sad, these watches are great too.\nI mean.. at least I guess so… What? You want this app to display square previews? Why didn\'t you tell me earlier? Just tap here, and magic will happen (but don\'t tell anyone about that, it\'s our little secret)</string>
+    <string name="about_toggle_shape_desc_square">A circle watch you said? Doesn\'t it look strange?\nI mean.. at least I guess so… What? You want this app to display circle previews? This seems weird but tap here, and magic will happen (but DON\'T tell anyone about that, it\'s a SECRET)\nA circle watch ahaha, such a crazy idea ahaha</string>
 </resources>

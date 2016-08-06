@@ -25,9 +25,11 @@ public class AboutFragment extends BaseFragment implements TimePickerDialog.OnTi
     private static final String STATE_KEY_HOUR = "hour";
     private static final String STATE_KEY_MINUTE = "minute";
 
-    @BindView(R.id.about_version) TextView version;
     @BindView(R.id.about_watchface) HexawatchView watchface;
     @BindView(R.id.about_time) TextView time;
+    @BindView(R.id.about_version) TextView version;
+    @BindView(R.id.about_toggle_title) TextView toggleTitle;
+    @BindView(R.id.about_toggle_desc) TextView toggleDesc;
 
     private int hour;
     private int minute;
@@ -43,6 +45,7 @@ public class AboutFragment extends BaseFragment implements TimePickerDialog.OnTi
 
         version.setText(getString(R.string.about_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
         watchface.setTheme(WatchTheme.Preset.FRANCE.theme);
+        onPreviewShapeChanged(appPrefs.isPreviewCircle());
 
         if (savedInstanceState == null) {
             setTime(3, 35);
@@ -63,9 +66,27 @@ public class AboutFragment extends BaseFragment implements TimePickerDialog.OnTi
         setTime(hourOfDay, minute);
     }
 
+    @Override
+    protected void onPreviewShapeChanged(boolean isCircle) {
+        watchface.setCircleShape(isCircle);
+
+        if (isCircle) {
+            toggleTitle.setText(R.string.about_toggle_shape_title_round);
+            toggleDesc.setText(R.string.about_toggle_shape_desc_round);
+        } else {
+            toggleTitle.setText(R.string.about_toggle_shape_title_square);
+            toggleDesc.setText(R.string.about_toggle_shape_desc_square);
+        }
+    }
+
     @OnClick(R.id.about_change_time_button)
     public void openTimePicker() {
         TimePickerDialogFragment.show(getChildFragmentManager(), hour, minute);
+    }
+
+    @OnClick(R.id.about_toggle_desc)
+    public void togglePreviewShape() {
+        appPrefs.togglePreviewShape();
     }
 
     private void setTime(int hour, int minute) {

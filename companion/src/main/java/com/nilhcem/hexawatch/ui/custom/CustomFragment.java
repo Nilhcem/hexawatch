@@ -14,6 +14,7 @@ import com.nilhcem.hexawatch.R;
 import com.nilhcem.hexawatch.common.core.WatchTheme;
 import com.nilhcem.hexawatch.ui.BaseFragment;
 import com.nilhcem.hexawatch.ui.widget.HexawatchView;
+import com.nilhcem.hexawatch.ui.widget.WearFrameLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,6 +24,7 @@ public class CustomFragment extends BaseFragment {
     private static final String STATE_KEY_THEME = "theme";
 
     @BindView(R.id.custom_layout) ViewGroup rootView;
+    @BindView(R.id.custom_hexawatch_container) WearFrameLayout wearFrameLayout;
     @BindView(R.id.custom_hexawatch) HexawatchView hexawatch;
     @BindView(R.id.custom_bg_color) ColorChooserView bgColorChooser;
     @BindView(R.id.custom_fill_color) ColorChooserView fillColorChooser;
@@ -40,6 +42,8 @@ public class CustomFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        onPreviewShapeChanged(appPrefs.isPreviewCircle());
+
         if (savedInstanceState == null) {
             theme = configHelper.getCustomTheme();
         } else {
@@ -93,6 +97,13 @@ public class CustomFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(STATE_KEY_THEME, theme);
+    }
+
+    @Override
+    protected void onPreviewShapeChanged(boolean isCircle) {
+        super.onPreviewShapeChanged(isCircle);
+        wearFrameLayout.setCircleShape(isCircle);
+        hexawatch.setCircleShape(isCircle);
     }
 
     @OnClick(R.id.custom_buttons_reset)

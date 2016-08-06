@@ -89,6 +89,28 @@
                 android:text="@string/about_try_button"/>
 
             <TextView
+                android:id="@+id/about_toggle_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingBottom="4dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                tools:text="@string/about_toggle_shape_title_round"/>
+
+            <TextView
+                android:id="@+id/about_toggle_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:textSize="14sp"
+                tools:text="@string/about_toggle_shape_desc_round"/>
+
+            <TextView
                 android:id="@+id/about_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

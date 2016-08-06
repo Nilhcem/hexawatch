@@ -12,11 +12,13 @@ class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
         void onThemePresetSelected(WatchTheme.Preset preset);
     }
 
+    private boolean isCircle;
     private WatchTheme customTheme;
     private WatchTheme.Preset selectedPreset;
     private final OnThemePresetSelectedListener listener;
 
-    ThemesAdapter(WatchTheme customTheme, WatchTheme.Preset selectedPreset, OnThemePresetSelectedListener listener) {
+    ThemesAdapter(boolean isCircle, WatchTheme customTheme, WatchTheme.Preset selectedPreset, OnThemePresetSelectedListener listener) {
+        this.isCircle = isCircle;
         this.customTheme = customTheme;
         this.selectedPreset = selectedPreset;
         this.listener = listener;
@@ -31,7 +33,7 @@ class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
     public void onBindViewHolder(ThemesViewHolder holder, int position) {
         final WatchTheme.Preset themePreset = WatchTheme.Preset.values()[position];
         WatchTheme theme = themePreset == WatchTheme.Preset.CUSTOM ? customTheme : themePreset.theme;
-        holder.bindData(themePreset.nameRes, theme, themePreset == selectedPreset);
+        holder.bindData(themePreset.nameRes, theme, isCircle, themePreset == selectedPreset);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,6 +47,11 @@ class ThemesAdapter extends RecyclerView.Adapter<ThemesViewHolder> {
     @Override
     public int getItemCount() {
         return WatchTheme.Preset.values().length;
+    }
+
+    void setCircleShape(boolean isCircle) {
+        this.isCircle = isCircle;
+        notifyDataSetChanged();
     }
 
     void updateTheme(WatchTheme.Preset selectedPreset, WatchTheme customTheme) {

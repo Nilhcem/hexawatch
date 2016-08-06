@@ -16,11 +16,18 @@ import com.nilhcem.hexawatch.ui.widget.recyclerview.MarginDecoration;
 
 import butterknife.BindView;
 
-public class ThemesFragment extends BaseFragment implements SharedPreferences.OnSharedPreferenceChangeListener, ThemesAdapter.OnThemePresetSelectedListener {
+public class ThemesFragment extends BaseFragment implements ThemesAdapter.OnThemePresetSelectedListener {
 
     @BindView(R.id.presets_recyclerview) RecyclerView recyclerView;
 
     private ThemesAdapter adapter;
+    private SharedPreferences.OnSharedPreferenceChangeListener customThemeChangedListener =
+            new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                    adapter.updateTheme(configHelper.getThemePreset(), configHelper.getCustomTheme());
+                }
+            };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,7 +37,7 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ThemesAdapter(configHelper.getCustomTheme(), configHelper.getThemePreset(), this);
+        adapter = new ThemesAdapter(appPrefs.isPreviewCircle(), configHelper.getCustomTheme(), configHelper.getThemePreset(), this);
 
         recyclerView.addItemDecoration(new MarginDecoration(ContextUtils.dpToPx(getContext(), 4f)));
         recyclerView.setHasFixedSize(true);
@@ -40,22 +47,22 @@ public class ThemesFragment extends BaseFragment implements SharedPreferences.On
     @Override
     public void onResume() {
         super.onResume();
-        configHelper.registerOnSharedPreferenceChangeListener(this);
+        configHelper.registerOnSharedPreferenceChangeListener(customThemeChangedListener);
     }
 
     @Override
     public void onPause() {
-        configHelper.unregisterOnSharedPreferenceChangeListener(this);
+        configHelper.unregisterOnSharedPreferenceChangeListener(customThemeChangedListener);
         super.onPause();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        adapter.updateTheme(configHelper.getThemePreset(), configHelper.getCustomTheme());
     }
 
     @Override
     public void onThemePresetSelected(WatchTheme.Preset preset) {
         configHelper.setThemePreset(preset);
+    }
+
+    @Override
+    protected void onPreviewShapeChanged(boolean isCircle) {
+        adapter.setCircleShape(isCircle);
     }
 }

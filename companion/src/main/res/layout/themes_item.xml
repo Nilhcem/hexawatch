@@ -16,14 +16,14 @@
         android:paddingTop="16dp">
 
         <com.nilhcem.hexawatch.ui.widget.HexawatchView
-            android:id="@+id/watchface"
+            android:id="@+id/theme_item_watchface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="1dp"
             tools:background="@color/accent"/>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/theme_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

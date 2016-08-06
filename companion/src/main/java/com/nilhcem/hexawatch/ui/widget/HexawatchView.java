@@ -57,4 +57,9 @@ public class HexawatchView extends View {
         hexawatch.setTheme(theme);
         invalidate();
     }
+
+    public void setCircleShape(boolean isCircle) {
+        hexawatch.setShape(isCircle ? WatchShape.CIRCLE : WatchShape.SQUARE);
+        invalidate();
+    }
 }

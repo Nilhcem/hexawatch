@@ -29,8 +29,9 @@ public class WearFrameLayout extends ViewGroup {
     private final float borderWidth;
     private final float buttonWidth;
     private final float buttonHeight;
-    private final boolean isRound;
-    private final boolean showButton;
+
+    private boolean isCircle;
+    private boolean showButton;
 
     private float marginRadius;
     private float borderRadius;
@@ -50,9 +51,9 @@ public class WearFrameLayout extends ViewGroup {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         // Get from attrs, or set manually
-        isRound = true;
+        isCircle = true;
         color = 0xff909090;
-        showButton = isRound;
+        showButton = isCircle;
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         marginWidth = applyDimension(COMPLEX_UNIT_DIP, 4, displayMetrics);
@@ -90,9 +91,7 @@ public class WearFrameLayout extends ViewGroup {
         strapRect.set(centerX - halfStrapWidth, 0, centerX + halfStrapWidth, height);
 
         // button
-        if (showButton) {
-            buttonRect.set(borderRect.right - buttonWidth, centerY - buttonHeight / 2, borderRect.right + buttonWidth, centerY + buttonHeight / 2);
-        }
+        buttonRect.set(borderRect.right - buttonWidth, centerY - buttonHeight / 2, borderRect.right + buttonWidth, centerY + buttonHeight / 2);
 
         // inner child
         float childRadius = borderRadius - borderWidth / 2;
@@ -123,7 +122,7 @@ public class WearFrameLayout extends ViewGroup {
 
         // transparent watch margin
         paint.setXfermode(clearMode);
-        canvas.drawRoundRect(marginRect, isRound ? marginRadius : 0, isRound ? marginRadius : 0, paint);
+        canvas.drawRoundRect(marginRect, isCircle ? marginRadius : 0, isCircle ? marginRadius : 0, paint);
         paint.setXfermode(null);
 
         // sub views
@@ -131,7 +130,13 @@ public class WearFrameLayout extends ViewGroup {
 
         // watch border
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawRoundRect(borderRect, isRound ? borderRadius : marginWidth, isRound ? borderRadius : marginWidth, paint);
+        canvas.drawRoundRect(borderRect, isCircle ? borderRadius : marginWidth, isCircle ? borderRadius : marginWidth, paint);
         paint.setStyle(Paint.Style.FILL);
+    }
+
+    public void setCircleShape(boolean isCircle) {
+        this.isCircle = isCircle;
+        showButton = isCircle;
+        invalidate();
     }
 }

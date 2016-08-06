@@ -15,15 +15,16 @@ import butterknife.BindView;
 
 public class ThemesViewHolder extends BaseViewHolder {
 
-    @BindView(R.id.watchface) HexawatchView watchface;
-    @BindView(R.id.name) TextView name;
+    @BindView(R.id.theme_item_watchface) HexawatchView watchface;
+    @BindView(R.id.theme_item_name) TextView name;
 
     public ThemesViewHolder(ViewGroup parent) {
         super(parent, R.layout.themes_item);
     }
 
-    public void bindData(@StringRes int nameRes, WatchTheme theme, boolean selected) {
+    public void bindData(@StringRes int nameRes, WatchTheme theme, boolean isCircle, boolean selected) {
         watchface.setTheme(theme);
+        watchface.setCircleShape(isCircle);
         name.setText(nameRes);
         itemView.setSelected(selected);
         ViewCompat.setElevation(itemView, selected ? ContextUtils.dpToPx(itemView.getContext(), 4f) : 0);
