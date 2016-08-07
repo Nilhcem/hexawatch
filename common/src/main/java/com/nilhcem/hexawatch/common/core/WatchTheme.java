@@ -66,8 +66,8 @@ public class WatchTheme implements Parcelable {
     }
 
     public enum Preset {
-        DEFAULT(R.string.theme_preset_default, new WatchTheme(0xff202020, 0xff808080, 0xffe0e0e0, 1.5f, 0.75f)),
-        CUSTOM(R.string.theme_preset_custom, new WatchTheme(0xff0089b6, 0xff71b8d0, 0xffe8f4ff, 1.5f, 0.75f)),
+        DEFAULT(R.string.theme_preset_default, new WatchTheme(0xff181818, 0xff3a3a3a, 0xffa2a2a2, 1.5f, 0.75f)),
+        CUSTOM(R.string.theme_preset_custom, new WatchTheme(0xff006f94, 0xff5b95a8, 0xffd1ebff, 1.5f, 0.75f)),
         BLUE(R.string.theme_preset_blue, new WatchTheme(0xff1c5090, 0xff6e88a8, 0xffffffff, 1.5f, 0.75f)),
         GREEN(R.string.theme_preset_green, new WatchTheme(0xff00b387, 0xff498778, 0xffe8fff4, 1.5f, 0.75f)),
         RED(R.string.theme_preset_red, new WatchTheme(0xffb62e2e, 0xffd06a6a, 0xffffffff, 1.5f, 0.75f)),
