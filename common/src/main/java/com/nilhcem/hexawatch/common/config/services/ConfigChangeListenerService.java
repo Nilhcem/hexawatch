@@ -19,7 +19,7 @@ public class ConfigChangeListenerService extends WearableListenerService {
         if (messageEvent.getPath().equals(getString(R.string.config_data_layer_path))) {
             try {
                 Config.Model model = Config.Model.parseFrom(messageEvent.getData());
-                WatchTheme.Preset preset = WatchTheme.Preset.valueOf(model.getPreset());
+                WatchTheme.Preset preset = WatchTheme.Preset.fromName(model.getPreset());
                 WatchTheme theme = new WatchTheme(model.getBgColor(), model.getFillColor(), model.getStrokeColor(), model.getStrokeWidth(), model.getInnerHexaRatio());
                 new SharedConfig(this).setDataInternally(preset, theme);
             } catch (InvalidProtocolBufferException e) {
