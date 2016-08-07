@@ -9,6 +9,7 @@
     android:orientation="horizontal">
 
     <com.nilhcem.hexawatch.ui.widget.WearFrameLayout
+        android:id="@+id/custom_hexawatch_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1">
