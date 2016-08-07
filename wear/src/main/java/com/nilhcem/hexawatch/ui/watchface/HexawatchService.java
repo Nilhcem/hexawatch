@@ -61,7 +61,7 @@ public class HexawatchService extends BaseWatchFaceService {
 
         @Override
         protected void onBurnInProtectionChanged(boolean burnInProtection) {
-            hexawatch.setDimensions(width, height, burnInProtection ? BURN_IN_PADDING : 0);
+            hexawatch.setDimensions(width, height, BURN_IN_PADDING);
             invalidate();
         }
 
