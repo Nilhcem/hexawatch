@@ -68,7 +68,7 @@ class Painter {
             case AMBIENT:
                 setAntiAlias(true);
                 setFillPaintStyle(Paint.Style.STROKE);
-                setPaintColors(Color.BLACK, 0xff505050, 0xffdddddd);
+                setPaintColors(Color.BLACK, 0xff888888, 0xffffffff);
                 setPaintWidths(1f);
                 break;
             case LOW_BIT:
