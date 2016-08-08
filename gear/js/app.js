@@ -12,17 +12,17 @@
         marginAmbient = 10,
         margin = marginInteractive,
 
-        strokeWidthInteractive = 3.0,
+        strokeWidthInteractive = 2.5,
         strokeWidthAmbient = 2.0,
         strokeWidth = strokeWidthInteractive,
 
-        bgColorInteractive = '#333333',
+        bgColorInteractive = '#000000',
         bgColorAmbient = '#000000',
         bgColor = bgColorInteractive,
 
-        strokeColor = '#e6e6e6',
+        strokeColor = '#ffffff',
 
-        fillColorInteractive = '#b9b9b9',
+        fillColorInteractive = '#888888',
         fillColorAmbient = '#ffffff',
         fillColor = fillColorInteractive,
 
