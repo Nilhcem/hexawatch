@@ -15,3 +15,22 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-printmapping mappings.txt
+-keepattributes SourceFile,LineNumberTable
+
+# Support
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+-dontwarn android.support.v7.**
+
+# Protobuf
+-dontwarn sun.misc.Unsafe
+-keep class com.google.protobuf.* { *; }
+-dontwarn com.google.protobuf.**
+-keep class * extends com.google.protobuf.GeneratedMessage { *; }
+-keepclassmembernames class * extends com.google.protobuf.GeneratedMessage { *; }
+
+# Colorpicker
+-keep class com.flask.colorpicker.* { *; }
+-dontwarn com.flask.colorpicker.**
