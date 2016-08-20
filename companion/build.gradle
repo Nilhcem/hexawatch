@@ -49,5 +49,5 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterknifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
-    compile 'com.github.QuadFlask:colorpicker:0.0.10'
+    compile 'com.github.QuadFlask:colorpicker:0.0.11'
 }
