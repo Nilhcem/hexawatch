@@ -10,7 +10,7 @@ android {
     buildToolsVersion project.ext['buildToolsVersion']
 
     defaultConfig {
-        applicationId 'com.nilhcem.hexawatch'
+        applicationId project.ext['applicationId']
         versionCode project.ext['versionCode']
         versionName project.ext['versionName']
 
