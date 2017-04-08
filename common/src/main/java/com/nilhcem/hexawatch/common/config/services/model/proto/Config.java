@@ -19,37 +19,37 @@ public final class Config {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string preset = 1;</code>
+     * <code>string preset = 1;</code>
      */
     java.lang.String getPreset();
     /**
-     * <code>optional string preset = 1;</code>
+     * <code>string preset = 1;</code>
      */
     com.google.protobuf.ByteString
         getPresetBytes();
 
     /**
-     * <code>optional int32 bg_color = 2;</code>
+     * <code>int32 bg_color = 2;</code>
      */
     int getBgColor();
 
     /**
-     * <code>optional int32 fill_color = 3;</code>
+     * <code>int32 fill_color = 3;</code>
      */
     int getFillColor();
 
     /**
-     * <code>optional int32 stroke_color = 4;</code>
+     * <code>int32 stroke_color = 4;</code>
      */
     int getStrokeColor();
 
     /**
-     * <code>optional float stroke_width = 5;</code>
+     * <code>float stroke_width = 5;</code>
      */
     float getStrokeWidth();
 
     /**
-     * <code>optional float inner_hexa_ratio = 6;</code>
+     * <code>float inner_hexa_ratio = 6;</code>
      */
     float getInnerHexaRatio();
   }
@@ -155,7 +155,7 @@ public final class Config {
     public static final int PRESET_FIELD_NUMBER = 1;
     private volatile java.lang.Object preset_;
     /**
-     * <code>optional string preset = 1;</code>
+     * <code>string preset = 1;</code>
      */
     public java.lang.String getPreset() {
       java.lang.Object ref = preset_;
@@ -170,7 +170,7 @@ public final class Config {
       }
     }
     /**
-     * <code>optional string preset = 1;</code>
+     * <code>string preset = 1;</code>
      */
     public com.google.protobuf.ByteString
         getPresetBytes() {
@@ -189,7 +189,7 @@ public final class Config {
     public static final int BG_COLOR_FIELD_NUMBER = 2;
     private int bgColor_;
     /**
-     * <code>optional int32 bg_color = 2;</code>
+     * <code>int32 bg_color = 2;</code>
      */
     public int getBgColor() {
       return bgColor_;
@@ -198,7 +198,7 @@ public final class Config {
     public static final int FILL_COLOR_FIELD_NUMBER = 3;
     private int fillColor_;
     /**
-     * <code>optional int32 fill_color = 3;</code>
+     * <code>int32 fill_color = 3;</code>
      */
     public int getFillColor() {
       return fillColor_;
@@ -207,7 +207,7 @@ public final class Config {
     public static final int STROKE_COLOR_FIELD_NUMBER = 4;
     private int strokeColor_;
     /**
-     * <code>optional int32 stroke_color = 4;</code>
+     * <code>int32 stroke_color = 4;</code>
      */
     public int getStrokeColor() {
       return strokeColor_;
@@ -216,7 +216,7 @@ public final class Config {
     public static final int STROKE_WIDTH_FIELD_NUMBER = 5;
     private float strokeWidth_;
     /**
-     * <code>optional float stroke_width = 5;</code>
+     * <code>float stroke_width = 5;</code>
      */
     public float getStrokeWidth() {
       return strokeWidth_;
@@ -225,7 +225,7 @@ public final class Config {
     public static final int INNER_HEXA_RATIO_FIELD_NUMBER = 6;
     private float innerHexaRatio_;
     /**
-     * <code>optional float inner_hexa_ratio = 6;</code>
+     * <code>float inner_hexa_ratio = 6;</code>
      */
     public float getInnerHexaRatio() {
       return innerHexaRatio_;
@@ -332,7 +332,7 @@ public final class Config {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + PRESET_FIELD_NUMBER;
       hash = (53 * hash) + getPreset().hashCode();
       hash = (37 * hash) + BG_COLOR_FIELD_NUMBER;
@@ -593,7 +593,7 @@ public final class Config {
 
       private java.lang.Object preset_ = "";
       /**
-       * <code>optional string preset = 1;</code>
+       * <code>string preset = 1;</code>
        */
       public java.lang.String getPreset() {
         java.lang.Object ref = preset_;
@@ -608,7 +608,7 @@ public final class Config {
         }
       }
       /**
-       * <code>optional string preset = 1;</code>
+       * <code>string preset = 1;</code>
        */
       public com.google.protobuf.ByteString
           getPresetBytes() {
@@ -624,7 +624,7 @@ public final class Config {
         }
       }
       /**
-       * <code>optional string preset = 1;</code>
+       * <code>string preset = 1;</code>
        */
       public Builder setPreset(
           java.lang.String value) {
@@ -637,7 +637,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional string preset = 1;</code>
+       * <code>string preset = 1;</code>
        */
       public Builder clearPreset() {
         
@@ -646,7 +646,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional string preset = 1;</code>
+       * <code>string preset = 1;</code>
        */
       public Builder setPresetBytes(
           com.google.protobuf.ByteString value) {
@@ -662,13 +662,13 @@ public final class Config {
 
       private int bgColor_ ;
       /**
-       * <code>optional int32 bg_color = 2;</code>
+       * <code>int32 bg_color = 2;</code>
        */
       public int getBgColor() {
         return bgColor_;
       }
       /**
-       * <code>optional int32 bg_color = 2;</code>
+       * <code>int32 bg_color = 2;</code>
        */
       public Builder setBgColor(int value) {
         
@@ -677,7 +677,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional int32 bg_color = 2;</code>
+       * <code>int32 bg_color = 2;</code>
        */
       public Builder clearBgColor() {
         
@@ -688,13 +688,13 @@ public final class Config {
 
       private int fillColor_ ;
       /**
-       * <code>optional int32 fill_color = 3;</code>
+       * <code>int32 fill_color = 3;</code>
        */
       public int getFillColor() {
         return fillColor_;
       }
       /**
-       * <code>optional int32 fill_color = 3;</code>
+       * <code>int32 fill_color = 3;</code>
        */
       public Builder setFillColor(int value) {
         
@@ -703,7 +703,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional int32 fill_color = 3;</code>
+       * <code>int32 fill_color = 3;</code>
        */
       public Builder clearFillColor() {
         
@@ -714,13 +714,13 @@ public final class Config {
 
       private int strokeColor_ ;
       /**
-       * <code>optional int32 stroke_color = 4;</code>
+       * <code>int32 stroke_color = 4;</code>
        */
       public int getStrokeColor() {
         return strokeColor_;
       }
       /**
-       * <code>optional int32 stroke_color = 4;</code>
+       * <code>int32 stroke_color = 4;</code>
        */
       public Builder setStrokeColor(int value) {
         
@@ -729,7 +729,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional int32 stroke_color = 4;</code>
+       * <code>int32 stroke_color = 4;</code>
        */
       public Builder clearStrokeColor() {
         
@@ -740,13 +740,13 @@ public final class Config {
 
       private float strokeWidth_ ;
       /**
-       * <code>optional float stroke_width = 5;</code>
+       * <code>float stroke_width = 5;</code>
        */
       public float getStrokeWidth() {
         return strokeWidth_;
       }
       /**
-       * <code>optional float stroke_width = 5;</code>
+       * <code>float stroke_width = 5;</code>
        */
       public Builder setStrokeWidth(float value) {
         
@@ -755,7 +755,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional float stroke_width = 5;</code>
+       * <code>float stroke_width = 5;</code>
        */
       public Builder clearStrokeWidth() {
         
@@ -766,13 +766,13 @@ public final class Config {
 
       private float innerHexaRatio_ ;
       /**
-       * <code>optional float inner_hexa_ratio = 6;</code>
+       * <code>float inner_hexa_ratio = 6;</code>
        */
       public float getInnerHexaRatio() {
         return innerHexaRatio_;
       }
       /**
-       * <code>optional float inner_hexa_ratio = 6;</code>
+       * <code>float inner_hexa_ratio = 6;</code>
        */
       public Builder setInnerHexaRatio(float value) {
         
@@ -781,7 +781,7 @@ public final class Config {
         return this;
       }
       /**
-       * <code>optional float inner_hexa_ratio = 6;</code>
+       * <code>float inner_hexa_ratio = 6;</code>
        */
       public Builder clearInnerHexaRatio() {
         
