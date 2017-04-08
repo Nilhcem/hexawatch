@@ -1,19 +1,9 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
 repositories {
     jcenter()
     maven { url "https://jitpack.io" }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion project.ext['compileSdkVersion']
@@ -36,7 +26,7 @@ android {
     }
 }
 
-ext.butterknifeVersion = '8.2.1'
+ext.butterknifeVersion = '8.5.1'
 
 dependencies {
     wearApp project(':wear')
@@ -47,7 +37,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     compile "com.jakewharton:butterknife:$butterknifeVersion"
-    apt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
-    compile 'com.github.QuadFlask:colorpicker:0.0.11'
+    compile 'com.github.QuadFlask:colorpicker:0.0.13'
 }
