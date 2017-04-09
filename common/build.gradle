@@ -5,10 +5,10 @@ android {
     buildToolsVersion project.ext['buildToolsVersion']
 
     defaultConfig {
-        versionCode project.ext['versionCode']
         versionName project.ext['versionName']
+        versionCode project.ext['versionCode'].toInteger()
 
-        minSdkVersion project.ext['minSdkVersion']
+        minSdkVersion project.ext['minSdkVersionCompanion']
         targetSdkVersion project.ext['targetSdkVersion']
     }
 
